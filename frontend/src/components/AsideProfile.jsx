@@ -10,10 +10,10 @@ function AsideProfile() {
           </button>
         </div>
         <ul className="flex flex-col items-center gap-2 bg-neutral-300 dark:bg-zinc-800 p-10 rounded-lg">
-          <li className="text-lg cursor-pointer hover:text-purple-700">
+          <li className="text-lg cursor-pointer hover:text-emerald-600">
             Mis productos
           </li>
-          <li className="text-lg cursor-pointer hover:text-purple-700">
+          <li className="text-lg cursor-pointer hover:text-emerald-600">
             Historial de cambios
           </li>
         </ul>
