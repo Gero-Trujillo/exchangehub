@@ -1,24 +1,69 @@
+import { IoBagHandleOutline } from "react-icons/io5";
+import { GoHistory } from "react-icons/go";
+import { MdDisabledVisible } from "react-icons/md";
+import { RiLogoutCircleLine } from "react-icons/ri";
+
 function AsideProfile() {
   return (
     <>
-      <aside className="w-full lg:w-1/4 flex flex-col bg-neutral-100 dark:bg-zinc-900 dark:text-white items-center p-4 rounded-lg gap-10 justify-between">
-        <div className="flex flex-col items-center gap-2">
-          <div className="max-w-32 max-h-32 w-32 h-32 flex items-center justify-center rounded-full border-4 border-emerald-600 bg-[url('https://robohash.org/user1')] bg-cover bg-center"></div>
-          <h2 className="text-xl">Username</h2>
-          <button className="bg-emerald-600 p-2 rounded-lg text-white">
+      <aside className="w-full lg:w-1/4 flex flex-col  dark:text-white items-center rounded-lg gap-10 justify-between">
+        <div className="group before:hover:scale-95 before:hover:h-72 before:hover:w-80 before:hover:h-44 before:hover:rounded-b-2xl before:transition-all before:duration-500 before:content-[''] before:w-80 before:h-24 before:rounded-t-2xl before:bg-gradient-to-bl from-emerald-300 via-emerald-600 to-emerald-900 before:absolute before:top-0 w-full h-72 relative bg-neutral-100 dark:bg-zinc-900 flex flex-col items-center justify-center gap-2 text-center rounded-2xl overflow-hidden">
+          <div
+            className="w-28 h-28 mt-8 rounded-full border-4 border-neutral-100 dark:border-zinc-900 z-10 group-hover:scale-150 group-hover:-translate-x-24 group-hover:-translate-y-20 transition-all duration-500"
+            style={{
+              backgroundImage: `url("https://robohash.org/1")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <div className="z-10 group-hover:-translate-y-10 transition-all duration-500">
+            <span className="text-2xl font-semibold">Geronimo Trujillo</span>
+            <p>@gerot511</p>
+          </div>
+          <a
+            className="bg-emerald-600 px-4 py-1 text-slate-50 rounded-md z-10 hover:scale-105 transition-all duration-500 hover:bg-emerald-500"
+            href="#"
+          >
             Editar perfil
-          </button>
+          </a>
         </div>
-        <ul className="flex flex-col items-center gap-2 bg-neutral-300 dark:bg-zinc-800 p-10 rounded-lg">
-          <li className="text-lg cursor-pointer hover:text-emerald-600">
-            Mis productos
-          </li>
-          <li className="text-lg cursor-pointer hover:text-emerald-600">
-            Historial de cambios
-          </li>
-        </ul>
-        <button className="bg-emerald-600 p-2 rounded-lg text-white">
-          Cerrar sesion
+
+        <div className="card w-full bg-neutral-100 dark:bg-zinc-900 p-5 rounded-xl">
+          <ul className="w-full flex flex-col gap-2">
+            <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
+              <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black">
+                <span className="text-2xl">
+                  <IoBagHandleOutline />
+                </span>
+                Mis productos
+              </button>
+            </li>
+            <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
+              <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black">
+                <span className="text-2xl">
+                  <GoHistory />
+                </span>
+                Historial intercambios
+              </button>
+            </li>
+            <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
+              <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black">
+                <span className="text-2xl">
+                  <MdDisabledVisible />
+                </span>
+                Inhabilitar cuenta
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <button className="rounded-lg relative w-36 h-10 cursor-pointer flex items-center border border-emerald-600 bg-emerald-600 group hover:bg-emerald-600 active:bg-emerald-600 active:border-emerald-600">
+          <span className="text-white font-semibold ml-8 transform group-hover:translate-x-20 transition-all duration-300">
+            Cerrar
+          </span>
+          <span className="absolute right-0 h-full w-10 rounded-lg bg-emerald-600 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300 text-white">
+            <RiLogoutCircleLine />
+          </span>
         </button>
       </aside>
     </>
