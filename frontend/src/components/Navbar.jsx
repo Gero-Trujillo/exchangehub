@@ -42,7 +42,7 @@ function Navbar() {
   };
   return (
     <>
-      <nav className="w-[100%] flex flex-col md:flex-row justify-evenly items-center p-4 sticky top-0 border-b-2 z-20 bg-neutral-200 dark:bg-zinc-900 py-6">
+      <nav className="w-[100%] flex flex-col md:flex-row justify-evenly items-center p-4 sticky top-0 border-b-2 z-20 bg-neutral-100 dark:bg-zinc-900 py-6">
         <div className="flex items-center">
           <img src={logo} alt="logo" className="w-24" />
           <h1 className="text-4xl font-bold text-emerald-600">
