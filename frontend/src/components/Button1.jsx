@@ -3,7 +3,7 @@ function Button1() {
   return (
     <>
       <a href="productos">
-        <button className="button">
+        <button className="button1">
           <svg
             className="svgIcon"
             viewBox="0 0 512 512"

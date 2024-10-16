@@ -1,0 +1,254 @@
+.loginContainer{
+    display: grid;
+    place-items: center;
+}
+.main {
+    font-family: sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #2da575;
+    max-height: 45%;
+    overflow: hidden;
+    /* border-radius: 12px; */
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+    width: 30%;
+}
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 24px;
+  }
+  
+  /*checkbox to switch from sign up to login*/
+  #chk {
+    display: none;
+  }
+  
+  /*Login*/
+  .login {
+    position: relative;
+    width: 100%;
+    height: 330px;
+  }
+  
+  .login label {
+    margin: 20% 0 10%;
+  }
+  
+  label {
+    color: #fff;
+    font-size: 2rem;
+    justify-content: center;
+    display: flex;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+  }
+  
+  .input {
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+  }
+  
+  /*Register*/
+  .register {
+    height: 920px;
+    background: #eee;
+    border-radius: 60% / 10%;
+    transform: translateY(32%);
+    transition: .8s ease-in-out;
+    margin-top: 10px;
+  }
+  
+  .register label {
+    color: #6ee7b7;
+    transform: scale(.6);
+    margin-top:-10px;
+  }
+  
+  #chk:checked ~ .register {
+    transform: translateY(-47%);
+  }
+  
+  #chk:checked ~ .register label {
+    transform: scale(1);
+    margin: -10px 0 0%;
+    margin-top:10px;
+  }
+  
+  #chk:checked ~ .login label {
+    transform: scale(.6);
+    margin: 5% 0 5%;
+  }   
+  /*Button*/
+  .form button {
+    width: 85%;
+    height: 40px;
+    margin: 5px auto 10%;
+    color: #fff;
+    background: linear-gradient(
+      45deg,
+      rgb(110, 231, 183) 0%,
+       rgb(5, 150, 105) 100%
+    );
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .2s ease-in;
+  }
+  
+  .form button:hover {
+    background-color: #6d44b8;
+  }
+
+  /* otra section */
+
+  .contenedor-login {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.infoLoginApp{
+    display: grid;
+    place-items: center;
+    width: 30%;
+    height: 45%;
+    background-color: #389771;
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* animacion info login */
+
+.spinner {
+    width: 70.4px;
+    height: 70.4px;
+    --clr: rgb(255, 255, 255);
+    --clr-alpha: rgb(247, 197, 159,.1);
+    animation: spinner 1.6s infinite ease;
+    transform-style: preserve-3d;
+  }
+  
+  .spinner > div {
+    background-color: var(--clr-alpha);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border: 3.5px solid var(--clr);
+  }
+  
+  .spinner div:nth-of-type(1) {
+    transform: translateZ(-35.2px) rotateY(180deg);
+  }
+  
+  .spinner div:nth-of-type(2) {
+    transform: rotateY(-270deg) translateX(50%);
+    transform-origin: top right;
+  }
+  .spinner div h2 {
+    font-size: small;
+    font-weight: 900;
+    color: #fff;
+    font-family: sans-serif;
+  }
+  
+  .spinner div:nth-of-type(3) {
+    transform: rotateY(270deg) translateX(-50%);
+    transform-origin: center left;
+  }
+  
+  .spinner div:nth-of-type(4) {
+    transform: rotateX(90deg) translateY(-50%);
+    transform-origin: top center;
+  }
+  
+  .spinner div:nth-of-type(5) {
+    transform: rotateX(-90deg) translateY(50%);
+    transform-origin: bottom center;
+  }
+  
+  .spinner div:nth-of-type(6) {
+    transform: translateZ(35.2px);
+  }
+  
+  @keyframes spinner {
+    0% {
+      transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+    }
+  
+    50% {
+      transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+    }
+  
+    100% {
+      transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+    }
+  }
+
+  /* From Uiverse.io by satyamchaudharydev */ 
+/* === removing default button style ===*/
+.button {
+  margin: 0;
+  height: auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+/* button styling */
+.button {
+  --border-right: 6px;
+  --text-stroke-color: rgba(255,255,255,0.6);
+  --animation-color: #37FF8B;
+  --fs-size: 2em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-size: var(--fs-size);
+  font-family: "Arial";
+  position: relative;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+/* this is the text, when you hover on button */
+.hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: #6ee7b7;
+  background-color: #fff;
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid #6ee7b7;
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+/* hover */
+.button:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color))
+}
+
+.containerInfoLogin{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
