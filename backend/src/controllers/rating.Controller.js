@@ -68,3 +68,5 @@ const getAllRatings = (req, res) => {
       res.json({ message: 'Rating deleted successfully' });
     });
   };
+
+  export { getAllRatings, getRatingById, createRating, updateRating, deleteRating };

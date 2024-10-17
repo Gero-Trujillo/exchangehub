@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import userRouter from './Routes/userRoute.js'
 import chatRouter from './Routes/chatRoute.js'
 import messageRouter from './Routes/messageRoute.js'
+import ratingRouter from './Routes/ratingRoute.js'
 
 const app = express()
 dotenv.config()
@@ -15,6 +16,7 @@ app.use(cors())
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
 app.use('/api/messages', messageRouter);
+app.use('/api/ratings', ratingRouter);
 
 //Routes
 app.get('/', (req, res) => {
