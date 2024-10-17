@@ -6,8 +6,11 @@ import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ArticlesPage from "./pages/ArticlesPage";
+import LoginPage from "./pages/LoginPage";
+import { useState } from "react";
 
 function App() {
+  const [IsLogin, SetIsLogin] = useState(false);
   return (
     <>
       <BrowserRouter>
@@ -17,9 +20,9 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/Inicio" element={<HomePage />} />
           <Route path="/Perfil" element={<ProfilePage />} />
-          <Route path="/Mensajes" element={<NotFoundPage/>} />
+          <Route path="/Mensajes" element />
           <Route path="/Productos" element={<ArticlesPage/>}/>
-          <Route path="/Settings" element={<NotFoundPage/>} />
+          <Route path="/Settings" element />
         </Routes>
         <Footer />
       </BrowserRouter>
