@@ -5,7 +5,7 @@ function LoginRegister() {
     <>
       <section class="loginContainer">
         <div class="contenedor-login">
-          <div class="main">
+          <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%]">
             <input type="checkbox" id="chk" aria-hidden="true" />
 
             <div class="login">
@@ -88,7 +88,7 @@ function LoginRegister() {
               </form>
             </div>
           </div>
-          <div class="infoLoginApp">
+          <div class="infoLoginApp hidden lg:grid">
             <div class="containerInfoLogin">
               <div class="spinner">
                 <div></div>

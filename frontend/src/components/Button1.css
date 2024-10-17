@@ -27,17 +27,17 @@
   fill: rgb(19, 19, 19);
 }
 
-.button:hover {
+.button1:hover {
   background-color: #6ee7b7;
   transition-duration: 0.5s;
 }
 
-.button:active {
+.button1:active {
   transform: scale(0.97);
   transition-duration: 0.2s;
 }
 
-.button:hover .svgIcon {
+.button1:hover .svgIcon {
   transform: rotate(250deg);
   transition-duration: 1.5s;
 }
