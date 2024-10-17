@@ -96,7 +96,7 @@ function ProductCard() {
       )}
       <div className="w-60 h-80 bg-white dark:bg-zinc-950 flex flex-col gap-1 rounded-br-3xl">
         <div
-          className="duration-500 h-48 hover:scale-125"
+          className="duration-500 h-48"
           style={{
             backgroundImage: `url("https://www.comprarlotes.com/uploads/users/user2460/gallery/4124_2.png")`,
             backgroundSize: "cover",

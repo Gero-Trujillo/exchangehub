@@ -17,9 +17,9 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/Inicio" element={<HomePage />} />
           <Route path="/Perfil" element={<ProfilePage />} />
-          <Route path="/Mensajes" element />
+          <Route path="/Mensajes" element={<NotFoundPage/>} />
           <Route path="/Productos" element={<ArticlesPage/>}/>
-          <Route path="/Settings" element />
+          <Route path="/Settings" element={<NotFoundPage/>} />
         </Routes>
         <Footer />
       </BrowserRouter>
