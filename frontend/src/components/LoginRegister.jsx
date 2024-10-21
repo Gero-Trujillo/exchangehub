@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
-  const { singin, isAuthenticated } = useAuth();
+  const { singin, isAuthenticated, error } = useAuth();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   useEffect(() => {
@@ -15,7 +15,6 @@ function LoginRegister() {
   }, [isAuthenticated]);
   return (
     <>
-
       <section class="loginContainer dark:bg-zinc-950">
         <div class="contenedor-login">
           <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">
@@ -31,6 +30,7 @@ function LoginRegister() {
                 <label for="chk" aria-hidden="true">
                   Log in
                 </label>
+                {error && <p className="w-full bg-yellow-400 py-2 rounded-md">{error}</p>}
                 <input
                   class="input"
                   type="email"
