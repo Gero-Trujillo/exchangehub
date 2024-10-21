@@ -2,8 +2,12 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { GoHistory } from "react-icons/go";
 import { MdDisabledVisible } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
+import { useAuth } from "../context/AuthContext";
 
 function AsideProfile() {
+
+  const { user } = useAuth();
+
   return (
     <>
       <aside className="w-full lg:w-1/4 flex flex-col  dark:text-white items-center rounded-lg gap-10 justify-between">
@@ -11,14 +15,14 @@ function AsideProfile() {
           <div
             className="w-28 h-28 mt-8 rounded-full border-4 border-neutral-100 dark:border-zinc-900 z-10 group-hover:scale-150 group-hover:-translate-x-24 group-hover:-translate-y-20 transition-all duration-500"
             style={{
-              backgroundImage: `url("https://robohash.org/1")`,
+              backgroundImage: `url("${user.profileImageUrl}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           ></div>
           <div className="z-10 group-hover:-translate-y-10 transition-all duration-500">
-            <span className="text-2xl font-semibold">Geronimo Trujillo</span>
-            <p>@gerot511</p>
+            <span className="text-2xl font-semibold">{`${user.name} ${user.lastname}`}</span>
+            <p>{user.email}</p>
           </div>
           <a
             className="bg-emerald-600 px-4 py-1 text-slate-50 rounded-md z-10 hover:scale-105 transition-all duration-500 hover:bg-emerald-500"
