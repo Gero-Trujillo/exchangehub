@@ -8,12 +8,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ArticlesPage from "./pages/ArticlesPage";
 import LoginPage from "./pages/LoginPage";
 import { useState } from "react";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
-  const [IsLogin, SetIsLogin] = useState(false);
   return (
     <>
-      {IsLogin ? (
+      <AuthProvider>
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -27,9 +27,7 @@ function App() {
           </Routes>
           <Footer />
         </BrowserRouter>
-      ) : (
-        <LoginPage />
-      )}
+      </AuthProvider>
     </>
   );
 }

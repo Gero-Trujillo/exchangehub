@@ -1,7 +1,18 @@
 import "./LoginRegister.css";
+import { useForm } from "react-hook-form";
+import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
+  const { singin, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/")
+    }
+  }, [isAuthenticated]);
+
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "dark";
   });
