@@ -6,10 +6,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
   const { singin, isAuthenticated } = useAuth();
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/")
+      navigate("/");
     }
   }, [isAuthenticated]);
 
@@ -45,25 +46,28 @@ function LoginRegister() {
             <input type="checkbox" id="chk" aria-hidden="true" />
 
             <div class="login">
-              <form class="form">
+              <form
+                class="form"
+                onSubmit={handleSubmit((values) => {
+                  singin(values);
+                })}
+              >
                 <label for="chk" aria-hidden="true">
                   Log in
                 </label>
                 <input
                   class="input"
                   type="email"
-                  name="email"
                   placeholder="Email"
-                  required=""
+                  {...register("email", { required: true })}
                 />
                 <input
                   class="input"
                   type="password"
-                  name="pswd"
                   placeholder="Password"
-                  required=""
+                  {...register("password", { required: true })}
                 />
-                <button>Log in</button>
+                <button type="submit">Log in</button>
               </form>
             </div>
 

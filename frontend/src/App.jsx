@@ -9,6 +9,7 @@ import ArticlesPage from "./pages/ArticlesPage";
 import LoginPage from "./pages/LoginPage";
 import { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
+import LoginRegister from "./components/LoginRegister";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/Mensajes" element />
             <Route path="/Productos" element={<ArticlesPage />} />
             <Route path="/Settings" element />
+            <Route path="/login" element={<LoginRegister />} />
           </Routes>
           <Footer />
         </BrowserRouter>
