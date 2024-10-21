@@ -13,33 +13,9 @@ function LoginRegister() {
       navigate("/");
     }
   }, [isAuthenticated]);
-
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "dark";
-  });
-  useEffect(() => {
-    if (theme === "dark") {
-      document.querySelector("html").classList.add("dark");
-    } else {
-      document.querySelector("html").classList.remove("dark");
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-  const handleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
   return (
     <>
-      <button
-        className="text-3xl cursor-pointer text-emerald-600 dark:text-emerald-300 fixed bottom-4 right-4 z-50 justify-center items-center rounded-full w-10 h-10"
-        onClick={handleTheme}
-      >
-        {theme === "light" ? (
-          <ion-icon name="sunny-outline"></ion-icon>
-        ) : (
-          <ion-icon name="moon-outline"></ion-icon>
-        )}
-      </button>
+
       <section class="loginContainer dark:bg-zinc-950">
         <div class="contenedor-login">
           <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">

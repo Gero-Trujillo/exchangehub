@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import LoginRegister from "./components/LoginRegister";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -21,11 +22,14 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/Inicio" element={<HomePage />} />
-            <Route path="/Perfil" element={<ProfilePage />} />
-            <Route path="/Mensajes" element />
             <Route path="/Productos" element={<ArticlesPage />} />
-            <Route path="/Settings" element />
             <Route path="/login" element={<LoginRegister />} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/Mensajes" element />
+              <Route path="/Perfil" element={<ProfilePage />} />
+              <Route path="/Settings" element />
+            </Route>
           </Routes>
           <Footer />
         </BrowserRouter>

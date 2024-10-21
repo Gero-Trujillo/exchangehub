@@ -1,5 +1,6 @@
-import { createContext, useState, useContext } from "react";
-import { loginUser } from "../api/auth";
+import { createContext, useState, useContext, useEffect } from "react";
+import { loginUser, verifyToken } from "../api/auth.js";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -14,6 +15,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const singin = async (user) => {
     try {
       const response = await loginUser(user);
@@ -24,8 +26,37 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    async function checkLogin() {
+      const cookies = Cookies.get();
+
+      if (!cookies.accessToken) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return setUser(null);
+      }
+      try {
+        const res = await verifyToken(cookies.accessToken);
+        if (!res.data) {
+          setIsAuthenticated(false);
+          setLoading(false);
+          return;
+        }
+
+        setUser(res.data);
+        setIsAuthenticated(true);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+      }
+    }
+    checkLogin();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ singin, user, isAuthenticated }}>
+    <AuthContext.Provider value={{ singin, user, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );
