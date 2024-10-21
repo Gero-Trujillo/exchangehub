@@ -10,6 +10,9 @@ export const loginUser = async (req, res) => {
     if (user.rows.length === 0) {
       return res.status(400).json("Invalid Credentials");
     }
+    res.cookie("accessToken", user.rows[0].idUser, {
+      httpOnly: true,
+    });
     res.json(user.rows[0]);
   } catch (err) {
     console.error(err.message);
