@@ -18,3 +18,5 @@ router.get("/api/exchanges/status/:status", getExchangeByStatus);
 router.post("/api/exchanges", createExchange);
 router.put("/api/exchanges/:id", updateExchange);
 router.delete("/api/exchanges/:id", deleteExchange);
+
+export default router;
