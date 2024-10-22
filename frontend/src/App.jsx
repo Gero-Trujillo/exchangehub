@@ -5,27 +5,36 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ArticlesPage from "./pages/ArticlesPage";
+import { AuthProvider } from "./context/AuthContext";
+import LoginRegister from "./components/LoginRegister";
+import ProtectedRoute from "./ProtectedRoute";
 import CardPremium from "./components/CardPremium";
 import EditProfile from "./components/editProfile/EditProfile";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="*" element={<NotFoundPage />} />
-          <Route path="/Inicio" element={<HomePage />} />
-          <Route path="/Perfil" element={<ProfilePage />} />
-          <Route path="/Mensajes" element />
-          <Route path="/Productos" element/>
-          <Route path="/Settings" element />
-          <Route path="/Edit" element={<EditProfile/>} />
-          <Route path="/Plan" element={<CardPremium/>} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/Inicio" element={<HomePage />} />
+            <Route path="/Productos" element={<ArticlesPage />} />
+            <Route path="/login" element={<LoginRegister />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/Mensajes" element />
+              <Route path="/Perfil" element={<ProfilePage />} />
+              <Route path="/Settings" element />
+              <Route path="/Plan" element={<CardPremium/>} />
+              <Route path="/Edit" element={<EditProfile/>} />
+            </Route>
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
