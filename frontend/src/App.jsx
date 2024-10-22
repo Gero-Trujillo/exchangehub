@@ -6,6 +6,7 @@ import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CardPremium from "./components/CardPremium";
+import EditProfile from "./components/editProfile/EditProfile";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/Mensajes" element />
           <Route path="/Productos" element/>
           <Route path="/Settings" element />
+          <Route path="/Edit" element={<EditProfile/>} />
           <Route path="/Plan" element={<CardPremium/>} />
         </Routes>
         <Footer />
