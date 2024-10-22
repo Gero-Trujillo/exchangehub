@@ -7,7 +7,7 @@ function HomePage() {
       <section className="flex justify-center items-center min-h-full p-20 w-full max-w-full">
         <div className="flex flex-col gap-2 max-w-full items-center justify-center md:justify-start md:items-start">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold text-wrap animate-fade-left dark:text-slate-100 text-center md:text-start">
-            ¿Productos que no utilizas?
+            Productos que no utilizas?
           </h1>
           <span className="text-emerald-600 animate-pulse animate-ease-in text-5xl md:text-6xl lg:text-8xl font-bold">
             Exchange<span className="text-emerald-300">Hub</span>
@@ -18,7 +18,7 @@ function HomePage() {
           <Button1 />
         </div>
       </section>
-      <section className="bg-neutral-200 dark:bg-zinc-900 m-10 rounded-lg p-10 h-auto flex flex-col justify-center items-center gap-10">
+      <section className="bg-neutral-100 dark:bg-zinc-900 m-10 rounded-lg p-10 h-auto flex flex-col justify-center items-center gap-10">
         <h1 className="text-4xl font-bold text-emerald-600 dark:text-emerald-300">Mas populares</h1>
         <div className="flex flex-wrap gap-8 w-full justify-center">
           <ProductCard />
