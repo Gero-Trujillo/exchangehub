@@ -15,7 +15,7 @@ function LoginRegister() {
   }, [isAuthenticated]);
   return (
     <>
-      <section class="loginContainer dark:bg-zinc-950">
+      <section class="loginContainer dark:bg-zinc-950 mt-[-300px] md:mt-[-320px] lg:mt-[-300px] xl:mt-[-200px]">
         <div class="contenedor-login">
           <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">
             <input type="checkbox" id="chk" aria-hidden="true" />
@@ -28,7 +28,7 @@ function LoginRegister() {
                 })}
               >
                 <label for="chk" aria-hidden="true">
-                  Log in
+                  Iniciar sesion
                 </label>
                 {error && <p className="w-full bg-yellow-400 py-2 rounded-md">{error}</p>}
                 <input
@@ -49,8 +49,8 @@ function LoginRegister() {
 
             <div class="register dark:bg-zinc-800">
               <form class="form">
-                <label for="chk" aria-hidden="true">
-                  Register
+                <label className="text-emerald-600 dark:text-emerald-300" for="chk" aria-hidden="true">
+                  Registrarse
                 </label>
                 <input
                   placeholder="Name"

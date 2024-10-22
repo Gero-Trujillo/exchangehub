@@ -6,8 +6,6 @@ import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ArticlesPage from "./pages/ArticlesPage";
-import LoginPage from "./pages/LoginPage";
-import { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import LoginRegister from "./components/LoginRegister";
 import ProtectedRoute from "./ProtectedRoute";
