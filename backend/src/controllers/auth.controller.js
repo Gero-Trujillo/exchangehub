@@ -22,6 +22,33 @@ export const loginUser = async (req, res) => {
   }
 };
 
+export const registerUser = async (req, res) => {
+  const { name, lastname, email, address, cellphone, password, isPremium } =
+    req.body;
+
+  try {
+    const exists = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
+
+    if (exists[0].length > 0) {
+      return res.status(400).json({ message: "El email esta registrado" });
+    }
+
+    const [rows] = await pool.query(
+      "INSERT INTO users (name, lastname, email, address, cellphone, password) VALUES (?, ?, ?, ?, ?, ?)",
+      [name, lastname, email, address, cellphone, password]
+    );
+    const token = await createAccessToken({ idUser: rows.insertId });
+    res.cookie("accessToken", token);
+    res.json(rows[0]);
+    console.log(rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+};
+
 export const logoutUser = async (req, res) => {
   try {
     res.clearCookie("accessToken");
