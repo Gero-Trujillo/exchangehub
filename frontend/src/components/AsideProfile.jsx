@@ -3,10 +3,9 @@ import { GoHistory } from "react-icons/go";
 import { MdDisabledVisible } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
 
 function AsideProfile() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -64,8 +63,18 @@ function AsideProfile() {
           </ul>
         </div>
 
-        <button className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-emerald-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:before:bg-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600">
-          <Link to="/login" className="flex items-center gap-4"><span><RiLogoutCircleLine/></span>Cerrar sesion</Link>
+        <button
+          className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-emerald-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:before:bg-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600"
+          onClick={() => {
+            logout();
+          }}
+        >
+          <div className="flex items-center gap-4 w-full">
+            <span>
+              <RiLogoutCircleLine />
+            </span>
+            Cerrar sesion
+          </div>
         </button>
       </aside>
     </>

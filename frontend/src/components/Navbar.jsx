@@ -46,12 +46,14 @@ function Navbar() {
   return (
     <>
       <nav className="w-[100%] flex flex-col md:flex-row justify-evenly items-center p-4 sticky top-0 border-b-2 z-20 bg-neutral-100 dark:bg-zinc-900 py-6">
-        <div className="flex items-center">
-          <img src={logo} alt="logo" className="w-24" />
-          <h1 className="text-4xl font-bold text-emerald-600">
-            Exchange<span className="text-emerald-300">Hub</span>{" "}
-          </h1>
-        </div>
+        <a href="/">
+          <div className="flex items-center">
+            <img src={logo} alt="logo" className="w-24" />
+            <h1 className="text-4xl font-bold text-emerald-600">
+              Exchange<span className="text-emerald-300">Hub</span>{" "}
+            </h1>
+          </div>
+        </a>
 
         {isAuthenticated ? (
           <div className="bg-emerald-600 dark:bg-emerald-300 max-h-[4.4rem] px-6  md:rounded-xl w-full md:max-w-fit flex gap-8 items-center fixed bottom-0 md:relative">
@@ -111,9 +113,7 @@ function Navbar() {
         ) : (
           <div className="flex gap-4">
             <button className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-emerald-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:before:bg-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600">
-              <Link to="/login">
-                Iniciar sesión
-              </Link>
+              <Link to="/login">Iniciar sesión</Link>
             </button>
 
             <div className="block content-center">

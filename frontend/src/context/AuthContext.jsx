@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { loginUser, registerUser, verifyToken } from "../api/auth.js";
 import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -37,6 +38,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+      Cookies.remove("accessToken");
+      setUser(null);
+      setIsAuthenticated(false);
+  };
+
   useEffect(() => {
     async function checkLogin() {
       const cookies = Cookies.get();
@@ -69,7 +76,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ singin, singup, user, isAuthenticated, loading, error }}
+      value={{ singin, singup, logout, user, isAuthenticated, loading, error }}
     >
       {children}
     </AuthContext.Provider>
