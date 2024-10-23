@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/users.routes.js";
 import express from "express";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(
 );
 
 app.use(authRoutes)
+app.use(userRoutes)
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
