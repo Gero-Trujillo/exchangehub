@@ -42,7 +42,6 @@ export const registerUser = async (req, res) => {
     const token = await createAccessToken({ idUser: rows.insertId });
     res.cookie("accessToken", token);
     res.json(rows[0]);
-    console.log(rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
