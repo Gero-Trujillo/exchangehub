@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
-  const { singin, isAuthenticated, error } = useAuth();
+  const { singin, isAuthenticated, error, singup } = useAuth();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   useEffect(() => {
@@ -30,7 +30,11 @@ function LoginRegister() {
                 <label for="chk" aria-hidden="true">
                   Iniciar sesion
                 </label>
-                {error && <p className="w-full bg-yellow-400 py-2 rounded-md">{error}</p>}
+                {error && (
+                  <p className="w-full bg-yellow-400 py-2 rounded-md">
+                    {error}
+                  </p>
+                )}
                 <input
                   class="input"
                   type="email"
@@ -48,8 +52,17 @@ function LoginRegister() {
             </div>
 
             <div class="register dark:bg-zinc-800">
-              <form class="form">
-                <label className="text-emerald-600 dark:text-emerald-300" for="chk" aria-hidden="true">
+              <form
+                class="form"
+                onSubmit={handleSubmit((values) => {
+                  singup(values);
+                })}
+              >
+                <label
+                  className="text-emerald-600 dark:text-emerald-300"
+                  for="chk"
+                  aria-hidden="true"
+                >
                   Registrarse
                 </label>
                 <input
@@ -59,6 +72,7 @@ function LoginRegister() {
                   type="text"
                   class="input"
                   required=""
+                  {...register("name", { required: true })}
                 />
                 <input
                   placeholder="Last Name"
@@ -67,6 +81,7 @@ function LoginRegister() {
                   type="text"
                   class="input"
                   required=""
+                  {...register("lastname", { required: true })}
                 />
                 <input
                   placeholder="Email"
@@ -75,6 +90,7 @@ function LoginRegister() {
                   type="email"
                   class="input"
                   required=""
+                  {...register("email", { required: true })}
                 />
                 <input
                   placeholder="Address"
@@ -83,6 +99,7 @@ function LoginRegister() {
                   type="text"
                   class="input"
                   required=""
+                  {...register("address", { required: true })}
                 />
                 <input
                   placeholder="Cellphone"
@@ -91,6 +108,7 @@ function LoginRegister() {
                   type="tel"
                   class="input"
                   required=""
+                  {...register("cellphone", { required: true })}
                 />
                 <input
                   placeholder="Password"
@@ -99,8 +117,9 @@ function LoginRegister() {
                   type="password"
                   class="input"
                   required=""
+                  {...register("password", { required: true })}
                 />
-                <button>Register</button>
+                <button type="submit">Register</button>
               </form>
             </div>
           </div>

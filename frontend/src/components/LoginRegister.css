@@ -71,8 +71,9 @@
     transform: translateY(32%);
     transition: .8s ease-in-out;
     margin-top: 10px;
+
   }
-  
+
   .register label {
     transform: scale(.6);
     margin-top:-10px;
