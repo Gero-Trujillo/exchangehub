@@ -3,9 +3,9 @@ import { GoHistory } from "react-icons/go";
 import { MdDisabledVisible } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function AsideProfile() {
-
   const { user } = useAuth();
 
   return (
@@ -15,7 +15,10 @@ function AsideProfile() {
           <div
             className="w-28 h-28 mt-8 rounded-full border-4 border-neutral-100 dark:border-zinc-900 z-10 group-hover:scale-150 group-hover:-translate-x-24 group-hover:-translate-y-20 transition-all duration-500"
             style={{
-              backgroundImage: `url(${user.profileImageUrl || "https://objetivoligar.com/wp-content/uploads/2017/03/blank-profile-picture-973460_1280.jpg"})`,
+              backgroundImage: `url(${
+                user.profileImageUrl ||
+                "https://objetivoligar.com/wp-content/uploads/2017/03/blank-profile-picture-973460_1280.jpg"
+              })`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -61,13 +64,8 @@ function AsideProfile() {
           </ul>
         </div>
 
-        <button className="rounded-lg relative w-36 h-10 cursor-pointer flex items-center border border-emerald-600 bg-emerald-600 group hover:bg-emerald-600 active:bg-emerald-600 active:border-emerald-600">
-          <span className="text-white font-semibold ml-8 transform group-hover:translate-x-20 transition-all duration-300">
-            Cerrar
-          </span>
-          <span className="absolute right-0 h-full w-10 rounded-lg bg-emerald-600 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300 text-white">
-            <RiLogoutCircleLine />
-          </span>
+        <button className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-emerald-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:before:bg-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600">
+          <Link to="/login" className="flex items-center gap-4"><span><RiLogoutCircleLine/></span>Cerrar sesion</Link>
         </button>
       </aside>
     </>
