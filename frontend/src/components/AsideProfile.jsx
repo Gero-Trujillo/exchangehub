@@ -15,7 +15,7 @@ function AsideProfile() {
           <div
             className="w-28 h-28 mt-8 rounded-full border-4 border-neutral-100 dark:border-zinc-900 z-10 group-hover:scale-150 group-hover:-translate-x-24 group-hover:-translate-y-20 transition-all duration-500"
             style={{
-              backgroundImage: `url("${user.profileImageUrl}")`,
+              backgroundImage: `url(${user.profileImageUrl || "https://objetivoligar.com/wp-content/uploads/2017/03/blank-profile-picture-973460_1280.jpg"})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

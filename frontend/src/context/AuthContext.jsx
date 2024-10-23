@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
         if (!res.data) {
           setIsAuthenticated(false);
           setLoading(false);
+          setUser(null);
           return;
         }
 

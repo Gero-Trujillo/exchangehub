@@ -6,7 +6,27 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
   const { singin, isAuthenticated, error, singup } = useAuth();
-  const { register, handleSubmit } = useForm();
+  // useForm para el formulario de inicio de sesión
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: loginErrors },
+  } = useForm();
+
+  // useForm para el formulario de registro
+  const {
+    register: registerSignup,
+    handleSubmit: handleSubmitSignup,
+    formState: { errors: signupErrors },
+  } = useForm();
+
+  const onSubmitLogin = (values) => {
+    singin(values);
+  };
+
+  const onSubmitSignup = (values) => {
+    singup(values);
+  };
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
@@ -23,9 +43,7 @@ function LoginRegister() {
             <div class="login">
               <form
                 class="form"
-                onSubmit={handleSubmit((values) => {
-                  singin(values);
-                })}
+                onSubmit={handleSubmitLogin(onSubmitLogin)}
               >
                 <label for="chk" aria-hidden="true">
                   Iniciar sesion
@@ -39,14 +57,16 @@ function LoginRegister() {
                   class="input"
                   type="email"
                   placeholder="Email"
-                  {...register("email", { required: true })}
+                  {...registerLogin("email", { required: true })}
                 />
+                {loginErrors.username && <span>Username is required</span>}
                 <input
                   class="input"
                   type="password"
                   placeholder="Password"
-                  {...register("password", { required: true })}
+                  {...registerLogin("password", { required: true })}
                 />
+                {loginErrors.password && <span>Password is required</span>}
                 <button type="submit">Log in</button>
               </form>
             </div>
@@ -54,9 +74,7 @@ function LoginRegister() {
             <div class="register dark:bg-zinc-800">
               <form
                 class="form"
-                onSubmit={handleSubmit((values) => {
-                  singup(values);
-                })}
+                onSubmit={handleSubmitSignup(onSubmitSignup)}
               >
                 <label
                   className="text-emerald-600 dark:text-emerald-300"
@@ -72,7 +90,7 @@ function LoginRegister() {
                   type="text"
                   class="input"
                   required=""
-                  {...register("name", { required: true })}
+                  {...registerSignup("name", { required: true })}
                 />
                 <input
                   placeholder="Last Name"
@@ -81,7 +99,7 @@ function LoginRegister() {
                   type="text"
                   class="input"
                   required=""
-                  {...register("lastname", { required: true })}
+                  {...registerSignup("lastname", { required: true })}
                 />
                 <input
                   placeholder="Email"
@@ -90,7 +108,7 @@ function LoginRegister() {
                   type="email"
                   class="input"
                   required=""
-                  {...register("email", { required: true })}
+                  {...registerSignup("email", { required: true })}
                 />
                 <input
                   placeholder="Address"
@@ -99,7 +117,7 @@ function LoginRegister() {
                   type="text"
                   class="input"
                   required=""
-                  {...register("address", { required: true })}
+                  {...registerSignup("address", { required: true })}
                 />
                 <input
                   placeholder="Cellphone"
@@ -108,7 +126,7 @@ function LoginRegister() {
                   type="tel"
                   class="input"
                   required=""
-                  {...register("cellphone", { required: true })}
+                  {...registerSignup("cellphone", { required: true })}
                 />
                 <input
                   placeholder="Password"
@@ -117,7 +135,7 @@ function LoginRegister() {
                   type="password"
                   class="input"
                   required=""
-                  {...register("password", { required: true })}
+                  {...registerSignup("password", { required: true })}
                 />
                 <button type="submit">Register</button>
               </form>
