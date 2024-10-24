@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./ProductCard.css";
 import { RxCrossCircled } from "react-icons/rx";
-function ProductCard() {
+function ProductCard(props) {
+  const {name, user, description, image} = props;
   const [product, setProduct] = useState(false);
   const handleProduct = () => {
     setProduct(!product);
@@ -19,18 +20,13 @@ function ProductCard() {
             <div className="flex flex-col gap-2 md:flex-col-reverse">
               <div className="flex flex-row justify-between w-full">
                 <div className="flex flex-row justify-between w-full">
-                  <h3 className="text-xl font-bold text-emerald-600">PlayStation 5</h3>
-                  <p className="text-xs text-emerald-300">@gerot511</p>
+                  <h3 className="text-xl font-bold text-emerald-600">{name}</h3>
+                  <p className="text-xs text-emerald-300">{user}</p>
                 </div>
               </div>
               <div className="flex flex-row justify-between w-full gap-2">
                 <p className="text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Perspiciatis et perferendis similique omnis ducimus
-                  repellendus possimus, dignissimos illum quasi harum ea nobis
-                  eum, eligendi pariatur deserunt ad beatae mollitia ut, porro
-                  quae dolorem aut distinctio minus? Temporibus cumque est
-                  accusamus repellat dolor.
+                  {description}
                 </p>
 
                 <div className="text-xs">
@@ -82,7 +78,7 @@ function ProductCard() {
 
               <div className="text-sm">
                 <img
-                  src="https://www.comprarlotes.com/uploads/users/user2460/gallery/4124_2.png"
+                  src={image}
                   className="w-full h-56 rounded-xl"
                 />
               </div>
@@ -98,7 +94,7 @@ function ProductCard() {
         <div
           className="duration-500 h-48"
           style={{
-            backgroundImage: `url("https://www.comprarlotes.com/uploads/users/user2460/gallery/4124_2.png")`,
+            backgroundImage: `url(${image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -107,9 +103,9 @@ function ProductCard() {
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
               <span className="text-xl text-emerald-600 font-bold">
-                PlayStation 5
+                {name}
               </span>
-              <p className="text-xs text-gray-400">@Gerot511</p>
+              <p className="text-xs text-gray-400">{user}</p>
             </div>
           </div>
           <button
