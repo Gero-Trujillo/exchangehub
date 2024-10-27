@@ -1,6 +1,8 @@
 import "./EditProfile.css";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 function EditProfile() {
+    const { user } = useAuth();
   return (
     <>
 
@@ -15,6 +17,7 @@ function EditProfile() {
                 type="text"
                 className="input"
                 required=""
+                value={user.name}
               />
               <input
                 placeholder="Last Name"
@@ -23,6 +26,7 @@ function EditProfile() {
                 type="text"
                 className="input"
                 required=""
+                value={user.lastname}
               />
               <input
                 placeholder="Email"
@@ -31,6 +35,7 @@ function EditProfile() {
                 type="email"
                 className="input"
                 required=""
+                value={user.email}
               />
               <input
                 placeholder="Address"
@@ -39,6 +44,7 @@ function EditProfile() {
                 type="text"
                 className="input"
                 required=""
+                value={user.address}
               />
               <input
                 placeholder="Cellphone"
@@ -47,6 +53,7 @@ function EditProfile() {
                 type="tel"
                 className="input"
                 required=""
+                value={user.cellphone}
               />
               <input
                 placeholder="Password"
@@ -55,6 +62,7 @@ function EditProfile() {
                 type="password"
                 className="input"
                 required=""
+                value={user.password}
               />
               <button>Save Changes</button>
             </form>
