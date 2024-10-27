@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from 'react'
-import { getArticles, getArticlesByUserId } from '../api/articles.js'
+import { createArticle, createArticleImage, getArticles, getArticlesByUserId } from '../api/articles.js'
 
 const ArticleContext = createContext()
 
@@ -27,6 +27,22 @@ export const ArticleProvider = ({children}) => {
         try {
             const res = await getArticlesByUserId(idUser)
             setArticles(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const createArticles = async (data) => {
+        try {
+            const res = await createArticle(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const createArticlesImage = async (data) => {
+        try {
+            const res = await createArticleImage(data)
         } catch (error) {
             console.log(error)
         }
