@@ -51,16 +51,11 @@ export const getArticleByCategory = async (req, res) => {
 export const createArticle = async (req, res) => {
   try {
     const { name, description, category, idOwner } = req.body;
-    const response = await pool.query(
+    const [rows] = await pool.query(
       "INSERT INTO articles (name, description, category, idOwner) VALUES (?, ?, ?, ?)",
       [name, description, category, idOwner]
     );
-    res.json({
-      message: "Article created successfully",
-      body: {
-        article: { name, description, category, idOwner },
-      },
-    });
+    res.json(rows.insertId);
   } catch (error) {
     console.log(error);
   }
@@ -111,6 +106,24 @@ export const getArticleBySearch = async (req, res) => {
       ["%" + search + "%"]
     );
     res.json(response.rows);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createArticleImage = async (req, res) => {
+  try {
+    const { idArticle, url } = req.body;
+    const response = await pool.query(
+      "INSERT INTO articlesImages (idArticle, url) VALUES (?, ?)",
+      [idArticle, url]
+    );
+    res.json({
+      message: "Image created successfully",
+      body: {
+        image: { idArticle, url },
+      },
+    });
   } catch (error) {
     console.log(error);
   }
