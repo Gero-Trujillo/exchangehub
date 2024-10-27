@@ -128,3 +128,18 @@ export const createArticleImage = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getArticleImages = async (req, res) => {
+  try {
+    const { idArticle } = req.params;
+    const [rows] = await pool.query(
+      "SELECT * FROM articlesimages WHERE idArticle = ?",
+      [idArticle]
+    );
+    console.log(idArticle)
+    console.log(rows)
+    res.json(rows);
+  } catch (error) {
+    console.log(error);
+  }
+};
