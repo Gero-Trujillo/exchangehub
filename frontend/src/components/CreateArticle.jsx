@@ -2,12 +2,12 @@ import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { RxCrossCircled } from "react-icons/rx";
 import { useArticle } from "../context/ArticleContext";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 
 function CreateArticle(props) {
   const { user } = useAuth();
-  const { createArticles, createArticlesImage } = useArticle();
+  const { createArticles, createArticlesImage, insertId } = useArticle();
   const {
     register,
     handleSubmit,
@@ -16,7 +16,7 @@ function CreateArticle(props) {
 
   const { showAddArt } = props;
   const [error, setError] = useState(null);
-  const [images, setImages] = useState([]);
+  const [uploadedImages, setUploadedImages] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
     setError(null);
     console.log(acceptedFiles);
@@ -25,21 +25,12 @@ function CreateArticle(props) {
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({ onDrop });
 
-  const onSubmit = handleSubmit(async (data) => {
-    if (!error) {
-      const fullData = { ...data, idOwner: user.idUser };
-      createArticles(fullData);
-    }
-    console.log("si ejecuta");
-  });
+  const onSubmit = (data) => {
+    handleSubmitArticle(data)
+  };
 
-  const handleSubmitArticle = async () => {
-    if (acceptedFiles.length < 1) {
-      setError("Ningun archivo seleccionado");
-      return;
-    }
-
-    const handleFiles = acceptedFiles.map(async (file) => {
+  const handleFiles = async () => {
+    const uploadPromises = acceptedFiles.map(async (file) => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "iy7b0j5h");
@@ -54,14 +45,34 @@ function CreateArticle(props) {
           }
         );
         const data = await res.json();
-        setImages((prev) => [...prev, data.secure_url]);
+        return data.secure_url;
       } catch (error) {
         console.error("Error uploading image:", error);
+        return null;
       }
-      images.map((image) => {
+    });
+
+    const imageUrls = await Promise.all(uploadPromises);
+    setUploadedImages(imageUrls.filter((url) => url !== null));
+    return imageUrls.filter((url) => url !== null);
+  };
+
+  const handleSubmitArticle = async (data) => {
+    if (acceptedFiles.length < 1) {
+      setError("Ningun archivo seleccionado");
+      return;
+    }
+    try {
+      const fullData = { ...data, idOwner: user.idUser };
+      const insertId = await createArticles(fullData);
+      const imageUrls = await handleFiles();
+      imageUrls.map((image) => {
+        console.log(insertId);
         createArticlesImage({ idArticle: insertId, url: image });
       });
-    });
+    } catch (error) {
+      console.log(error);
+    }
     window.location.reload();
   };
 
@@ -83,7 +94,7 @@ function CreateArticle(props) {
           </h1>
           <form
             className="bg-neutral-200 rounded-xl p-4 flex flex-col gap-2"
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <input
               className="rounded-md p-2 w-full outline-none"
@@ -156,7 +167,6 @@ function CreateArticle(props) {
             <button
               className="w-full outline-none rounded-md bg-emerald-600 p-2 text-white hover:bg-emerald-700 dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black"
               type="submit"
-              onClick={handleSubmitArticle}
             >
               Publicar
             </button>

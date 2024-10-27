@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ProductCard.css";
 import { RxCrossCircled } from "react-icons/rx";
+import { useArticle } from "../context/ArticleContext";
 function ProductCard(props) {
-  const {name, user, description, image} = props;
+  const { getArticlesImages, articleImgs } = useArticle();
+  const { name, user, description, image, idArticle } = props;
   const [product, setProduct] = useState(false);
+
+  useEffect(() => {
+    getArticlesImages(idArticle);
+    console.log(articleImgs)
+  }, []);
+
   const handleProduct = () => {
     setProduct(!product);
   };
@@ -25,9 +33,7 @@ function ProductCard(props) {
                 </div>
               </div>
               <div className="flex flex-row justify-between w-full gap-2">
-                <p className="text-xs">
-                  {description}
-                </p>
+                <p className="text-xs">{description}</p>
 
                 <div className="text-xs">
                   <div className="flex flex-row">
@@ -77,10 +83,7 @@ function ProductCard(props) {
               </div>
 
               <div className="text-sm">
-                <img
-                  src={image}
-                  className="w-full h-56 rounded-xl"
-                />
+                <img src={image} className="w-full h-56 rounded-xl" />
               </div>
             </div>
 
@@ -102,9 +105,7 @@ function ProductCard(props) {
         <div className="flex flex-col gap-4 p-3">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
-              <span className="text-xl text-emerald-600 font-bold">
-                {name}
-              </span>
+              <span className="text-xl text-emerald-600 font-bold">{name}</span>
               <p className="text-xs text-gray-400">{user}</p>
             </div>
           </div>

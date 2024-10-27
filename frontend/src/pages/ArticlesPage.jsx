@@ -4,7 +4,7 @@ import ProductCard from "../components/ProductCard";
 import { useEffect } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
 function ArticlesPage() {
-  const {getAllArticles, articles} = useArticle();
+  const {getAllArticles, articles, getArticlesImages, articleImgs} = useArticle();
   useEffect(() => {
     getAllArticles();
   }, []);
@@ -20,10 +20,10 @@ function ArticlesPage() {
           {articles.map((article) => (
             <ProductCard
               key={article.idArticle}
+              idArticle={article.idArticle}
               name={article.name}
               user={article.idOwner}
               description={article.description}
-              image={article.imageUrl}
             />
           ))}
         </div>

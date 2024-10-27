@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   createArticle,
   createArticleImage,
+  getArticleImages,
   getArticles,
   getArticlesByUserId,
 } from "../api/articles.js";
@@ -18,7 +19,8 @@ export const useArticle = () => {
 
 export const ArticleProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
-  const [insertId, setInsertId] = useState(null);
+  const [articleImgs, setArticleImgs] = useState([]);
+  const [insertId, setInsertId] = useState();
 
   const getAllArticles = async () => {
     try {
@@ -41,8 +43,7 @@ export const ArticleProvider = ({ children }) => {
   const createArticles = async (data) => {
     try {
       const res = await createArticle(data);
-      console.log(res.data)
-      setInsertId(res.data)
+      return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -51,21 +52,33 @@ export const ArticleProvider = ({ children }) => {
   const createArticlesImage = async (data) => {
     try {
       const res = await createArticleImage(data);
-      console.log(res);
+      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getArticlesImages = async (idArticle) => {
+    try {
+      const res = await getArticleImages(idArticle);
+      console.log(res)
+      setArticleImgs(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <ArticleContext.Provider
       value={{
         articles,
         insertId,
+        articleImgs,
         getAllArticles,
         getArticlesOfUser,
         createArticles,
         createArticlesImage,
+        getArticlesImages
       }}
     >
       {children}
