@@ -1,21 +1,12 @@
 import React from "react";
 import OptionsArticles from "../components/OptionsArticles";
 import ProductCard from "../components/ProductCard";
-import { useState, useEffect } from "react";
-import { getArticles } from "../api/articles.js";
+import { useEffect } from "react";
+import { useArticle } from "../context/ArticleContext.jsx";
 function ArticlesPage() {
-  const [articles, setArticles] = useState([])
+  const {getAllArticles, articles} = useArticle();
   useEffect(() => {
-    async function fetchArticles() {
-      try {
-        const res = await getArticles();
-        console.log(res);
-        setArticles(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchArticles();
+    getAllArticles();
   }, []);
 
   return (

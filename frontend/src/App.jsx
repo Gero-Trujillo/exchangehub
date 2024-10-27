@@ -9,28 +9,31 @@ import ArticlesPage from "./pages/ArticlesPage";
 import { AuthProvider } from "./context/AuthContext";
 import LoginRegister from "./components/LoginRegister";
 import ProtectedRoute from "./ProtectedRoute";
+import { ArticleProvider } from "./context/ArticleContext";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/Inicio" element={<HomePage />} />
-            <Route path="/Productos" element={<ArticlesPage />} />
-            <Route path="/login" element={<LoginRegister />} />
+        <ArticleProvider>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/Inicio" element={<HomePage />} />
+              <Route path="/Productos" element={<ArticlesPage />} />
+              <Route path="/login" element={<LoginRegister />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="/Mensajes" element />
-              <Route path="/Perfil" element={<ProfilePage />} />
-              <Route path="/Settings" element />
-            </Route>
-          </Routes>
-          <Footer />
-        </BrowserRouter>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/Mensajes" element />
+                <Route path="/Perfil" element={<ProfilePage />} />
+                <Route path="/Settings" element />
+              </Route>
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </ArticleProvider>
       </AuthProvider>
     </>
   );
