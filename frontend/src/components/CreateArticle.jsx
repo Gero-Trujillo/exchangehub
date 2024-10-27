@@ -1,21 +1,39 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { RxCrossCircled } from "react-icons/rx";
+import { useArticle } from "../context/ArticleContext";
+import { set, useForm } from "react-hook-form";
+import { useAuth } from "../context/AuthContext";
 
 function CreateArticle(props) {
+  const { user } = useAuth();
+  const { createArticles, createArticlesImage } = useArticle();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const { showAddArt } = props;
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
+    setError(null);
     console.log(acceptedFiles);
     // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({ onDrop });
 
-  const handleSubmitArticle = async (e) => {
-    e.preventDefault();
+  const onSubmit = handleSubmit(async (data) => {
+    if (!error) {
+      const fullData = { ...data, idOwner: user.idUser };
+      createArticles(fullData);
+    }
+    console.log("si ejecuta");
+  });
 
+  const handleSubmitArticle = async () => {
     if (acceptedFiles.length < 1) {
       setError("Ningun archivo seleccionado");
       return;
@@ -40,13 +58,16 @@ function CreateArticle(props) {
       } catch (error) {
         console.error("Error uploading image:", error);
       }
-      console.log(images);
+      images.map((image) => {
+        createArticlesImage({ idArticle: insertId, url: image });
+      });
     });
+    window.location.reload();
   };
 
   const handleClose = () => {
     showAddArt(false);
-  }
+  };
 
   return (
     <>
@@ -60,18 +81,34 @@ function CreateArticle(props) {
           <h1 className="text-center text-2xl font-semibold text-emerald-600">
             Publicar articulo
           </h1>
-          <form className="bg-neutral-200 rounded-xl p-4 flex flex-col gap-2">
+          <form
+            className="bg-neutral-200 rounded-xl p-4 flex flex-col gap-2"
+            onSubmit={onSubmit}
+          >
             <input
               className="rounded-md p-2 w-full outline-none"
               type="text"
               placeholder="Nombre del producto"
+              {...register("name", { required: true })}
             />
+            {errors.name && (
+              <p className="w-full text-yellow-500">El nombre es obligatorio</p>
+            )}
             <textarea
               className="rounded-md p-2 w-full h-28 outline-none resize-none"
               type="text"
               placeholder="Descripcion del producto. *Especificar que desea obtener a cambio*"
+              {...register("description", { required: true })}
             />
-            <select className="p-2 rounded-md outline-none">
+            {errors.description && (
+              <p className="w-full text-yellow-500">
+                La descripcion es obligatoria
+              </p>
+            )}
+            <select
+              className="p-2 rounded-md outline-none"
+              {...register("category", { required: true })}
+            >
               <option selected disabled>
                 Categoria
               </option>
@@ -80,6 +117,11 @@ function CreateArticle(props) {
               <option value="herramientas">Herramientas</option>
               <option value="accesorios">Accesorios</option>
             </select>
+            {errors.category && (
+              <p className="w-full text-yellow-500">
+                La categoria es obligatoria
+              </p>
+            )}
 
             <div className="bg-neutral-100 p-2 rounded-md flex flex-col gap-2 cursor-cell">
               <div {...getRootProps()}>
@@ -111,13 +153,14 @@ function CreateArticle(props) {
                 </aside>
               )}
             </div>
+            <button
+              className="w-full outline-none rounded-md bg-emerald-600 p-2 text-white hover:bg-emerald-700 dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black"
+              type="submit"
+              onClick={handleSubmitArticle}
+            >
+              Publicar
+            </button>
           </form>
-          <button
-            className="w-full outline-none rounded-md bg-emerald-600 p-2 text-white hover:bg-emerald-700 dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black"
-            onClick={handleSubmitArticle}
-          >
-            Publicar
-          </button>
         </div>
       </section>
     </>

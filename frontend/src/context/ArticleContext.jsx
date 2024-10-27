@@ -1,58 +1,76 @@
-import {createContext, useContext, useEffect, useState} from 'react'
-import { createArticle, createArticleImage, getArticles, getArticlesByUserId } from '../api/articles.js'
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createArticle,
+  createArticleImage,
+  getArticles,
+  getArticlesByUserId,
+} from "../api/articles.js";
 
-const ArticleContext = createContext()
+const ArticleContext = createContext();
 
 export const useArticle = () => {
-    const context = useContext(ArticleContext)
-    if (!context) {
-        throw new Error('useArticle must be used within a ArticleProvider')
+  const context = useContext(ArticleContext);
+  if (!context) {
+    throw new Error("useArticle must be used within a ArticleProvider");
+  }
+  return context;
+};
+
+export const ArticleProvider = ({ children }) => {
+  const [articles, setArticles] = useState([]);
+  const [insertId, setInsertId] = useState(null);
+
+  const getAllArticles = async () => {
+    try {
+      const res = await getArticles();
+      setArticles(res.data);
+    } catch (error) {
+      console.log(error);
     }
-    return context
-}
+  };
 
-export const ArticleProvider = ({children}) => {
-    const [articles, setArticles] = useState([])
-
-    const getAllArticles = async () => {
-        try {
-            const res = await getArticles()
-            setArticles(res.data)
-        } catch (error) {
-            console.log(error)
-        }
+  const getArticlesOfUser = async (idUser) => {
+    try {
+      const res = await getArticlesByUserId(idUser);
+      setArticles(res.data);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const getArticlesOfUser = async (idUser) => {
-        try {
-            const res = await getArticlesByUserId(idUser)
-            setArticles(res.data)
-        } catch (error) {
-            console.log(error)
-        }
+  const createArticles = async (data) => {
+    try {
+      const res = await createArticle(data);
+      console.log(res.data)
+      setInsertId(res.data)
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const createArticles = async (data) => {
-        try {
-            const res = await createArticle(data)
-        } catch (error) {
-            console.log(error)
-        }
+  const createArticlesImage = async (data) => {
+    try {
+      const res = await createArticleImage(data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const createArticlesImage = async (data) => {
-        try {
-            const res = await createArticleImage(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+  return (
+    <ArticleContext.Provider
+      value={{
+        articles,
+        insertId,
+        getAllArticles,
+        getArticlesOfUser,
+        createArticles,
+        createArticlesImage,
+      }}
+    >
+      {children}
+    </ArticleContext.Provider>
+  );
+};
 
-    return (
-        <ArticleContext.Provider value={{articles, getAllArticles, getArticlesOfUser}}>
-            {children}
-        </ArticleContext.Provider>
-    )
-}
-
-export default ArticleContext
+export default ArticleContext;
