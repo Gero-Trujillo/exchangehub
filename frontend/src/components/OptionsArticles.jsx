@@ -1,7 +1,15 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import { useArticle } from "../context/ArticleContext";
 
 function OptionsArticles() {
+  const {searchArticles} = useArticle()
+  const [onSearch, setOnSearch] = useState('');
+
+  useEffect(() => {
+    searchArticles(onSearch)
+  }, [onSearch]);
+
   return (
     <>
       <section className="w-full flex flex-col items-center gap-4 md:flex-row dark:flex-col-reverse dark:md:flex-row-reverse md:justify-between lg:px-12 xl:px-20 2xl:px-36">
@@ -22,6 +30,8 @@ function OptionsArticles() {
             <input
               type="text"
               class="outline-none text-[20px] bg-transparent w-full font-normal px-4"
+              onChange={e => setOnSearch(e.target.value)}
+              value={onSearch}
             />
           </div>
 
@@ -42,9 +52,7 @@ function OptionsArticles() {
         </div>
 
         <div>
-          <span className="dark:text-white">
-            Page 1 de 1
-          </span>
+          <span className="dark:text-white">Page 1 de 1</span>
         </div>
       </section>
     </>

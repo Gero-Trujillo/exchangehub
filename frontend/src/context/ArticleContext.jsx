@@ -4,6 +4,7 @@ import {
   createArticleImage,
   getArticleImages,
   getArticles,
+  getArticlesBySearch,
   getArticlesByUserId,
 } from "../api/articles.js";
 
@@ -19,6 +20,7 @@ export const useArticle = () => {
 
 export const ArticleProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
+  const [articlesFound, setArticlesFound] = useState([]);
   const [articleImgs, setArticleImgs] = useState([]);
   const [insertId, setInsertId] = useState();
 
@@ -65,7 +67,17 @@ export const ArticleProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const searchArticles = async (search) => {
+    try {
+      const res = await getArticlesBySearch(search);
+      console.log(res);
+      setArticlesFound(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <ArticleContext.Provider
@@ -73,11 +85,13 @@ export const ArticleProvider = ({ children }) => {
         articles,
         insertId,
         articleImgs,
+        articlesFound,
         getAllArticles,
         getArticlesOfUser,
         createArticles,
         createArticlesImage,
-        getArticlesImages
+        getArticlesImages,
+        searchArticles,
       }}
     >
       {children}

@@ -4,8 +4,13 @@ import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
 function ArticlesPage() {
-  const { getAllArticles, articles, getArticlesImages, articleImgs } =
-    useArticle();
+  const {
+    getAllArticles,
+    articles,
+    getArticlesImages,
+    articleImgs,
+    articlesFound,
+  } = useArticle();
 
   const [articlesImages, setArticlesImages] = useState([]);
 
@@ -22,7 +27,7 @@ function ArticlesPage() {
           const articleImages = await getArticlesImages(article.idArticle);
           images[article.idArticle] = articleImages;
         }
-       
+
         setArticlesImages(images);
       } catch (error) {
         console.error("Error fetching article images:", error);
@@ -42,18 +47,31 @@ function ArticlesPage() {
         </h1>
         <OptionsArticles />
         <div className="w-full flex flex-wrap justify-center gap-2 md:gap-6 lg:gap-8">
-          {articles.map((article) => {
-            return (
-              <ProductCard
-                key={article.idArticle}
-                idArticle={article.idArticle}
-                name={article.name}
-                user={article.idOwner}
-                description={article.description}
-                images={articlesImages[article.idArticle]}
-              />
-            );
-          })}
+          {articlesFound
+            ? articlesFound.map((article) => {
+                return (
+                  <ProductCard
+                    key={article.idArticle}
+                    idArticle={article.idArticle}
+                    name={article.name}
+                    user={article.idOwner}
+                    description={article.description}
+                    images={articlesImages[article.idArticle]}
+                  />
+                );
+              })
+            : articles.map((article) => {
+                return (
+                  <ProductCard
+                    key={article.idArticle}
+                    idArticle={article.idArticle}
+                    name={article.name}
+                    user={article.idOwner}
+                    description={article.description}
+                    images={articlesImages[article.idArticle]}
+                  />
+                );
+              })}
         </div>
       </section>
     </>
