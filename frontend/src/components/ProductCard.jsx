@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ProductCard.css";
 import { RxCrossCircled } from "react-icons/rx";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useArticle } from "../context/ArticleContext";
 function ProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
@@ -110,15 +111,15 @@ function ProductCard(props) {
                 />
                 <button
                   onClick={handlePrevClick}
-                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white text-5xl hover:text-neutral-300 hover:scale-110"
                 >
-                  &lt;
+                  <RiArrowLeftSLine />
                 </button>
                 <button
                   onClick={handleNextClick}
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white text-5xl hover:text-neutral-300 hover:scale-110"
                 >
-                  &gt;
+                  <RiArrowRightSLine />
                 </button>
               </div>
             </div>
