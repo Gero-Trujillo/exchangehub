@@ -113,15 +113,15 @@ export const getArticleBySearch = async (req, res) => {
 
 export const createArticleImage = async (req, res) => {
   try {
-    const { idArticle, url } = req.body;
+    const { idArticle, url, is_main } = req.body;
     const response = await pool.query(
-      "INSERT INTO articlesImages (idArticle, url) VALUES (?, ?)",
-      [idArticle, url]
+      "INSERT INTO articlesImages (idArticle, url, is_main) VALUES (?, ?, ?)",
+      [idArticle, url, is_main]
     );
     res.json({
       message: "Image created successfully",
       body: {
-        image: { idArticle, url },
+        image: { idArticle, url, is_main },
       },
     });
   } catch (error) {
@@ -131,13 +131,11 @@ export const createArticleImage = async (req, res) => {
 
 export const getArticleImages = async (req, res) => {
   try {
-    const { idArticle } = req.params;
+    const { id } = req.params;
     const [rows] = await pool.query(
       "SELECT * FROM articlesimages WHERE idArticle = ?",
-      [idArticle]
+      [id]
     );
-    console.log(idArticle)
-    console.log(rows)
     res.json(rows);
   } catch (error) {
     console.log(error);
