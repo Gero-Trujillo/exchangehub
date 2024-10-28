@@ -23,11 +23,11 @@ router.get(
   authRequired,
   getArticleByCategory
 );
-router.get("/api/articles/search/:search", authRequired, getArticleBySearch);
+router.get("/api/articles/search/:search", getArticleBySearch);
 router.post("/api/articles", authRequired, createArticle);
 router.put("/api/articles/:id", authRequired, updateArticle);
 router.delete("/api/articles/:id", authRequired, deleteArticle);
 router.post("/api/articles/image", authRequired, createArticleImage);
-router.get("/api/articles/image/:id", authRequired, getArticleImages);
+router.get("/api/articles/image/:id", getArticleImages);
 
 export default router;

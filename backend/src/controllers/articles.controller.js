@@ -100,12 +100,12 @@ export const deleteArticle = async (req, res) => {
 
 export const getArticleBySearch = async (req, res) => {
   try {
-    const search = req.params.search;
-    const response = await pool.query(
+    const {search} = req.params;
+    const [rows] = await pool.query(
       "SELECT * FROM articles WHERE name LIKE ?",
       ["%" + search + "%"]
     );
-    res.json(response.rows);
+    res.json(rows);
   } catch (error) {
     console.log(error);
   }
