@@ -1,12 +1,15 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { RxCrossCircled } from "react-icons/rx";
 import { useArticle } from "../context/ArticleContext";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateArticle(props) {
   const { user } = useAuth();
+  const [mainImage, setMainImage] = useState(null);
+  const [filesWithIds, setFilesWithIds] = useState([]);
   const { createArticles, createArticlesImage, insertId } = useArticle();
   const {
     register,
@@ -25,12 +28,29 @@ function CreateArticle(props) {
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({ onDrop });
 
+    useEffect(() => {
+      const files = acceptedFiles.map(file => {
+        return { 
+          file, 
+          id: uuidv4(), 
+          preview: URL.createObjectURL(file) 
+        };
+      });
+      setFilesWithIds(files);
+      console.log(filesWithIds)
+  
+      return () => {
+        acceptedFiles.forEach(file => URL.revokeObjectURL(file.preview));
+      };
+    }, [acceptedFiles]);
+
   const onSubmit = (data) => {
-    handleSubmitArticle(data)
+    handleSubmitArticle(data);
   };
 
   const handleFiles = async () => {
-    const uploadPromises = acceptedFiles.map(async (file) => {
+    const uploadPromises = filesWithIds.map(async ({file, id}) => {
+      console.log(file)
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "iy7b0j5h");
@@ -44,8 +64,11 @@ function CreateArticle(props) {
             body: formData,
           }
         );
+        if (!res.ok) {
+          throw new Error(`Error al subir la imagen: ${res.statusText}`);
+        }
         const data = await res.json();
-        return data.secure_url;
+        return { url: data.secure_url, id: id };
       } catch (error) {
         console.error("Error uploading image:", error);
         return null;
@@ -68,7 +91,7 @@ function CreateArticle(props) {
       const imageUrls = await handleFiles();
       imageUrls.map((image) => {
         console.log(insertId);
-        createArticlesImage({ idArticle: insertId, url: image });
+        createArticlesImage({ idArticle: insertId, url: image.url, is_main: image.id === mainImage });
       });
     } catch (error) {
       console.log(error);
@@ -133,7 +156,9 @@ function CreateArticle(props) {
                 La categoria es obligatoria
               </p>
             )}
-
+            <p className="text-neutral-400">
+              *NOTA: Haz click sobre la imagen que quieres que sea la principal*
+            </p>
             <div className="bg-neutral-100 p-2 rounded-md flex flex-col gap-2 cursor-cell">
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
@@ -151,12 +176,17 @@ function CreateArticle(props) {
               ) : (
                 <aside>
                   <ul className="flex gap-2 flex-wrap">
-                    {acceptedFiles.map((file) => (
-                      <li key={file.path}>
+                    {filesWithIds.map(({file, id, preview}) => (
+                      <li key={id}>
                         <img
-                          className="w-12 h-12"
-                          src={URL.createObjectURL(file)}
+                          className={`w-12 h-12 ${
+                            mainImage === id
+                              ? "border-4 border-emerald-500"
+                              : ""
+                          }`}
+                          src={preview}
                           alt={file.path}
+                          onClick={() => setMainImage(id)}
                         />
                       </li>
                     ))}

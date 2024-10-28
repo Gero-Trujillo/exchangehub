@@ -4,13 +4,31 @@ import { RxCrossCircled } from "react-icons/rx";
 import { useArticle } from "../context/ArticleContext";
 function ProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
-  const { name, user, description, image, idArticle } = props;
+  const { name, user, description, images, idArticle } = props;
   const [product, setProduct] = useState(false);
+  const [mainImage, setMainImage] = useState(null);
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const handlePrevClick = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextClick = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   useEffect(() => {
-    getArticlesImages(idArticle);
-    console.log(articleImgs)
-  }, []);
+    if (images && images.length > 0) {
+      const mainImageFind = images.find((img) => img.is_main);
+      setMainImage(mainImageFind || images[0]);
+      const index = images.findIndex((img) => img.is_main);
+      setCurrentImageIndex(index);
+    }
+  }, [images]);
 
   const handleProduct = () => {
     setProduct(!product);
@@ -27,13 +45,15 @@ function ProductCard(props) {
             </button>
             <div className="flex flex-col gap-2 md:flex-col-reverse">
               <div className="flex flex-row justify-between w-full">
-                <div className="flex flex-row justify-between w-full">
-                  <h3 className="text-xl font-bold text-emerald-600">{name}</h3>
+                <div className="flex flex-row justify-between w-full items-center">
+                  <h3 className="text-2xl font-bold text-emerald-600">
+                    {name}
+                  </h3>
                   <p className="text-xs text-emerald-300">{user}</p>
                 </div>
               </div>
               <div className="flex flex-row justify-between w-full gap-2">
-                <p className="text-xs">{description}</p>
+                <p className="text-md">{description}</p>
 
                 <div className="text-xs">
                   <div className="flex flex-row">
@@ -82,8 +102,24 @@ function ProductCard(props) {
                 </div>
               </div>
 
-              <div className="text-sm">
-                <img src={image} className="w-full h-56 rounded-xl" />
+              <div className="relative h-96">
+                <img
+                  src={images[currentImageIndex]?.url}
+                  alt={`Imagen ${currentImageIndex + 1}`}
+                  className="w-full h-full object-cover rounded-xl"
+                />
+                <button
+                  onClick={handlePrevClick}
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                >
+                  &lt;
+                </button>
+                <button
+                  onClick={handleNextClick}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                >
+                  &gt;
+                </button>
               </div>
             </div>
 
@@ -94,14 +130,20 @@ function ProductCard(props) {
         </section>
       )}
       <div className="w-60 h-80 bg-white dark:bg-zinc-950 flex flex-col gap-1 rounded-br-3xl">
-        <div
-          className="duration-500 h-48"
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></div>
+        {images && images.length > 0 ? (
+          <div
+            className="duration-500 h-48"
+            style={{
+              backgroundImage: `url(${mainImage?.url})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-xl">
+            Cargando...
+          </div>
+        )}
         <div className="flex flex-col gap-4 p-3">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">

@@ -1,13 +1,38 @@
 import React from "react";
 import OptionsArticles from "../components/OptionsArticles";
 import ProductCard from "../components/ProductCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
 function ArticlesPage() {
-  const {getAllArticles, articles, getArticlesImages, articleImgs} = useArticle();
+  const { getAllArticles, articles, getArticlesImages, articleImgs } =
+    useArticle();
+
+  const [articlesImages, setArticlesImages] = useState([]);
+
   useEffect(() => {
     getAllArticles();
   }, []);
+
+  useEffect(() => {
+    // Función para obtener las imágenes de los artículos
+    const fetchArticlesImages = async () => {
+      try {
+        const images = {};
+        for (const article of articles) {
+          const articleImages = await getArticlesImages(article.idArticle);
+          images[article.idArticle] = articleImages;
+        }
+       
+        setArticlesImages(images);
+      } catch (error) {
+        console.error("Error fetching article images:", error);
+      }
+    };
+
+    if (articles.length > 0) {
+      fetchArticlesImages();
+    }
+  }, [articles]);
 
   return (
     <>
@@ -17,15 +42,18 @@ function ArticlesPage() {
         </h1>
         <OptionsArticles />
         <div className="w-full flex flex-wrap justify-center gap-2 md:gap-6 lg:gap-8">
-          {articles.map((article) => (
-            <ProductCard
-              key={article.idArticle}
-              idArticle={article.idArticle}
-              name={article.name}
-              user={article.idOwner}
-              description={article.description}
-            />
-          ))}
+          {articles.map((article) => {
+            return (
+              <ProductCard
+                key={article.idArticle}
+                idArticle={article.idArticle}
+                name={article.name}
+                user={article.idOwner}
+                description={article.description}
+                images={articlesImages[article.idArticle]}
+              />
+            );
+          })}
         </div>
       </section>
     </>

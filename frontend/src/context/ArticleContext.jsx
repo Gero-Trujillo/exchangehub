@@ -61,8 +61,7 @@ export const ArticleProvider = ({ children }) => {
   const getArticlesImages = async (idArticle) => {
     try {
       const res = await getArticleImages(idArticle);
-      console.log(res)
-      setArticleImgs(res);
+      return res.data;
     } catch (error) {
       console.log(error);
     }

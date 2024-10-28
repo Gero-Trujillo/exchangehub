@@ -7,13 +7,41 @@ import { useState, useEffect } from "react";
 function MyProducts() {
   const { user } = useAuth();
   const [showAddArt, setShowAddArt] = useState(false);
-  const { getArticlesOfUser, articles } = useArticle();
+  const [articlesImages, setArticlesImages] = useState([]);
+  const {
+    getAllArticles,
+    articles,
+    getArticlesImages,
+    articleImgs,
+    getArticlesOfUser,
+  } = useArticle();
 
   const handleShowAddArt = () => setShowAddArt(!showAddArt);
 
   useEffect(() => {
     getArticlesOfUser(user.idUser);
   }, []);
+
+  useEffect(() => {
+    // Función para obtener las imágenes de los artículos
+    const fetchArticlesImages = async () => {
+      try {
+        const images = {};
+        for (const article of articles) {
+          const articleImages = await getArticlesImages(article.idArticle);
+          images[article.idArticle] = articleImages;
+        }
+       
+        setArticlesImages(images);
+      } catch (error) {
+        console.error("Error fetching article images:", error);
+      }
+    };
+
+    if (articles.length > 0) {
+      fetchArticlesImages();
+    }
+  }, [articles]);
 
   return (
     <>
@@ -39,10 +67,11 @@ function MyProducts() {
           {articles.map((article) => (
             <ProductCard
               key={article.idArticle}
+              idArticle={article.idArticle}
               name={article.name}
               user={article.idOwner}
               description={article.description}
-              image={article.imageUrl}
+              images={articlesImages[article.idArticle]}
             />
           ))}
         </div>
