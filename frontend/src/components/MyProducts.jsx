@@ -47,7 +47,7 @@ function MyProducts() {
     <>
       {showAddArt && <CreateArticle showAddArt={setShowAddArt} />}
       <section className="w-full lg:w-3/4 flex flex-col bg-neutral-100 dark:bg-zinc-900 rounded-lg p-10 gap-10 flex-grow">
-        <div className="flex items-center justify-evenly">
+        <div className="flex flex-col gap-4 md:flex-row items-center justify-evenly">
           <h1 className="text-center text-4xl text-emerald-600 dark:text-emerald-300 font-semibold">
             Mis productos
           </h1>

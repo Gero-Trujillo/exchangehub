@@ -38,7 +38,7 @@ function ProductCard(props) {
       {product && (
         <section className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-[#000000dd] z-50">
           <div className="flex flex-col gap-2 dark:text-white max-w-lg w-5/6 bg-white dark:bg-zinc-900 p-5 rounded-xl mt-8 shadow-md hover:duration-150 duration-150">
-            <button className="w-full flex items-center justify-center text-4xl text-emerald-600">
+            <button className="w-full flex items-center justify-center text-4xl text-emerald-600 dark:text-emerald-300">
               <span onClick={handleProduct}>
                 <RxCrossCircled />
               </span>
@@ -46,7 +46,7 @@ function ProductCard(props) {
             <div className="flex flex-col gap-2 md:flex-col-reverse">
               <div className="flex flex-row justify-between w-full">
                 <div className="flex flex-row justify-between w-full items-center">
-                  <h3 className="text-2xl font-bold text-emerald-600">
+                  <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-300">
                     {name}
                   </h3>
                   <p className="text-xs text-emerald-300">{user}</p>
@@ -123,7 +123,7 @@ function ProductCard(props) {
               </div>
             </div>
 
-            <button className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-400 outline-none">
+            <button className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-700 outline-none dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black">
               Ofertar
             </button>
           </div>
@@ -140,7 +140,7 @@ function ProductCard(props) {
             }}
           ></div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-xl">
+          <div className="w-full h-full flex items-center justify-center bg-gray-200">
             Cargando...
           </div>
         )}
@@ -152,7 +152,7 @@ function ProductCard(props) {
             </div>
           </div>
           <button
-            className="hover:bg-emerald-500 text-gray-50 bg-emerald-600 py-2 rounded-br-xl dark:bg-emerald-300 dark:text-black dark:hover:bg-emerald-500"
+            className="hover:bg-emerald-700 text-gray-50 bg-emerald-600 py-2 rounded-br-xl dark:bg-emerald-300 dark:text-black dark:hover:bg-emerald-400"
             onClick={handleProduct}
           >
             Ver mas

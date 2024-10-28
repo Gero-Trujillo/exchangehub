@@ -106,21 +106,21 @@ function CreateArticle(props) {
   return (
     <>
       <section className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-[#000000dd] z-50">
-        <div className="w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 bg-neutral-100 p-4 rounded-xl flex flex-col gap-4">
+        <div className="w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 bg-neutral-100 p-4 rounded-xl flex flex-col gap-4 dark:bg-zinc-900">
           <div className="w-full flex justify-end">
-            <button className="text-emerald-600 text-3xl" onClick={handleClose}>
+            <button className="text-emerald-600 dark:text-emerald-300 text-3xl" onClick={handleClose}>
               <RxCrossCircled />
             </button>
           </div>
-          <h1 className="text-center text-2xl font-semibold text-emerald-600">
+          <h1 className="text-center text-2xl font-semibold text-emerald-600 dark:text-emerald-300">
             Publicar articulo
           </h1>
           <form
-            className="bg-neutral-200 rounded-xl p-4 flex flex-col gap-2"
+            className="bg-neutral-200 rounded-xl p-4 flex flex-col gap-2 dark:bg-zinc-800 dark:text-white"
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
-              className="rounded-md p-2 w-full outline-none"
+              className="rounded-md p-2 w-full outline-none dark:bg-zinc-900"
               type="text"
               placeholder="Nombre del producto"
               {...register("name", { required: true })}
@@ -129,7 +129,7 @@ function CreateArticle(props) {
               <p className="w-full text-yellow-500">El nombre es obligatorio</p>
             )}
             <textarea
-              className="rounded-md p-2 w-full h-28 outline-none resize-none"
+              className="rounded-md p-2 w-full h-28 outline-none resize-none dark:bg-zinc-900"
               type="text"
               placeholder="Descripcion del producto. *Especificar que desea obtener a cambio*"
               {...register("description", { required: true })}
@@ -140,7 +140,7 @@ function CreateArticle(props) {
               </p>
             )}
             <select
-              className="p-2 rounded-md outline-none"
+              className="p-2 rounded-md outline-none dark:bg-zinc-900"
               {...register("category", { required: true })}
             >
               <option selected disabled>
@@ -159,7 +159,7 @@ function CreateArticle(props) {
             <p className="text-neutral-400">
               *NOTA: Haz click sobre la imagen que quieres que sea la principal*
             </p>
-            <div className="bg-neutral-100 p-2 rounded-md flex flex-col gap-2 cursor-cell">
+            <div className="bg-neutral-100 p-2 rounded-md flex flex-col gap-2 cursor-cell dark:bg-zinc-700">
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 {isDragActive ? (
