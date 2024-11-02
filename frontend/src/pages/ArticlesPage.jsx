@@ -10,9 +10,12 @@ function ArticlesPage() {
     getArticlesImages,
     articleImgs,
     articlesFound,
+    articlesCategory,
   } = useArticle();
 
   const [articlesImages, setArticlesImages] = useState([]);
+
+  const [filteredArticles, setFilteredArticles] = useState([]);
 
   useEffect(() => {
     getAllArticles();
@@ -39,6 +42,18 @@ function ArticlesPage() {
     }
   }, [articles]);
 
+  useEffect(() => {
+    const combinedArticles = [
+      ...new Map(
+        [...articlesFound, ...articlesCategory].map((article) => [
+          article.idArticle,
+          article,
+        ])
+      ).values(),
+    ]
+    setFilteredArticles(combinedArticles);
+  }, [articlesFound, articlesCategory]);
+
   return (
     <>
       <section className="flex flex-col gap-4 m-2 p-2 bg-neutral-100 dark:bg-zinc-900 rounded-xl md:m-4 lg:m-6 md:p-4 lg:p-6 md:gap-8 lg:gap-12 min-h-screen">
@@ -47,8 +62,8 @@ function ArticlesPage() {
         </h1>
         <OptionsArticles />
         <div className="w-full flex flex-wrap justify-center gap-2 md:gap-6 lg:gap-8">
-          {articlesFound
-            ? articlesFound.map((article) => {
+          {filteredArticles.length > 0
+            ? filteredArticles.map((article) => {
                 return (
                   <ProductCard
                     key={article.idArticle}

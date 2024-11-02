@@ -3,12 +3,26 @@ import { CiSearch } from "react-icons/ci";
 import { useArticle } from "../context/ArticleContext";
 
 function OptionsArticles() {
-  const {searchArticles} = useArticle()
-  const [onSearch, setOnSearch] = useState('');
+  const { searchArticles, searchCategory } = useArticle();
+
+  const [todos, setTodos] = useState(true);
+  const [tecnologia, setTecnologia] = useState(false);
+  const [deportes, setDeportes] = useState(false);
+  const [ropa, setRopa] = useState(false);
+  const [hogar, setHogar] = useState(false);
+  const [herramientas, setHerramientas] = useState(false);
+  const [accesorios, setAccesorios] = useState(false);
+
+  const [onSearch, setOnSearch] = useState("");
+  const [onCategory, setOnCategory] = useState("todos");
 
   useEffect(() => {
-    searchArticles(onSearch)
+    searchArticles(onSearch);
   }, [onSearch]);
+
+  useEffect(()=>{
+    searchCategory(onCategory)
+  }, [onCategory])
 
   return (
     <>
@@ -30,23 +44,101 @@ function OptionsArticles() {
             <input
               type="text"
               class="outline-none text-[20px] bg-transparent w-full font-normal px-4"
-              onChange={e => setOnSearch(e.target.value)}
+              onChange={(e) => setOnSearch(e.target.value)}
               value={onSearch}
             />
           </div>
 
-          <div className="w-full justify-center md:w-auto flex items-center">
-            <div className="flex gap-2 items-center">
-              <select className="p-2 rounded-md text-emerald-600 dark:text-emerald-300 dark:bg-zinc-950 outline-none border-none">
-                <option className="" value="" disabled selected>
-                  Categoria
-                </option>
-                <option value="todas">Todas</option>
-                <option value="tecnologia">Tecnologia</option>
-                <option value="ropa">Ropa</option>
-                <option value="herramientas">Herramientas</option>
-                <option value="vehiculos">Vehiculos</option>
-              </select>
+          <div className="w-full justify-center md:w-auto flex items-center gap-2 transition-all duration-200 ease-in">
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${todos ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(true);
+              setTecnologia(false);
+              setDeportes(false);
+              setRopa(false);
+              setHogar(false);
+              setHerramientas(false);
+              setAccesorios(false);
+              setOnCategory("todos");
+            }}>
+              Todos
+            </div>
+
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${tecnologia ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(false);
+              setTecnologia(true);
+              setDeportes(false);
+              setRopa(false);
+              setHogar(false);
+              setHerramientas(false);
+              setAccesorios(false);
+              setOnCategory("tecnologia");
+            }}>
+              Tecnologia
+            </div>
+
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${deportes ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(false);
+              setTecnologia(false);
+              setDeportes(true);
+              setRopa(false);
+              setHogar(false);
+              setHerramientas(false);
+              setAccesorios(false);
+              setOnCategory("deportes");
+            }}>
+              Deportes
+            </div>
+
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${ropa ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(false);
+              setTecnologia(false);
+              setDeportes(false);
+              setRopa(true);
+              setHogar(false);
+              setHerramientas(false);
+              setAccesorios(false);
+              setOnCategory("ropa");
+            }}>
+              Ropa
+            </div>
+
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${hogar ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(false);
+              setTecnologia(false);
+              setDeportes(false);
+              setRopa(false);
+              setHogar(true);
+              setHerramientas(false);
+              setAccesorios(false);
+              setOnCategory("hogar");
+            }}>
+              Hogar
+            </div>
+
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${herramientas ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(false);
+              setTecnologia(false);
+              setDeportes(false);
+              setRopa(false);
+              setHogar(false);
+              setHerramientas(true);
+              setAccesorios(false);
+              setOnCategory("herramientas");
+            }}>
+              Herramientas
+            </div>
+
+            <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${accesorios ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
+              setTodos(false);
+              setTecnologia(false);
+              setDeportes(false);
+              setRopa(false);
+              setHogar(false);
+              setHerramientas(false);
+              setAccesorios(true);
+              setOnCategory("accesorios");
+            }}>
+              Accesorios
             </div>
           </div>
         </div>

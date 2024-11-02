@@ -4,6 +4,7 @@ import {
   createArticleImage,
   getArticleImages,
   getArticles,
+  getArticlesByCategory,
   getArticlesBySearch,
   getArticlesByUserId,
 } from "../api/articles.js";
@@ -21,6 +22,7 @@ export const useArticle = () => {
 export const ArticleProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
   const [articlesFound, setArticlesFound] = useState([]);
+  const [articlesCategory, setArticlesCategory] = useState([]);
   const [articleImgs, setArticleImgs] = useState([]);
   const [insertId, setInsertId] = useState();
 
@@ -79,6 +81,20 @@ export const ArticleProvider = ({ children }) => {
     }
   };
 
+  const searchCategory = async (category) => {
+    if (category === "todos") {
+      setArticlesCategory(articles);
+      return;
+    }
+    try {
+      const res = await getArticlesByCategory(category);
+      setArticlesCategory(res.data)
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ArticleContext.Provider
       value={{
@@ -86,12 +102,14 @@ export const ArticleProvider = ({ children }) => {
         insertId,
         articleImgs,
         articlesFound,
+        articlesCategory,
         getAllArticles,
         getArticlesOfUser,
         createArticles,
         createArticlesImage,
         getArticlesImages,
         searchArticles,
+        searchCategory,
       }}
     >
       {children}
