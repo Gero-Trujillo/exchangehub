@@ -37,12 +37,12 @@ export const getArticleByUserId = async (req, res) => {
 
 export const getArticleByCategory = async (req, res) => {
   try {
-    const category = req.params.category;
-    const response = await pool.query(
+    const { category } = req.params;
+    const [rows] = await pool.query(
       "SELECT * FROM articles WHERE category = ?",
       [category]
     );
-    res.json(response.rows);
+    res.json(rows);
   } catch (error) {
     console.log(error);
   }
@@ -100,7 +100,7 @@ export const deleteArticle = async (req, res) => {
 
 export const getArticleBySearch = async (req, res) => {
   try {
-    const {search} = req.params;
+    const { search } = req.params;
     const [rows] = await pool.query(
       "SELECT * FROM articles WHERE name LIKE ?",
       ["%" + search + "%"]
