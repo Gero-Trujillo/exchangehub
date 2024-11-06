@@ -11,12 +11,14 @@ import LoginRegister from "./components/LoginRegister";
 import ProtectedRoute from "./ProtectedRoute";
 import CardPremium from "./components/CardPremium";
 import EditProfile from "./components/editProfile/EditProfile";
+import { ArticleProvider } from "./context/ArticleContext";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <BrowserRouter>
+       <ArticleProvider>
+       <BrowserRouter>
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -34,6 +36,7 @@ function App() {
           </Routes>
           <Footer />
         </BrowserRouter>
+       </ArticleProvider>
       </AuthProvider>
     </>
   );

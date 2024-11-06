@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
   const { singin, isAuthenticated, error, singup } = useAuth();
-  // useForm para el formulario de inicio de sesiÃ³n
+  // useForm para el formulario de inicio de session
   const {
     register: registerLogin,
     handleSubmit: handleSubmitLogin,
