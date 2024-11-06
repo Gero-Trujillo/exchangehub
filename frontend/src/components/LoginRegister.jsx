@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginRegister() {
-  const { singin, isAuthenticated, error } = useAuth();
+  const { signin, isAuthenticated, error } = useAuth();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   useEffect(() => {
@@ -15,30 +15,30 @@ function LoginRegister() {
   }, [isAuthenticated]);
   return (
     <>
-      <section class="loginContainer dark:bg-zinc-950">
-        <div class="contenedor-login">
-          <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">
+      <section className="loginContainer dark:bg-zinc-950">
+        <div className="contenedor-login">
+          <div className="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">
             <input type="checkbox" id="chk" aria-hidden="true" />
 
-            <div class="login">
+            <div className="login">
               <form
-                class="form"
+                className="form"
                 onSubmit={handleSubmit((values) => {
-                  singin(values);
+                  signin(values);
                 })}
               >
-                <label for="chk" aria-hidden="true">
+                <label form="chk" aria-hidden="true">
                   Log in
                 </label>
                 {error && <p className="w-full bg-yellow-400 py-2 rounded-md">{error}</p>}
                 <input
-                  class="input"
+                  className="input"
                   type="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
                 <input
-                  class="input"
+                  className="input"
                   type="password"
                   placeholder="Password"
                   {...register("password", { required: true })}
@@ -47,9 +47,9 @@ function LoginRegister() {
               </form>
             </div>
 
-            <div class="register dark:bg-zinc-800">
-              <form class="form">
-                <label for="chk" aria-hidden="true">
+            <div className="register dark:bg-zinc-800">
+              <form className="form">
+                <label form="chk" aria-hidden="true">
                   Register
                 </label>
                 <input
@@ -57,7 +57,7 @@ function LoginRegister() {
                   id="name"
                   name="name"
                   type="text"
-                  class="input"
+                  className="input"
                   required=""
                 />
                 <input
@@ -65,7 +65,7 @@ function LoginRegister() {
                   id="lastname"
                   name="lastname"
                   type="text"
-                  class="input"
+                  className="input"
                   required=""
                 />
                 <input
@@ -73,7 +73,7 @@ function LoginRegister() {
                   id="register-email"
                   name="register-email"
                   type="email"
-                  class="input"
+                  className="input"
                   required=""
                 />
                 <input
@@ -81,7 +81,7 @@ function LoginRegister() {
                   id="address"
                   name="address"
                   type="text"
-                  class="input"
+                  className="input"
                   required=""
                 />
                 <input
@@ -89,7 +89,7 @@ function LoginRegister() {
                   id="cellphone"
                   name="cellphone"
                   type="tel"
-                  class="input"
+                  className="input"
                   required=""
                 />
                 <input
@@ -97,16 +97,16 @@ function LoginRegister() {
                   id="register-password"
                   name="register-password"
                   type="password"
-                  class="input"
+                  className="input"
                   required=""
                 />
                 <button>Register</button>
               </form>
             </div>
           </div>
-          <div class="infoLoginApp hidden lg:grid">
-            <div class="containerInfoLogin">
-              <div class="spinner">
+          <div className="infoLoginApp hidden lg:grid">
+            <div className="containerInfoLogin">
+              <div className="spinner">
                 <div className="dark:border-zinc-800 dark:bg-[#0000003b]"></div>
                 <div className="dark:border-zinc-800 dark:bg-[#0000003b]"></div>
                 <div className="dark:border-zinc-800 dark:bg-[#0000003b]"></div>
@@ -114,9 +114,9 @@ function LoginRegister() {
                 <div className="dark:border-zinc-800 dark:bg-[#0000003b]"></div>
                 <div className="dark:border-zinc-800 dark:bg-[#0000003b]"></div>
               </div>
-              <button class="button" data-text="Awesome">
-                <span class="actual-text">&nbsp;Exchange&nbsp;</span>
-                <span aria-hidden="true" class="hover-text dark:bg-zinc-800">
+              <button className="button" data-text="Awesome">
+                <span className="actual-text">&nbsp;Exchange&nbsp;</span>
+                <span aria-hidden="true" className="hover-text dark:bg-zinc-800">
                   &nbsp;Hub&nbsp;
                 </span>
               </button>

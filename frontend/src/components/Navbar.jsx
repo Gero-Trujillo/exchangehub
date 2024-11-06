@@ -13,6 +13,7 @@ function Navbar() {
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0" },
     { name: "Perfil", icon: "person-outline", dis: "translate-x-16" },
     { name: "Mensajes", icon: "chatbubble-outline", dis: "translate-x-32" },
+    { name: "Notificaciones", icon: "notifications-outline", dis: "translate-x-32" },
     { name: "Productos", icon: "bag-handle-outline", dis: "translate-x-48" },
     { name: "Settings", icon: "settings-outline", dis: "translate-x-64" },
   ];
