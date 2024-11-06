@@ -1,12 +1,26 @@
 import { IoBagHandleOutline } from "react-icons/io5";
 import { GoHistory } from "react-icons/go";
+import { useState } from "react";
+import ModalInhabilitar from "./ModalInhabilitar";
+import TableHistorial from "./TableHistorial";
 import { MdDisabledVisible } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
 function AsideProfile() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [historial, setHistorial] = useState(false);
+
+  const abrirModal = () => setModalVisible(true);
+  const cerrarModal = () => setModalVisible(false);
+
+  const abrirHistorial = () => setHistorial(true);
+  const cerrarHistorial = () => setHistorial(false);
+
+  
+
   return (
     <>
-      <aside className="w-full lg:w-1/4 flex flex-col  dark:text-white items-center rounded-lg gap-10 justify-between">
+      <aside className="w-full lg:w-1/4 flex flex-col dark:text-white items-center rounded-lg gap-10 justify-between">
         <div className="group before:hover:scale-95 before:hover:h-72 before:hover:w-80 before:hover:h-44 before:hover:rounded-b-2xl before:transition-all before:duration-500 before:content-[''] before:w-80 before:h-24 before:rounded-t-2xl before:bg-gradient-to-bl from-emerald-300 via-emerald-600 to-emerald-900 before:absolute before:top-0 w-full h-72 relative bg-neutral-100 dark:bg-zinc-900 flex flex-col items-center justify-center gap-2 text-center rounded-2xl overflow-hidden">
           <div
             className="w-28 h-28 mt-8 rounded-full border-4 border-neutral-100 dark:border-zinc-900 z-10 group-hover:scale-150 group-hover:-translate-x-24 group-hover:-translate-y-20 transition-all duration-500"
@@ -39,7 +53,7 @@ function AsideProfile() {
               </button>
             </li>
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
-              <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black">
+              <button onClick={abrirHistorial} className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black">
                 <span className="text-2xl">
                   <GoHistory />
                 </span>
@@ -47,7 +61,10 @@ function AsideProfile() {
               </button>
             </li>
             <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
-              <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black">
+              <button
+                onClick={abrirModal}
+                className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-emerald-600 hover:text-white hover:shadow-inner focus:bg-gradient-to-r from-emerald-400 to-emerald-600 focus:text-white text-gray-700 transition-all ease-linear items-center dark:text-white dark:hover:bg-emerald-300 dark:hover:text-black"
+              >
                 <span className="text-2xl">
                   <MdDisabledVisible />
                 </span>
@@ -66,6 +83,9 @@ function AsideProfile() {
           </span>
         </button>
       </aside>
+
+      {modalVisible && <ModalInhabilitar onClose={cerrarModal} />}
+      {historial && <TableHistorial onClose={cerrarHistorial} />}
     </>
   );
 }

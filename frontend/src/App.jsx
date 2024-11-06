@@ -10,7 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import { useState } from "react";
 
 function App() {
-  const [IsLogin, SetIsLogin] = useState(false);
+  const [IsLogin, SetIsLogin] = useState(true);
   return (
     <>
       {IsLogin ? (
