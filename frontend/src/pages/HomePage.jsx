@@ -4,6 +4,7 @@ import Button1 from "../components/Button1";
 import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
 import AdSubscription from "../components/AdSubscription.jsx";
+import StatsHome from "../components/StatsHome.jsx";
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
     useArticle();
@@ -71,6 +72,7 @@ function HomePage() {
         </div>
       </section>
       <AdSubscription/>
+      <StatsHome />
       <AdvantagesHome />
     </>
   );
