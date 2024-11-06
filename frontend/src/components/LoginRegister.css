@@ -1,7 +1,7 @@
 .loginContainer{
     display: grid;
     place-items: center;
-}
+  }
 .main {
     font-family: sans-serif;
     position: relative;
@@ -71,10 +71,10 @@
     transform: translateY(32%);
     transition: .8s ease-in-out;
     margin-top: 10px;
+
   }
-  
+
   .register label {
-    color: #6ee7b7;
     transform: scale(.6);
     margin-top:-10px;
   }

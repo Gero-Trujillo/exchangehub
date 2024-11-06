@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { loginUser, verifyToken } from "../api/auth.js";
+import { loginUser, registerUser, verifyToken } from "../api/auth.js";
 import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }) => {
         if (!res.data) {
           setIsAuthenticated(false);
           setLoading(false);
+          setUser(null);
           return;
         }
 
