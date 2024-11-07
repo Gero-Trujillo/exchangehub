@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
 import AdSubscription from "../components/AdSubscription.jsx";
 import StatsHome from "../components/StatsHome.jsx";
+import MembersGroup from "../components/MembersGroup.jsx";
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
     useArticle();
@@ -73,6 +74,7 @@ function HomePage() {
       </section>
       <AdSubscription/>
       <StatsHome />
+      <MembersGroup />
       <AdvantagesHome />
     </>
   );
