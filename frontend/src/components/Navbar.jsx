@@ -14,7 +14,7 @@ function Navbar() {
     { name: "Perfil", icon: "person-outline", dis: "translate-x-16" },
     { name: "Mensajes", icon: "chatbubble-outline", dis: "translate-x-32" },
     { name: "Productos", icon: "bag-handle-outline", dis: "translate-x-48" },
-    { name: "Settings", icon: "settings-outline", dis: "translate-x-64" },
+    { name: "Premium", icon: "rocket-outline", dis: "translate-x-64" },
   ];
   const [active, setActive] = useState(0);
   const [theme, setTheme] = useState(() => {

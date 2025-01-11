@@ -3,6 +3,9 @@ import ProductCard from "../components/ProductCard";
 import Button1 from "../components/Button1";
 import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
+import AdSuscription from "../components/AdSuscription.jsx";
+import StatsHome from "../components/StatsHome.jsx";
+import MembersGroup from "../components/MembersGroup.jsx";
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
     useArticle();
@@ -69,6 +72,9 @@ function HomePage() {
           })}
         </div>
       </section>
+      <AdSuscription />
+      <StatsHome />
+      <MembersGroup />
       <AdvantagesHome />
     </>
   );
