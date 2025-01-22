@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 import LoginRegister from "./components/LoginRegister";
 import ProtectedRoute from "./ProtectedRoute";
 import { ArticleProvider } from "./context/ArticleContext";
+import ChatHomePage from "./pages/ChatHomePage";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
               <Route path="/login" element={<LoginRegister />} />
 
               <Route element={<ProtectedRoute />}>
-                <Route path="/Mensajes" element />
+                <Route path="/Mensajes" element={<ChatHomePage />} />
                 <Route path="/Perfil" element={<ProfilePage />} />
                 <Route path="/Settings" element />
               </Route>

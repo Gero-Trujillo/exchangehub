@@ -124,9 +124,11 @@ function ProductCard(props) {
               </div>
             </div>
 
-            <button className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-700 outline-none dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black">
-              Ofertar
-            </button>
+            <a href="/mensajes">
+              <button className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-700 outline-none dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black">
+                Ofertar
+              </button>
+            </a>
           </div>
         </section>
       )}
