@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+    background-color: #fff;
+}
 
+.dark {
+  background: #000;
+}
 /* #root{
     display: grid;
     min-height: 100dvh;

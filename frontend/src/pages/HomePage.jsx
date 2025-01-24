@@ -41,7 +41,7 @@ function HomePage() {
     <>
       <section className="flex justify-center items-center min-h-full p-20 w-full max-w-full">
         <div className="flex flex-col gap-2 max-w-full items-center justify-center md:justify-start md:items-start">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold text-wrap animate-fade-left dark:text-slate-100 text-center md:text-start">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold text-wrap animate-fade-left text-zinc-900 dark:text-slate-100 text-center md:text-start">
             Productos que no utilizas?
           </h1>
           <span className="text-emerald-600 animate-pulse animate-ease-in text-5xl md:text-6xl lg:text-8xl font-bold">
