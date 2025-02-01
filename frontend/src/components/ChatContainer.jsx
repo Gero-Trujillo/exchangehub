@@ -7,15 +7,29 @@ import { useAuth } from "../context/AuthContext";
 import { formatMessageTime } from "../libs/utils";
 
 function ChatContainer() {
-  const { messages, selectedUser, getMessages, isMessagesLoading } =
-    useChatStore();
+  const {
+    messages,
+    selectedUser,
+    getMessages,
+    isMessagesLoading,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
 
   const { user } = useAuth();
   const messageEndRef = useRef(null);
 
   useEffect(() => {
     getMessages(selectedUser.idUser, user.idUser);
-  }, [selectedUser.idUser, getMessages]);
+    subscribeToMessages();
+    return () => unsubscribeFromMessages();
+  }, [
+    selectedUser.idUser,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+    user.idUser,
+  ]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -53,7 +67,8 @@ function ChatContainer() {
                     src={
                       message.idSender === user.idUser
                         ? user.profileImageUrl || "https://robohash.org/1"
-                        : selectedUser.profileImageUrl || "https://robohash.org/1"
+                        : selectedUser.profileImageUrl ||
+                          "https://robohash.org/1"
                     }
                     alt="profile pic"
                   />
@@ -64,7 +79,13 @@ function ChatContainer() {
                   {formatMessageTime(message.sentAt)}
                 </time>
               </div>
-              <div className={`chat-bubble flex flex-col ${message.idSender === user.idUser ? "bg-emerald-600 text-white dark:bg-emerald-300 dark:text-zinc-900" : "bg-neutral-200 text-zinc-900 dark:bg-zinc-700 dark:text-neutral-100"}`}>
+              <div
+                className={`chat-bubble flex flex-col ${
+                  message.idSender === user.idUser
+                    ? "bg-emerald-600 text-white dark:bg-emerald-300 dark:text-zinc-900"
+                    : "bg-neutral-200 text-zinc-900 dark:bg-zinc-700 dark:text-neutral-100"
+                }`}
+              >
                 {message.image && (
                   <img
                     src={message.image}

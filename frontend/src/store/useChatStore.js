@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "../api/axios.js";
+import { useAuthStore } from "./useAuthStore";
 
 export const useChatStore = create((set, get) => ({
   messages: [],
@@ -23,9 +24,8 @@ export const useChatStore = create((set, get) => ({
   getMessages: async (idUser, myId) => {
     set({ isMessagesLoading: true });
     try {
-      const { data } = await axios.get(`/messages/${idUser}/${myId}`);
-      console.log(data)
-      set({ messages: data });
+      const res = await axios.get(`/messages/${idUser}/${myId}`);
+      set({ messages: res.data });
     } catch (error) {
       console.log(error);
     } finally {
@@ -40,10 +40,30 @@ export const useChatStore = create((set, get) => ({
         `/messages/send/${selectedUser.idUser}/${senderId}`,
         messageData
       );
-      set({ messages: [...messages, res.data] });
     } catch (error) {
       console.log(error);
     }
+  },
+
+  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+
+  subscribeToMessages: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
+
+    const socket = useAuthStore.getState().socket;
+
+    socket.on("newMessage", (message) => {
+      message.sentAt = new Date().toISOString();
+      set((state) => ({
+        messages: [...state.messages, message],
+      }));
+    });
+  },
+
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket.off("newMessage");
   },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),

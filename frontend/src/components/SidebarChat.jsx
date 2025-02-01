@@ -3,12 +3,14 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { useChatStore } from "../store/useChatStore";
 import { Users } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useAuthStore } from "../store/useAuthStore.js";
+
 
 
 function SidebarChat() {
   const { user } = useAuth();
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
-  const onlineUsers  = [2,4];
+  const { onlineUsers } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ function SidebarChat() {
   }, [getUsers]);
 
   const filteredUsers = showOnlineOnly
-    ? users.filter((user) => onlineUsers.includes(user.idUser))
+    ? users.filter((user) => onlineUsers.includes(user.idUser.toString()))
     : users;
 
 
@@ -68,7 +70,7 @@ function SidebarChat() {
                   alt={user.name}
                   className="size-12 object-cover rounded-full"
                 />
-                {onlineUsers.includes(user.idUser) && (
+                {onlineUsers.includes(user.idUser.toString()) && (
                   <span
                     className="absolute bottom-0 right-0 size-3 bg-green-500 
                   rounded-full ring-2 ring-zinc-900"
@@ -80,7 +82,7 @@ function SidebarChat() {
               <div className="hidden lg:block text-left min-w-0">
                 <div className="font-medium truncate text-zinc-900 dark:text-neutral-100">{user.name} {user.lastname}</div>
                 <div className="text-sm text-zinc-400">
-                  {onlineUsers.includes(user.idUser) ? "En linea" : "Desconectado"}
+                  {onlineUsers.includes(user.idUser.toString()) ? "En linea" : "Desconectado"}
                 </div>
               </div>
             </button>

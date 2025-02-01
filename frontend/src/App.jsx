@@ -11,8 +11,12 @@ import LoginRegister from "./components/LoginRegister";
 import ProtectedRoute from "./ProtectedRoute";
 import { ArticleProvider } from "./context/ArticleContext";
 import ChatHomePage from "./pages/ChatHomePage";
+import { useAuthStore } from "./store/useAuthStore";
 
 function App() {
+  const { onlineUsers } = useAuthStore();
+
+  console.log({ onlineUsers });
   return (
     <>
       <AuthProvider>

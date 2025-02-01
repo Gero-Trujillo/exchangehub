@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 
 function LoginRegister() {
   const { singin, isAuthenticated, error, singup } = useAuth();
+  const { login, singup: registering } = useAuthStore();
   // useForm para el formulario de inicio de sesión
   const {
     register: registerLogin,
@@ -22,10 +24,12 @@ function LoginRegister() {
 
   const onSubmitLogin = (values) => {
     singin(values);
+    login(values);
   };
 
   const onSubmitSignup = (values) => {
     singup(values);
+    registering(values);
   };
   const navigate = useNavigate();
   useEffect(() => {
@@ -41,10 +45,7 @@ function LoginRegister() {
             <input type="checkbox" id="chk" aria-hidden="true" />
 
             <div class="login">
-              <form
-                class="form"
-                onSubmit={handleSubmitLogin(onSubmitLogin)}
-              >
+              <form class="form" onSubmit={handleSubmitLogin(onSubmitLogin)}>
                 <label for="chk" aria-hidden="true">
                   Iniciar sesion
                 </label>
@@ -72,10 +73,7 @@ function LoginRegister() {
             </div>
 
             <div class="register dark:bg-zinc-800">
-              <form
-                class="form"
-                onSubmit={handleSubmitSignup(onSubmitSignup)}
-              >
+              <form class="form" onSubmit={handleSubmitSignup(onSubmitSignup)}>
                 <label
                   className="text-emerald-600 dark:text-emerald-300"
                   for="chk"

@@ -8,7 +8,7 @@ function Messageinput() {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const { user } = useAuth();
-  const { sendMessage } = useChatStore();
+  const { sendMessage, addMessage } = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -34,10 +34,20 @@ function Messageinput() {
     if (!text.trim() && !imagePreview) return;
 
     try {
-      await sendMessage({
+      addMessage({
         text: text.trim(),
         image: imagePreview,
-      }, user.idUser);
+        idSender: user.idUser,
+        sentAt: new Date().toISOString(),
+      });
+      await sendMessage(
+        {
+          text: text.trim(),
+          image: imagePreview,
+          sentAt: new Date().toISOString(),
+        },
+        user.idUser
+      );
 
       // Clear form
       setText("");
@@ -75,7 +85,7 @@ function Messageinput() {
           <input
             type="text"
             className="w-full input input-bordered rounded-lg input-sm sm:input-md bg-neutral-100 input-success text-zinc-900 dark:bg-zinc-900"
-            placeholder="Type a message..."
+            placeholder="Escribe una mensaje..."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
