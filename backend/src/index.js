@@ -5,8 +5,7 @@ import userRoutes from "./routes/users.routes.js";
 import articleRoutes from './routes/articles.routes.js'
 import messageRoutes from './routes/messages.routes.js'
 import express from "express";
-
-const app = express();
+import { app, server } from "./libs/socket.js";
 
 app.use(express.json());
 app.use(cookieParser());
@@ -22,6 +21,6 @@ app.use(userRoutes)
 app.use(articleRoutes)
 app.use(messageRoutes)
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log("Server running on port 3000");
 });

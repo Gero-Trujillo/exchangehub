@@ -1,4 +1,5 @@
 import { pool } from "../db.js";
+import { getReceiverSocketId, io } from "../libs/socket.js";
 
 export const getUsersForSidebar = async (req, res) => {
   try {
@@ -7,7 +8,6 @@ export const getUsersForSidebar = async (req, res) => {
     const [rows] = await pool.query("SELECT * FROM users WHERE idUser != ?", [
       loggedInUserId,
     ]);
-    console.log(rows);
     res.status(200).json(rows);
   } catch (error) {
     console.log(error);
@@ -40,6 +40,18 @@ export const sendMessage = async (req, res) => {
       `INSERT INTO messages (idSender, idReceiver, text, image) VALUES (?, ?, ?, ?)`,
       [senderId, receiverId, text, image]
     );
+
+    console.log("receiverId", receiverId);
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    console.log(`Receiver socket id: ${receiverSocketId}`);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", {
+        idSender: senderId,
+        idReceiver: receiverId,
+        text,
+        image,
+      });
+    }
 
     res.status(200).json(rows);
   } catch (error) {
