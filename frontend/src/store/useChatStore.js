@@ -21,6 +21,15 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
+  getUser: async (id) => {
+    try {
+      const res = await axios.get(`/users/${id}`);
+      set({ selectedUser: res.data });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getMessages: async (idUser, myId) => {
     set({ isMessagesLoading: true });
     try {
@@ -45,7 +54,8 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
-  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] })),
 
   subscribeToMessages: () => {
     const { selectedUser } = get();

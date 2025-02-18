@@ -3,11 +3,16 @@ import "./ProductCard.css";
 import { RxCrossCircled } from "react-icons/rx";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useArticle } from "../context/ArticleContext";
+import { useChatStore } from "../store/useChatStore";
+import { useNavigate } from "react-router-dom";
+
 function ProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
   const { name, user, description, images, idArticle } = props;
   const [product, setProduct] = useState(false);
   const [mainImage, setMainImage] = useState(null);
+  const { setSelectedUser, getUser } = useChatStore();
+  const navigate = useNavigate();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const handlePrevClick = () => {
@@ -34,6 +39,12 @@ function ProductCard(props) {
   const handleProduct = () => {
     setProduct(!product);
   };
+
+  const handleOffer = () => {
+    getUser(user);
+    navigate(`/Mensajes`);
+  }
+
   return (
     <>
       {product && (
@@ -124,11 +135,12 @@ function ProductCard(props) {
               </div>
             </div>
 
-            <a href="/mensajes">
-              <button className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-700 outline-none dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black">
-                Ofertar
-              </button>
-            </a>
+            <button
+              className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-700 outline-none dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black"
+              onClick={handleOffer}
+            >
+              Ofertar
+            </button>
           </div>
         </section>
       )}

@@ -12,7 +12,7 @@ import {
   const router = Router();
   router.post("/api/users", addUser);
   router.get("/api/users", consultUsers);
-  router.get("/api/users/:iduser", consultUser);
+  router.get("/api/users/:idUser", consultUser);
   router.put("/api/users/:iduser", updateUser);
   router.delete("/api/users/:iduser", deleteUserUpdateState);
   router.post("/api/users/:iduser", resetUserUpdateState);

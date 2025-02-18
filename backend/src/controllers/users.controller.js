@@ -43,12 +43,12 @@ export const consultUsers = async (req, res) => {
 };
 
 export const consultUser = async (req, res) => {
-  const { iduser } = req.params;
+  const { idUser } = req.params;
 
-  const query = "SELECT * FROM Tblusers WHERE iduser = ?";
+  const query = "SELECT * FROM users WHERE idUser = ?";
   try {
-    const [result] = await pool.execute(query, [iduser]);
-    res.status(200).json({ message: "CONSULTA EXITOSA", INFO: result });
+    const [rows] = await pool.execute(query, [idUser]);
+    res.status(200).json(rows[0]);
   } catch (error) {
     console.error("Error al CONSULTAR EL USUARIO: ", error);
     res.status(500).json({ error: "Error al CONSULTAR el usuario" });
