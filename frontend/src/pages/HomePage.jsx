@@ -6,9 +6,7 @@ import { useArticle } from "../context/ArticleContext.jsx";
 import AdSubscription from "../components/AdSubscription.jsx";
 import StatsHome from "../components/StatsHome.jsx";
 import MembersGroup from "../components/MembersGroup.jsx";
-import AdSuscription from "../components/AdSuscription.jsx";
-import StatsHome from "../components/StatsHome.jsx";
-import MembersGroup from "../components/MembersGroup.jsx";
+
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
     useArticle();
@@ -76,9 +74,6 @@ function HomePage() {
         </div>
       </section>
       <AdSubscription/>
-      <StatsHome />
-      <MembersGroup />
-      <AdSuscription />
       <StatsHome />
       <MembersGroup />
       <AdvantagesHome />
