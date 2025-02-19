@@ -1,6 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function PayPalCard() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.querySelector("html").classList.add("dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -18,13 +35,7 @@ export default function PayPalCard() {
           },
           createOrder: function (data, actions) {
             return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: "9.99",
-                  },
-                },
-              ],
+              purchase_units: [{ amount: { value: "9.99" } }],
             });
           },
           onApprove: function (data, actions) {
@@ -41,29 +52,42 @@ export default function PayPalCard() {
   }, []);
 
   return (
-    <div className="flex flex-col bg-black border-2 border-emerald-900 rounded-3xl max-w-sm mx-auto text-center">
+    <div
+      className={`flex flex-col border-2 rounded-3xl max-w-sm mx-auto text-center ${
+        theme === "dark" ? "bg-black border-emerald-900 text-white" : "bg-white border-emerald-600 text-black"
+      }`}
+    >
       <div className="px-6 py-8 sm:p-10 sm:pb-6">
         <h2 className="text-lg font-medium tracking-tighter text-emerald-600 lg:text-3xl">
-        Elite Exchange
+          Elite Exchange
         </h2>
-        <p className="mt-2 text-sm text-gray-100">
-          <span className="font-semibold text-white">🔹 Trueques Premium:</span> Accede a los mejores productos y ofertas exclusivas. <br />
-          <span className="font-semibold text-white">🔹 Mayor Seguridad:</span> Verificación avanzada para transacciones seguras. <br />
-          <span className="font-semibold text-white">🔹 Más Confianza:</span> Perfil destacado y prioridad en intercambios. <br />
-          <span className="font-semibold text-white">🔹 Soporte VIP:</span> Atención preferencial para resolver cualquier duda. <br />
+        <p className="mt-2 text-sm">
+          🔹 <span className="font-semibold">Trueques Premium:</span> Accede a los mejores productos y ofertas exclusivas. <br />
+          🔹 <span className="font-semibold">Mayor Seguridad:</span> Verificación avanzada para transacciones seguras. <br />
+          🔹 <span className="font-semibold">Más Confianza:</span> Perfil destacado y prioridad en intercambios. <br />
+          🔹 <span className="font-semibold">Soporte VIP:</span> Atención preferencial para resolver cualquier duda. <br />
         </p>
-        <p className="mt-2 text-sm text-gray-100">🚀 ¡Únete y lleva tus intercambios al siguiente nivel!</p>
+        <p className="mt-2 text-sm">🚀 ¡Únete y lleva tus intercambios al siguiente nivel!</p>
         <p className="mt-4">
-          <span className="text-5xl font-light tracking-tight text-white">$9.99</span>
-          <span className="text-base font-medium text-white"> /mo </span>
+          <span className="text-5xl font-light tracking-tight">$9.99</span>
+          <span className="text-base font-medium"> /mo </span>
         </p>
       </div>
       <div className="flex justify-center px-6 pb-8 sm:px-8">
-        <div
-          id="paypal-button-container"
-          className="w-auto flex items-center justify-center px-4 py-1.5 text-white duration-100 bg-emerald-600 border-2 border-emerald-600 rounded-full hover:bg-transparent hover:border-emerald-600 hover:text-emerald-600 focus:outline-none focus-visible:outline-emerald-600 text-sm focus-visible:ring-emerald-600"
-        ></div>
+        <div id="paypal-button-container" className="w-auto"></div>
       </div>
+      <div className="block content-center">
+              <button
+                className="text-3xl cursor-pointer text-emerald-600 dark:text-emerald-300"
+                onClick={handleTheme}
+              >
+                {theme === "light" ? (
+                  <ion-icon name="sunny-outline"></ion-icon>
+                ) : (
+                  <ion-icon name="moon-outline"></ion-icon>
+                )}
+              </button>
+            </div>
     </div>
   );
 }
