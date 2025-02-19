@@ -6,6 +6,7 @@ import { useArticle } from "../context/ArticleContext.jsx";
 import AdSubscription from "../components/AdSubscription.jsx";
 import StatsHome from "../components/StatsHome.jsx";
 import MembersGroup from "../components/MembersGroup.jsx";
+import CardPayment from "../components/CardPayment.jsx";
 
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
@@ -53,6 +54,9 @@ function HomePage() {
           </p>
           <Button1 />
         </div>
+      </section>
+      <section>
+        <CardPayment />
       </section>
       <section className="bg-neutral-100 dark:bg-zinc-900 m-10 rounded-lg p-10 h-auto flex flex-col justify-center items-center gap-10">
         <h1 className="text-4xl font-bold text-emerald-600 dark:text-emerald-300">

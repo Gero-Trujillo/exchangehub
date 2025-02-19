@@ -12,6 +12,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { ArticleProvider } from "./context/ArticleContext";
 import ChatHomePage from "./pages/ChatHomePage";
 import { useAuthStore } from "./store/useAuthStore";
+import CardPayment from "./components/CardPayment";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -24,7 +25,8 @@ function App() {
           <BrowserRouter>
             <Navbar />
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage />} />        
+              <Route path="/Payment" element={<CardPayment />} />
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/Inicio" element={<HomePage />} />
               <Route path="/Productos" element={<ArticlesPage />} />
