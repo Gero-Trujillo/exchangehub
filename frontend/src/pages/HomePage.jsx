@@ -3,6 +3,9 @@ import ProductCard from "../components/ProductCard";
 import Button1 from "../components/Button1";
 import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
+import AdSubscription from "../components/AdSubscription.jsx";
+import StatsHome from "../components/StatsHome.jsx";
+import MembersGroup from "../components/MembersGroup.jsx";
 import AdSuscription from "../components/AdSuscription.jsx";
 import StatsHome from "../components/StatsHome.jsx";
 import MembersGroup from "../components/MembersGroup.jsx";
@@ -72,6 +75,9 @@ function HomePage() {
           })}
         </div>
       </section>
+      <AdSubscription/>
+      <StatsHome />
+      <MembersGroup />
       <AdSuscription />
       <StatsHome />
       <MembersGroup />

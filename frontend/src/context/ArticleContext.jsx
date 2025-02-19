@@ -82,10 +82,6 @@ export const ArticleProvider = ({ children }) => {
   };
 
   const searchCategory = async (category) => {
-    if (category === "todos") {
-      setArticlesCategory(articles);
-      return;
-    }
     try {
       const res = await getArticlesByCategory(category);
       setArticlesCategory(res.data)
