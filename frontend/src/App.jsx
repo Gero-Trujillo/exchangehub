@@ -13,6 +13,7 @@ import { ArticleProvider } from "./context/ArticleContext";
 import ChatHomePage from "./pages/ChatHomePage";
 import { useAuthStore } from "./store/useAuthStore";
 import CardPayment from "./components/CardPayment";
+import SuscriptionPage from "./pages/SuscriptionPage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -26,7 +27,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />        
-              <Route path="/Payment" element={<CardPayment />} />
+              <Route path="/Premium" element={<SuscriptionPage />} />
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/Inicio" element={<HomePage />} />
               <Route path="/Productos" element={<ArticlesPage />} />

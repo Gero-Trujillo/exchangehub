@@ -1,22 +1,6 @@
 import { useEffect, useState } from "react";
 
 export default function PayPalCard() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "dark";
-  });
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.querySelector("html").classList.add("dark");
-    } else {
-      document.querySelector("html").classList.remove("dark");
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const handleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -53,9 +37,7 @@ export default function PayPalCard() {
 
   return (
     <div
-      className={`flex flex-col border-2 rounded-3xl max-w-sm mx-auto text-center ${
-        theme === "dark" ? "bg-black border-emerald-900 text-white" : "bg-white border-emerald-600 text-black"
-      }`}
+      className='flex flex-col border-2 rounded-3xl max-w-sm mx-auto dark:text-slate-100 text-center md:text-start border-emerald-600'
     >
       <div className="px-6 py-8 sm:p-10 sm:pb-6">
         <h2 className="text-lg font-medium tracking-tighter text-emerald-600 lg:text-3xl">
@@ -76,18 +58,6 @@ export default function PayPalCard() {
       <div className="flex justify-center px-6 pb-8 sm:px-8">
         <div id="paypal-button-container" className="w-auto"></div>
       </div>
-      <div className="block content-center">
-              <button
-                className="text-3xl cursor-pointer text-emerald-600 dark:text-emerald-300"
-                onClick={handleTheme}
-              >
-                {theme === "light" ? (
-                  <ion-icon name="sunny-outline"></ion-icon>
-                ) : (
-                  <ion-icon name="moon-outline"></ion-icon>
-                )}
-              </button>
-            </div>
     </div>
   );
 }
