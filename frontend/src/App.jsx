@@ -14,6 +14,7 @@ import ChatHomePage from "./pages/ChatHomePage";
 import { useAuthStore } from "./store/useAuthStore";
 import CardPayment from "./components/CardPayment";
 import SuscriptionPage from "./pages/SuscriptionPage";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -32,10 +33,10 @@ function App() {
               <Route path="/Inicio" element={<HomePage />} />
               <Route path="/Productos" element={<ArticlesPage />} />
               <Route path="/login" element={<LoginRegister />} />
-
               <Route element={<ProtectedRoute />}>
                 <Route path="/Mensajes" element={<ChatHomePage />} />
                 <Route path="/Perfil" element={<ProfilePage />} />
+                <Route path="/EditProfile" element={<EditProfile />} />
                 <Route path="/Settings" element />
               </Route>
             </Routes>
