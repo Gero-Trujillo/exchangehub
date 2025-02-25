@@ -1,0 +1,112 @@
+[
+  {
+    "idExchange": 1,
+    "idProductOne": 1,
+    "idProductTwo": 1,
+    "idUserOne": 1,
+    "idUserTwo": 1,
+    "NameProductUno": "Sausage - Liver",
+    "NameProductTwo": "Bread - Multigrain",
+    "StateExchange": false,
+    "NameUserTwo": "Hurley Aloway"
+  },
+  {
+    "idExchange": 2,
+    "idProductOne": 2,
+    "idProductTwo": 2,
+    "idUserOne": 2,
+    "idUserTwo": 2,
+    "NameProductUno": "Coffee - Frthy Coffee Crisp",
+    "NameProductTwo": "Taro Root",
+    "StateExchange": false,
+    "NameUserTwo": "Sunny Leban"
+  },
+  {
+    "idExchange": 3,
+    "idProductOne": 3,
+    "idProductTwo": 3,
+    "idUserOne": 3,
+    "idUserTwo": 3,
+    "NameProductUno": "Turkey - Oven Roast Breast",
+    "NameProductTwo": "Puff Pastry - Sheets",
+    "StateExchange": true,
+    "NameUserTwo": "Michal Alyokhin"
+  },
+  {
+    "idExchange": 4,
+    "idProductOne": 4,
+    "idProductTwo": 4,
+    "idUserOne": 4,
+    "idUserTwo": 4,
+    "NameProductUno": "Puree - Mango",
+    "NameProductTwo": "Syrup - Chocolate",
+    "StateExchange": false,
+    "NameUserTwo": "Helenka Roly"
+  },
+  {
+    "idExchange": 5,
+    "idProductOne": 5,
+    "idProductTwo": 5,
+    "idUserOne": 5,
+    "idUserTwo": 5,
+    "NameProductUno": "Glucose",
+    "NameProductTwo": "Gatorade - Xfactor Berry",
+    "StateExchange": true,
+    "NameUserTwo": "Ingaborg Flade"
+  },
+  {
+    "idExchange": 6,
+    "idProductOne": 6,
+    "idProductTwo": 6,
+    "idUserOne": 6,
+    "idUserTwo": 6,
+    "NameProductUno": "Edible Flower - Mixed",
+    "NameProductTwo": "Croissant, Raw - Mini",
+    "StateExchange": true,
+    "NameUserTwo": "Devin Tollemache"
+  },
+  {
+    "idExchange": 7,
+    "idProductOne": 7,
+    "idProductTwo": 7,
+    "idUserOne": 7,
+    "idUserTwo": 7,
+    "NameProductUno": "Ice Cream Bar - Hagen Daz",
+    "NameProductTwo": "Rum - Cream, Amarula",
+    "StateExchange": false,
+    "NameUserTwo": "Colver Downton"
+  },
+  {
+    "idExchange": 8,
+    "idProductOne": 8,
+    "idProductTwo": 8,
+    "idUserOne": 8,
+    "idUserTwo": 8,
+    "NameProductUno": "Meldea Green Tea Liquor",
+    "NameProductTwo": "Chicken - Breast, 5 - 7 Oz",
+    "StateExchange": false,
+    "NameUserTwo": "Idaline Paulusch"
+  },
+  {
+    "idExchange": 9,
+    "idProductOne": 9,
+    "idProductTwo": 9,
+    "idUserOne": 9,
+    "idUserTwo": 9,
+    "NameProductUno": "Beer - Corona",
+    "NameProductTwo": "Peppercorns - Green",
+    "StateExchange": true,
+    "NameUserTwo": "Carl De Giorgis"
+  },
+  {
+    "idExchange": 10,
+    "idProductOne": 10,
+    "idProductTwo": 10,
+    "idUserOne": 10,
+    "idUserTwo": 10,
+    "NameProductUno": "Trout - Smoked",
+    "NameProductTwo": "V8 - Berry Blend",
+    "StateExchange": true,
+    "NameUserTwo": "Eadie Joy"
+  }
+]
