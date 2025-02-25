@@ -24,7 +24,7 @@ Instalación y configuración
 
 Clona el repositorio:
 
-git clone https://github.com/tu_usuario/exchangehub.git
+git clone https://github.com/Gero-Trujillo/exchangehub.git
 
 Accede al directorio del proyecto:
 
@@ -42,9 +42,9 @@ npm install
 
 Configura las variables de entorno en un archivo .env en la carpeta server:
 
-DB_HOST=tu_host
+DB_HOST=localhost
 DB_USER=tu_usuario
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=
 DB_NAME=exchangehub
 
 Inicia el servidor:
