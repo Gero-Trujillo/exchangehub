@@ -4,6 +4,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useArticle } from "../context/ArticleContext";
 import { useChatStore } from "../store/useChatStore";
+import { useArticleStore } from "../store/useArticleStore";
 import { useNavigate } from "react-router-dom";
 
 function ProductCard(props) {
@@ -12,6 +13,7 @@ function ProductCard(props) {
   const [product, setProduct] = useState(false);
   const [mainImage, setMainImage] = useState(null);
   const { setSelectedUser, getUser } = useChatStore();
+  const { setArticleToOffer } = useArticleStore();
   const navigate = useNavigate();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -42,7 +44,15 @@ function ProductCard(props) {
 
   const handleOffer = () => {
     getUser(user);
-    navigate(`/Mensajes`);
+    const articleToOfferObj = {
+      idArticle,
+      name,
+      user,
+      description,
+      images,
+    }
+    setArticleToOffer(articleToOfferObj);
+    navigate(`/Ofertar`);
   };
 
   return (

@@ -15,6 +15,7 @@ import { useAuthStore } from "./store/useAuthStore";
 import CardPayment from "./components/CardPayment";
 import SuscriptionPage from "./pages/SuscriptionPage";
 import EditProfile from "./components/EditProfile";
+import OfertarPage from "./pages/OfertarPage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -27,7 +28,7 @@ function App() {
           <BrowserRouter>
             <Navbar />
             <Routes>
-              <Route path="/" element={<HomePage />} />        
+              <Route path="/" element={<HomePage />} />
               <Route path="/Premium" element={<SuscriptionPage />} />
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/Inicio" element={<HomePage />} />
@@ -37,7 +38,7 @@ function App() {
                 <Route path="/Mensajes" element={<ChatHomePage />} />
                 <Route path="/Perfil" element={<ProfilePage />} />
                 <Route path="/EditProfile" element={<EditProfile />} />
-                <Route path="/Settings" element />
+                <Route path="/Ofertar" element={<OfertarPage />} />
               </Route>
             </Routes>
             <Footer />
