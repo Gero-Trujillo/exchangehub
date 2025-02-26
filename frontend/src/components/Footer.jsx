@@ -1,12 +1,36 @@
+import {FaInstagram, FaFacebook, FaTiktok} from 'react-icons/fa';
 
 function Footer() {
   return (
     <>
-      <footer className="w-full bg-emerald-600 h-20 flex justify-center items-center">
-        <p className="text-slate-100 font-bold">ExchangeHub &copy; 2024 - Made By Gero Trujillo · Julian Posso · Pablo Ruiz</p>
+      <footer className="footer footer-center bg-neutral-100 dark:bg-zinc-800 text-base-content rounded p-10">
+        <nav className="grid grid-flow-col gap-4">
+          <a className="link link-hover text-emerald-600 dark:text-emerald-300">Sobre nosotros</a>
+          <a className="link link-hover text-emerald-600 dark:text-emerald-300">Contacto</a>
+          <a className="link link-hover text-emerald-600 dark:text-emerald-300">Terminos y condiciones</a>
+          <a className="link link-hover text-emerald-600 dark:text-emerald-300">Politica de privacidad</a>
+        </nav>
+        <nav>
+          <div className="grid grid-flow-col gap-4">
+            <a className='text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300'>
+              <FaInstagram/>
+            </a>
+            <a className='text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300'>
+              <FaFacebook/>
+            </a>
+            <a className='text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300'>
+              <FaTiktok/>
+            </a>
+          </div>
+        </nav>
+        <aside>
+          <p className='text-zinc-400'>
+            Copyright © {new Date().getFullYear()} - Todos los derechos reservados por ExchangeHub
+          </p>
+        </aside>
       </footer>
     </>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

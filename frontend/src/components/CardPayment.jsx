@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function PayPalCard() {
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -24,7 +23,27 @@ export default function PayPalCard() {
           },
           onApprove: function (data, actions) {
             return actions.order.capture().then(function (details) {
-              alert("Pago exitoso, gracias " + details.payer.name.given_name);
+              // Enviar la orden al backend para verificar el pago
+              fetch("http://localhost:3000/payments/verify", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ orderID: data.orderID }),
+              })
+                .then(response => response.json())
+                .then(result => {
+                  if (result.success) {
+                    localStorage.setItem("paymentStatus", "completed");
+                    alert("Pago exitoso, gracias " + details.payer.name.given_name);
+                  } else {
+                    alert("Error al verificar el pago.");
+                  }
+                })
+                .catch(error => {
+                  console.error("Error en la verificación del pago:", error);
+                  alert("Hubo un problema con la verificación del pago.");
+                });
             });
           },
         }).render("#paypal-button-container");
@@ -37,7 +56,7 @@ export default function PayPalCard() {
 
   return (
     <div
-      className='flex flex-col border-2 rounded-3xl max-w-sm mx-auto dark:text-slate-100 text-center md:text-start border-emerald-600'
+      className="flex flex-col border-2 rounded-3xl max-w-sm mx-auto dark:text-slate-100 text-center md:text-start border-emerald-600"
     >
       <div className="px-6 py-8 sm:p-10 sm:pb-6">
         <h2 className="text-lg font-medium tracking-tighter text-emerald-600 lg:text-3xl">
