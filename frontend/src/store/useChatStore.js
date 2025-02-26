@@ -63,6 +63,7 @@ export const useChatStore = create((set, get) => ({
 
     const socket = useAuthStore.getState().socket;
 
+    if (!socket) return;
     socket.on("newMessage", (message) => {
       message.sentAt = new Date().toISOString();
       set((state) => ({
@@ -73,6 +74,7 @@ export const useChatStore = create((set, get) => ({
 
   unsubscribeFromMessages: () => {
     const socket = useAuthStore.getState().socket;
+    if (!socket) return;
     socket.off("newMessage");
   },
 

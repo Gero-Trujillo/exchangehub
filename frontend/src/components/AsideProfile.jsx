@@ -8,6 +8,7 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useAuth } from "../context/AuthContext";
 import { uploadImage } from "../api/profile";
+import { Link } from "react-router-dom";
 
 function AsideProfile() {
   const { user, logout } = useAuth();
@@ -162,13 +163,13 @@ function AsideProfile() {
             <p>{user.email}</p>
           </div>
           <div className="flex flex-col gap-2 items-center">
-            <a
+            <Link
               className="bg-emerald-600 px-4 py-1 text-slate-50 rounded-md z-10 hover:scale-105 transition-all duration-500 hover:bg-emerald-500"
-              href="/EditProfile"
+              to="/EditProfile"
               
             >
               Editar perfil
-            </a>
+            </Link>
           </div>
         </div>
 
