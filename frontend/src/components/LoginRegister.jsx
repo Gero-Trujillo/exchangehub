@@ -40,7 +40,7 @@ function LoginRegister() {
   return (
     <>
       <section class="loginContainer dark:bg-zinc-950 mt-[-300px] md:mt-[-320px] lg:mt-[-300px] xl:mt-[-200px]">
-        <div class="contenedor-login">
+        <div class="contenedor-login h-[1330px]">
           <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">
             <input type="checkbox" id="chk" aria-hidden="true" />
 
@@ -55,14 +55,14 @@ function LoginRegister() {
                   </p>
                 )}
                 <input
-                  class="input"
+                  class="input bg-neutral-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100"
                   type="email"
                   placeholder="Email"
                   {...registerLogin("email", { required: true })}
                 />
                 {loginErrors.username && <span>Username is required</span>}
                 <input
-                  class="input"
+                  class="input bg-neutral-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100"
                   type="password"
                   placeholder="Password"
                   {...registerLogin("password", { required: true })}
@@ -86,7 +86,7 @@ function LoginRegister() {
                   id="name"
                   name="name"
                   type="text"
-                  class="input"
+                  className="input bg-neutral-100 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100"
                   required=""
                   {...registerSignup("name", { required: true })}
                 />
@@ -95,7 +95,7 @@ function LoginRegister() {
                   id="lastname"
                   name="lastname"
                   type="text"
-                  class="input"
+                  className="input bg-neutral-100 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100"
                   required=""
                   {...registerSignup("lastname", { required: true })}
                 />
@@ -104,8 +104,8 @@ function LoginRegister() {
                   id="register-email"
                   name="register-email"
                   type="email"
-                  class="input"
-                  required=""
+                  className="input bg-neutral-100 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100"
+                  required
                   {...registerSignup("email", { required: true })}
                 />
                 <input
@@ -113,8 +113,8 @@ function LoginRegister() {
                   id="address"
                   name="address"
                   type="text"
-                  class="input"
-                  required=""
+                  className="input bg-neutral-100 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100"
+                  required
                   {...registerSignup("address", { required: true })}
                 />
                 <input
@@ -122,8 +122,8 @@ function LoginRegister() {
                   id="cellphone"
                   name="cellphone"
                   type="tel"
-                  class="input"
-                  required=""
+                  className="input bg-neutral-100 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100"
+                  required
                   {...registerSignup("cellphone", { required: true })}
                 />
                 <input
@@ -131,8 +131,8 @@ function LoginRegister() {
                   id="register-password"
                   name="register-password"
                   type="password"
-                  class="input"
-                  required=""
+                  className="input bg-neutral-100 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100"
+                  required
                   {...registerSignup("password", { required: true })}
                 />
                 <button type="submit">Register</button>

@@ -48,7 +48,7 @@ function HomePage() {
           <span className="text-emerald-600 animate-pulse animate-ease-in text-5xl md:text-6xl lg:text-8xl font-bold">
             Exchange<span className="text-emerald-300">Hub</span>
           </span>
-          <p className="text-xl md:text-2xl dark:text-slate-100 text-center md:text-start">
+          <p className="text-xl md:text-2xl text-zinc-600 dark:text-slate-100 text-center md:text-start">
             Encuentra productos que te interesen y cambialos por los tuyos aquí
           </p>
           <Button1 />
