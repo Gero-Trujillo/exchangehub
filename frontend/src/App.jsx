@@ -15,6 +15,7 @@ import { useAuthStore } from "./store/useAuthStore";
 import SuscriptionPage from "./pages/SuscriptionPage";
 import EditProfile from "./components/EditProfile";
 import OfertarPage from "./pages/OfertarPage";
+import TermsPage from "./pages/TermsPage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -33,6 +34,8 @@ function App() {
               <Route path="/Inicio" element={<HomePage />} />
               <Route path="/Productos" element={<ArticlesPage />} />
               <Route path="/login" element={<LoginRegister />} />
+              <Route path="/terms" element={<TermsPage />} />
+
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/Mensajes" element={<ChatHomePage />} />

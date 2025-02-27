@@ -1,5 +1,6 @@
 import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 import { Link as ScrollLink } from "react-scroll";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -17,9 +18,11 @@ function Footer() {
           <a className="link link-hover text-emerald-600 dark:text-emerald-300">
             Contacto
           </a>
-          <a className="link link-hover text-emerald-600 dark:text-emerald-300">
+          <Link
+          to="/terms"
+          className="link link-hover text-emerald-600 dark:text-emerald-300">
             Terminos y condiciones
-          </a>
+          </Link>
           <a className="link link-hover text-emerald-600 dark:text-emerald-300">
             Politica de privacidad
           </a>
