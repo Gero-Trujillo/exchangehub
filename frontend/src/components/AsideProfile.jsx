@@ -165,13 +165,8 @@ function AsideProfile() {
           <div className="flex flex-col gap-2 items-center">
             <Link
               className="bg-emerald-600 px-4 py-1 text-slate-50 rounded-md z-10 hover:scale-105 transition-all duration-500 hover:bg-emerald-500"
-<<<<<<< HEAD
               to="/EditProfile"
               >
-=======
-              href="#"
-            >
->>>>>>> origin/jp
               Editar perfil
             </Link>
           </div>

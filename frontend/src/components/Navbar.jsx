@@ -84,7 +84,7 @@ function Navbar() {
                 <span className="text-xl relative">
                   <ion-icon name="notifications-outline"></ion-icon>
                   {unreadMessages > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2">
+                    <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs font-bold rounded-full px-2">
                       {unreadMessages}
                     </span>
                   )}
