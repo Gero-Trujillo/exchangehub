@@ -81,7 +81,7 @@ function TableHistorial({ onClose }) {
         <table className="historial-table rounded-md dark:bg-zinc-900 ">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr className = "dark: bg-zinc-800" key={headerGroup.id}>
+              <tr className= "dark: bg-zinc-800" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}

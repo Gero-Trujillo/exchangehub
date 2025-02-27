@@ -32,7 +32,7 @@ export const addUser = async (req, res) => {
 };
 
 export const consultUsers = async (req, res) => {
-  const query = "SELECT * FROM users";
+  const query = "SELECT * FROM Tblusers";
   try {
     const [rows] = await pool.execute(query);
     res.status(200).json(rows);

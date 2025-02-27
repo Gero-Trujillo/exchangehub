@@ -1,4 +1,5 @@
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/users.routes.js";
@@ -8,14 +9,17 @@ import dashboard from './routes/dashboard.routes.js'
 import express from "express";
 import { app, server } from "./libs/socket.js";
 
+dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: FRONTEND_URL,
+  credentials: true,
+}));
 
 app.use(authRoutes)
 app.use(userRoutes)
@@ -23,6 +27,6 @@ app.use(articleRoutes)
 app.use(messageRoutes)
 app.use(dashboard)
 
-server.listen(3000, () => {
-    console.log("Server running on port 3000");
+server.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });

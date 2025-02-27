@@ -166,8 +166,7 @@ function AsideProfile() {
             <Link
               className="bg-emerald-600 px-4 py-1 text-slate-50 rounded-md z-10 hover:scale-105 transition-all duration-500 hover:bg-emerald-500"
               to="/EditProfile"
-              
-            >
+              >
               Editar perfil
             </Link>
           </div>
