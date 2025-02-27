@@ -5,7 +5,7 @@ export const addUser = async (req, res) => {
   const { name, lastname, email, address, cellphone, password } = req.body;
 
   const query = `
-    INSERT INTO users (name, lastname, email, address, cellphone, password)
+    INSERT INTO TblUsers (name, lastname, email, address, cellphone, password)
     VALUES (?, ?, ?, ?, ?, ?)`;
 
   try {
@@ -60,7 +60,7 @@ export const updateUser = async (req, res) => {
   const { iduser } = req.params;
 
   const query =
-    " UPDATE users SET name = ?, lastname = ?, email = ?, address = ?, cellphone = ?, password = ? WHERE iduser = ? ";
+    " UPDATE TblUsers SET name = ?, lastname = ?, email = ?, address = ?, cellphone = ?, password = ? WHERE iduser = ? ";
   try {
     const [result] = await pool.execute(query, [
       name,
@@ -80,7 +80,7 @@ export const updateUser = async (req, res) => {
 
 export const deleteUserUpdateState = async (req, res) => {
   const { iduser } = req.params;
-  const query = "UPDATE users SET state = 0 WHERE iduser = ?";
+  const query = "UPDATE TblUsers SET state = 0 WHERE iduser = ?";
 
   try {
     const [result] = await pool.execute(query, [iduser]);
