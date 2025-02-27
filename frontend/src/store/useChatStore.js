@@ -5,6 +5,7 @@ import { useAuthStore } from "./useAuthStore";
 export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],
+  unreadMessages: 0, // 🔔 Contador de mensajes no leídos
   selectedUser: null,
   isUsersLoading: false,
   isMessagesLoading: false,
@@ -13,7 +14,14 @@ export const useChatStore = create((set, get) => ({
     set({ isUsersLoading: true });
     try {
       const res = await axios.get(`/messages/users/${id}`);
-      set({ users: res.data });
+      const usersWithUnread = res.data.map((user) => ({
+        ...user,
+        hasUnreadMessages: user.unreadCount > 0, // ✅ Marcar si tiene mensajes no leídos
+      }));
+      
+      const unreadCount = usersWithUnread.filter((u) => u.hasUnreadMessages).length;
+
+      set({ users: usersWithUnread, unreadMessages: unreadCount });
     } catch (error) {
       console.log(error);
     } finally {
@@ -35,6 +43,9 @@ export const useChatStore = create((set, get) => ({
     try {
       const res = await axios.get(`/messages/${idUser}/${myId}`);
       set({ messages: res.data });
+
+      // 🔄 Marcar como leídos cuando se abren los mensajes
+      get().markMessagesAsRead(idUser, myId);
     } catch (error) {
       console.log(error);
     } finally {
@@ -45,7 +56,7 @@ export const useChatStore = create((set, get) => ({
   sendMessage: async (messageData, senderId) => {
     const { selectedUser, messages } = get();
     try {
-      const res = await axios.post(
+      await axios.post(
         `/messages/send/${selectedUser.idUser}/${senderId}`,
         messageData
       );
@@ -68,6 +79,7 @@ export const useChatStore = create((set, get) => ({
       message.sentAt = new Date().toISOString();
       set((state) => ({
         messages: [...state.messages, message],
+        unreadMessages: state.unreadMessages + 1, // 🔔 Aumentar contador
       }));
     });
   },
@@ -76,6 +88,22 @@ export const useChatStore = create((set, get) => ({
     const socket = useAuthStore.getState().socket;
     if (!socket) return;
     socket.off("newMessage");
+  },
+
+  markMessagesAsRead: async (idUser, myId) => {
+    try {
+      await axios.post(`/messages/read/${idUser}/${myId}`);
+      
+      // 🔄 Actualizar el estado de usuarios y notificaciones
+      set((state) => ({
+        users: state.users.map((user) =>
+          user.id === idUser ? { ...user, hasUnreadMessages: false } : user
+        ),
+        unreadMessages: Math.max(0, state.unreadMessages - 1),
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
