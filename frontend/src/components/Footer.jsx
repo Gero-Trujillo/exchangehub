@@ -23,9 +23,11 @@ function Footer() {
           className="link link-hover text-emerald-600 dark:text-emerald-300">
             Terminos y condiciones
           </Link>
-          <a className="link link-hover text-emerald-600 dark:text-emerald-300">
+          <Link
+          to="/privacy"
+          className="link link-hover text-emerald-600 dark:text-emerald-300">
             Politica de privacidad
-          </a>
+          </Link>
         </nav>
         <nav>
           <div className="grid grid-flow-col gap-4">

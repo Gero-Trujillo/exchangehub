@@ -16,6 +16,7 @@ import SuscriptionPage from "./pages/SuscriptionPage";
 import EditProfile from "./components/EditProfile";
 import OfertarPage from "./pages/OfertarPage";
 import TermsPage from "./pages/TermsPage";
+import PolicyPage from "./pages/PolicyPage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -35,6 +36,7 @@ function App() {
               <Route path="/Productos" element={<ArticlesPage />} />
               <Route path="/login" element={<LoginRegister />} />
               <Route path="/terms" element={<TermsPage />} />
+              <Route path="/privacy" element={<PolicyPage />} />
 
 
               <Route element={<ProtectedRoute />}>
