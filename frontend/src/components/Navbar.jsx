@@ -19,12 +19,16 @@ function Navbar() {
   ];
 
   const [active, setActive] = useState(0);
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "dark"
+  );
   const [showNotifications, setShowNotifications] = useState(false); // Controla si se muestra la lista de mensajes
 
   useEffect(() => {
     const currentPath = location.pathname.slice(1).toLowerCase();
-    const activeIndex = Menus.findIndex(menu => menu.name.toLowerCase() === currentPath);
+    const activeIndex = Menus.findIndex(
+      (menu) => menu.name.toLowerCase() === currentPath
+    );
     if (activeIndex !== -1) {
       setActive(activeIndex);
     }
@@ -40,7 +44,7 @@ function Navbar() {
   }, [theme]);
 
   const handleTheme = () => {
-    setTheme(prevTheme => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
@@ -68,10 +72,20 @@ function Navbar() {
                   className="flex flex-col text-center pt-6"
                   onClick={() => setActive(i)}
                 >
-                  <span className={`text-xl cursor-pointer duration-500 ${i === active && "-mt-6 text-zinc-800 dark:text-slate-100"}`}>
+                  <span
+                    className={`text-xl cursor-pointer duration-500 ${
+                      i === active && "-mt-6 text-zinc-800 dark:text-slate-100"
+                    }`}
+                  >
                     <ion-icon name={menu.icon}></ion-icon>
                   </span>
-                  <span className={`${active === i ? "translate-y-4 duration-700 opacity-100" : "opacity-0 translate-y-10"}`}>
+                  <span
+                    className={`${
+                      active === i
+                        ? "translate-y-4 duration-700 opacity-100"
+                        : "opacity-0 translate-y-10"
+                    }`}
+                  >
                     {menu.name}
                   </span>
                 </Link>
@@ -80,7 +94,10 @@ function Navbar() {
 
             {/* 🔔 Icono de Notificaciones */}
             <li className="relative w-16 dark:text-emerald-900">
-              <div className="flex flex-col text-center pt-6 cursor-pointer" onClick={() => setShowNotifications(!showNotifications)}>
+              <div
+                className="flex flex-col text-center pt-6 cursor-pointer"
+                onClick={() => setShowNotifications(!showNotifications)}
+              >
                 <span className="text-xl relative">
                   <ion-icon name="notifications-outline"></ion-icon>
                   {unreadMessages > 0 && (
@@ -94,10 +111,12 @@ function Navbar() {
               {/* 📩 Lista de mensajes no leídos */}
               {showNotifications && unreadMessages > 0 && (
                 <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 w-64">
-                  <h3 className="font-bold text-black dark:text-white mb-2">Mensajes nuevos</h3>
+                  <h3 className="font-bold text-black dark:text-white mb-2">
+                    Mensajes nuevos
+                  </h3>
                   {users
-                    .filter(user => user.hasUnreadMessages)
-                    .map(user => (
+                    .filter((user) => user.hasUnreadMessages)
+                    .map((user) => (
                       <Link
                         key={user.id}
                         to={`/chat/${user.id}`}
@@ -112,7 +131,10 @@ function Navbar() {
             </li>
           </ul>
 
-          <button className="text-3xl cursor-pointer text-slate-100 dark:text-emerald-900" onClick={handleTheme}>
+          <button
+            className="text-3xl cursor-pointer text-slate-100 dark:text-emerald-900"
+            onClick={handleTheme}
+          >
             {theme === "light" ? (
               <ion-icon name="sunny-outline"></ion-icon>
             ) : (
@@ -122,12 +144,15 @@ function Navbar() {
         </div>
       ) : (
         <div className="flex gap-4">
-          <button className="relative px-8 py-2 rounded-md bg-neutral-100 border-2 border-emerald-600 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600">
+          <button className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-emerald-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:before:bg-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600">
             <Link to="/login">Iniciar sesión</Link>
           </button>
 
           <div className="block content-center">
-            <button className="text-3xl cursor-pointer text-emerald-600 dark:text-emerald-300" onClick={handleTheme}>
+            <button
+              className="text-3xl cursor-pointer text-emerald-600 dark:text-emerald-300"
+              onClick={handleTheme}
+            >
               {theme === "light" ? (
                 <ion-icon name="sunny-outline"></ion-icon>
               ) : (

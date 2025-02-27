@@ -20,7 +20,7 @@ function MembersGroup() {
   ];
   return (
     <>
-      <div className="bg-neutral-100 dark:bg-zinc-900 rounded-xl m-10 py-24 sm:py-32">
+      <div className="bg-neutral-100 dark:bg-zinc-900 rounded-xl m-10 py-24 sm:py-32" id="aboutus">
         <div className="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
           <div className="max-w-xl">
             <h2 className="text-pretty text-3xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-300 sm:text-4xl">
