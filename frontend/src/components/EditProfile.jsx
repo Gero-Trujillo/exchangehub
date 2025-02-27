@@ -28,6 +28,7 @@ export default function EditProfile() {
       await updateUser(user.idUser, formData);
       alert("Profile updated successfully!");
       navigate("/Perfil"); // Redirigir después de guardar cambios
+      window.location.reload(); // Recargar la página
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile.");

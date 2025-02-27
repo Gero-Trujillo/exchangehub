@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./TableHistorial.css";
 import "./AsideProfile"
 import {
@@ -57,7 +57,7 @@ function TableHistorial({ onClose }) {
     <div className="overlay ">
       <div className="table-container dark:bg-zinc-700">
         <div className="filtersTable">
-        <button onClick={onClose} className="dismiss" type="button">×</button>
+        <button onClick={onClose} class="dismiss" type="button">×</button>
           <input
             type="text"
             className="filter-input"
@@ -81,7 +81,7 @@ function TableHistorial({ onClose }) {
         <table className="historial-table rounded-md dark:bg-zinc-900 ">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr className = "dark: bg-zinc-800" key={headerGroup.id}>
+              <tr class = "dark: bg-zinc-800" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
@@ -106,7 +106,7 @@ function TableHistorial({ onClose }) {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td className="dark:bg-zinc-600 dark:text-white text-emerald-600" key={cell.id}>
+                  <td class="dark:bg-zinc-600 dark:text-white text-emerald-600" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
