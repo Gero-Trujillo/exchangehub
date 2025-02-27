@@ -7,17 +7,12 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/users.routes.js";
 import articleRoutes from './routes/articles.routes.js'
 import messageRoutes from './routes/messages.routes.js'
-import dashboard from './routes/dashboard.routes.js'
-import express from "express";
-import { app, server } from "./libs/socket.js";
+import dashboardRoutes from './routes/dashboard.routes.js'
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-import articleRoutes from './routes/articles.routes.js';
-import messageRoutes from './routes/messages.routes.js';
-import dashboardRoutes from './routes/dashboard.routes.js';
 
 app.use(express.json());
 app.use(cookieParser());
@@ -35,6 +30,4 @@ app.use(dashboardRoutes);
 
 server.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
-server.listen(3000, () => {
-  console.log("Server running on port 3000");
 });
