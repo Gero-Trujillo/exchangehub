@@ -17,6 +17,7 @@ import EditProfile from "./components/EditProfile";
 import OfertarPage from "./pages/OfertarPage";
 import TermsPage from "./pages/TermsPage";
 import PolicyPage from "./pages/PolicyPage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -37,6 +38,7 @@ function App() {
               <Route path="/login" element={<LoginRegister />} />
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/privacy" element={<PolicyPage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
 
               <Route element={<ProtectedRoute />}>

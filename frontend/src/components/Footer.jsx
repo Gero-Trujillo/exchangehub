@@ -15,9 +15,11 @@ function Footer() {
           >
             Equipo de desarrollo
           </ScrollLink>
-          <a className="link link-hover text-emerald-600 dark:text-emerald-300">
+          <Link
+          to="/contact"
+          className="link link-hover text-emerald-600 dark:text-emerald-300">
             Contacto
-          </a>
+          </Link>
           <Link
           to="/terms"
           className="link link-hover text-emerald-600 dark:text-emerald-300">
