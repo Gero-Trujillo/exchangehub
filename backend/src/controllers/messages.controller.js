@@ -33,12 +33,12 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   try {
-    const { text, image } = req.body;
+    const { text, image, isSpecial } = req.body;
     const { receiverId, senderId } = req.params;
 
     const [rows] = await pool.query(
-      `INSERT INTO messages (idSender, idReceiver, text, image) VALUES (?, ?, ?, ?)`,
-      [senderId, receiverId, text, image]
+      `INSERT INTO messages (idSender, idReceiver, text, image, isSpecial) VALUES (?, ?, ?, ?, ?)`,
+      [senderId, receiverId, text, image, isSpecial]
     );
 
     console.log("receiverId", receiverId);
@@ -50,6 +50,7 @@ export const sendMessage = async (req, res) => {
         idReceiver: receiverId,
         text,
         image,
+        isSpecial,
       });
     }
 
