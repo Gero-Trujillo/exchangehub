@@ -4,7 +4,9 @@ import { TbArrowsExchange2 } from "react-icons/tb";
 import { useArticleStore } from "../store/useArticleStore";
 import { useAuth } from "../context/AuthContext";
 import { useArticle } from "../context/ArticleContext";
+import { useChatStore } from "../store/useChatStore";
 import ProductCardOfferView from "../components/ProductCardOfferView";
+import { Link, useNavigate } from "react-router-dom";
 
 function OfertarPage() {
   const { articleToOffer: article, articleToGive } = useArticleStore();
@@ -17,6 +19,11 @@ function OfertarPage() {
     articleImgs,
     getArticlesOfUser,
   } = useArticle();
+
+  const { selectedUser, addMessage, sendMessage, getUser } = useChatStore();
+
+  const navigate = useNavigate();
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     getArticlesOfUser(user.idUser);
@@ -31,7 +38,7 @@ function OfertarPage() {
           const articleImages = await getArticlesImages(article.idArticle);
           images[article.idArticle] = articleImages;
         }
-       
+
         setArticlesImages(images);
       } catch (error) {
         console.error("Error fetching article images:", error);
@@ -43,7 +50,28 @@ function OfertarPage() {
     }
   }, [articles]);
 
-  console.log(articleToGive)
+  const handleSendSpecialMessage = async () => {
+    addMessage({
+      text: "¡Hola! Tengo una oferta para ti",
+      image: article.images,
+      idSender: user.idUser,
+      sentAt: new Date().toISOString(),
+      isSpecial: true,
+    });
+    await sendMessage(
+      {
+        text: "¡Hola! Tengo una oferta para ti",
+        image: article.images,
+        sentAt: new Date().toISOString(),
+        isSpecial: true,
+      },
+      user.idUser
+    );
+
+    // Navegar a la conversación
+    getUser(selectedUser.idUser);
+    navigate("/Mensajes");
+  };
 
   return (
     <>
@@ -84,7 +112,14 @@ function OfertarPage() {
                 description={articleToGive.description}
                 images={articleToGive.images}
               />
-              <button className="btn btn-active btn-ghost" onClick={() => document.getElementById("my_modal_4").showModal()}>Cambiar elección</button>
+              <button
+                className="btn btn-active btn-ghost"
+                onClick={() =>
+                  document.getElementById("my_modal_4").showModal()
+                }
+              >
+                Cambiar elección
+              </button>
             </div>
           ) : (
             <div
@@ -95,9 +130,12 @@ function OfertarPage() {
             </div>
           )}
         </div>
-        <button className="btn btn-outline border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-300 dark:text-emerald-300 dark:hover:bg-emerald-300 dark:hover:text-zinc-950">
-          Enviar oferta
-        </button>
+          <button
+            className="btn btn-outline border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-300 dark:text-emerald-300 dark:hover:bg-emerald-300 dark:hover:text-zinc-950"
+            onClick={handleSendSpecialMessage}
+          >
+            Enviar oferta
+          </button>
 
         <dialog id="my_modal_4" className="modal backdrop-blur-sm">
           <div className="modal-box w-11/12 max-w-5xl bg-neutral-100 dark:bg-zinc-800 flex flex-col gap-4">

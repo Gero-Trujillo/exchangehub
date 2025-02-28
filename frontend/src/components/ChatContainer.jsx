@@ -94,6 +94,11 @@ function ChatContainer() {
                   />
                 )}
                 {message.text && <p>{message.text}</p>}
+                {message.isSpecial && (
+                  <button className="btn bg-neutral-100 border-neutral-100 text-zinc-800 hover:text-neutral-100 dark:bg-zinc-800 dark:border-zinc-800 dark:text-neutral-100 dark:hover:bg-neutral-100 dark:hover:text-zinc-800 mt-2">
+                    Ver oferta
+                  </button>
+                )}
               </div>
             </div>
           ))}
