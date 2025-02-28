@@ -18,11 +18,11 @@ import OfertarPage from "./pages/OfertarPage";
 import TermsPage from "./pages/TermsPage";
 import PolicyPage from "./pages/PolicyPage";
 import ContactPage from "./pages/ContactPage";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 function App() {
   const { onlineUsers } = useAuthStore();
 
-  console.log({ onlineUsers });
   return (
     <>
       <AuthProvider>
@@ -49,6 +49,7 @@ function App() {
                 <Route path="/Settings" element />
               </Route>
             </Routes>
+            <WhatsAppButton />
             <Footer />
           </BrowserRouter>
         </ArticleProvider>
