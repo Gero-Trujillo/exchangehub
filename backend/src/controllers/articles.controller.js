@@ -2,7 +2,11 @@ import { pool } from "../db.js";
 
 export const getArticles = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM articles");
+    const [rows] = await pool.query(`
+      SELECT articles.*, CONCAT(users.name, ' ', users.lastname) AS ownerName
+      FROM articles
+      JOIN users ON articles.idOwner = users.idUser
+    `);
     res.status(200).json(rows);
   } catch (error) {
     console.log(error);
