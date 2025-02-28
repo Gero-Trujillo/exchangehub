@@ -23,7 +23,6 @@ function OfertarPage() {
   const { selectedUser, addMessage, sendMessage, getUser } = useChatStore();
 
   const navigate = useNavigate();
-  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     getArticlesOfUser(user.idUser);
@@ -51,9 +50,21 @@ function OfertarPage() {
   }, [articles]);
 
   const handleSendSpecialMessage = async () => {
+    if(!article || !articleToGive) return;
+    
+
+    // Encontrar la imagen principal del artículo
+    let mainImage = "";
+    for (const image of article.images) {
+      if (image.is_main) {
+        mainImage = image.url;
+      }
+    }
+
+
     addMessage({
       text: "¡Hola! Tengo una oferta para ti",
-      image: article.images,
+      image: mainImage,
       idSender: user.idUser,
       sentAt: new Date().toISOString(),
       isSpecial: true,
@@ -61,7 +72,7 @@ function OfertarPage() {
     await sendMessage(
       {
         text: "¡Hola! Tengo una oferta para ti",
-        image: article.images,
+        image: mainImage,
         sentAt: new Date().toISOString(),
         isSpecial: true,
       },
