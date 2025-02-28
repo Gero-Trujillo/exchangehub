@@ -1,7 +1,7 @@
 import { useArticle } from "../context/ArticleContext";
 import { useAuth } from "../context/AuthContext";
 import CreateArticle from "./CreateArticle";
-import ProductCard from "./ProductCard";
+import MyProductCard from "./MyProductCard";
 import { useState, useEffect } from "react";
 
 function MyProducts() {
@@ -65,7 +65,7 @@ function MyProducts() {
             </h1>
           )}
           {articles.map((article) => (
-            <ProductCard
+            <MyProductCard
               key={article.idArticle}
               idArticle={article.idArticle}
               name={article.name}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ProductCard from "../components/ProductCard";
+import ProductCardOnlyInfo from "../components/ProductCardOnlyInfo";
 import { TbArrowsExchange2 } from "react-icons/tb";
 import { useArticleStore } from "../store/useArticleStore";
 import { useAuth } from "../context/AuthContext";
@@ -43,6 +43,8 @@ function OfertarPage() {
     }
   }, [articles]);
 
+  console.log(articleToGive)
+
   return (
     <>
       <section className="min-h-[60vh] flex flex-col justify-center items-center gap-20 p-20 bg-neutral-100 dark:bg-zinc-800 m-10 rounded-xl">
@@ -52,11 +54,12 @@ function OfertarPage() {
         <div className="flex w-full flex-col lg:flex-row">
           {article ? (
             <div className="card rounded-box grid bg-neutral-200 dark:bg-zinc-700 flex-grow place-items-center py-10">
-              <ProductCard
+              <ProductCardOnlyInfo
                 key={article.idArticle}
                 idArticle={article.idArticle}
                 name={article.name}
                 user={article.user}
+                ownerName={article.ownerName}
                 description={article.description}
                 images={article.images}
               />
@@ -72,11 +75,12 @@ function OfertarPage() {
           </div>
           {articleToGive ? (
             <div className="card rounded-box grid bg-neutral-200 dark:bg-zinc-700 flex-grow place-items-center py-10 gap-4">
-              <ProductCard
+              <ProductCardOnlyInfo
                 key={articleToGive.idArticle}
                 idArticle={articleToGive.idArticle}
                 name={articleToGive.name}
                 user={articleToGive.user}
+                ownerName={articleToGive.ownerName}
                 description={articleToGive.description}
                 images={articleToGive.images}
               />
@@ -106,6 +110,7 @@ function OfertarPage() {
                   key={article.idArticle}
                   idArticle={article.idArticle}
                   name={article.name}
+                  ownerName={article.ownerName}
                   user={article.idOwner}
                   description={article.description}
                   images={articlesImages[article.idArticle]}

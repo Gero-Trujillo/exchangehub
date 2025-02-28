@@ -42,20 +42,6 @@ function ProductCard(props) {
     setProduct(!product);
   };
 
-  const handleOffer = () => {
-    getUser(user);
-    const articleToOfferObj = {
-      idArticle,
-      name,
-      user,
-      ownerName,
-      description,
-      images,
-    }
-    setArticleToOffer(articleToOfferObj);
-    navigate(`/Ofertar`);
-  };
-
   return (
     <>
       {product && (
@@ -132,13 +118,6 @@ function ProductCard(props) {
                 </button>
               </div>
             </div>
-
-            <button
-              className="w-full bg-emerald-600 py-2 rounded-xl text-white hover:bg-emerald-700 outline-none dark:bg-emerald-300 dark:hover:bg-emerald-400 dark:text-black"
-              onClick={handleOffer}
-            >
-              Ofertar
-            </button>
           </div>
         </section>
       )}
@@ -160,7 +139,9 @@ function ProductCard(props) {
         <div className="flex flex-col gap-4 p-3">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col w-4/5">
-              <span className="text-xl text-emerald-600 font-bold truncate overflow-hidden whitespace-nowrap">{name}</span>
+              <span className="text-xl text-emerald-600 font-bold truncate overflow-hidden whitespace-nowrap">
+                {name}
+              </span>
               <p className="text-xs text-gray-400">{ownerName}</p>
             </div>
           </div>

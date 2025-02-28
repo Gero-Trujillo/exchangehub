@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useArticleStore } from "../store/useArticleStore";
 
 function ProductCardOfferView(props) {
-  const { idArticle, name, user, description, images } = props;
+  const { idArticle, name, user, description, images, ownerName } = props;
   const [mainImage, setMainImage] = useState(null);
   const { articleToGive, setArticleToGive } = useArticleStore();
 
@@ -18,6 +18,7 @@ function ProductCardOfferView(props) {
       idArticle,
       name,
       user,
+      ownerName,
       description,
       images,
     });
