@@ -29,10 +29,12 @@ export const getArticleById = async (req, res) => {
 export const getArticleByUserId = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query(
-      "SELECT * FROM articles WHERE idOwner = ?",
-      [id]
-    );
+    const [rows] = await pool.query(`
+      SELECT articles.*, CONCAT(users.name, ' ', users.lastname) AS ownerName
+      FROM articles
+      JOIN users ON articles.idOwner = users.idUser
+      WHERE articles.idOwner = ?
+    `, [id]);
     res.status(200).json(rows);
   } catch (error) {
     console.log(error);
