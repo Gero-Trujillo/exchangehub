@@ -86,7 +86,7 @@ function OfertarPage() {
 
   return (
     <>
-      <section className="min-h-[60vh] flex flex-col justify-center items-center gap-20 p-20 bg-neutral-100 dark:bg-zinc-800 m-10 rounded-xl">
+      <section data-aos="fade-left" className="min-h-[60vh] flex flex-col justify-center items-center gap-20 p-20 bg-neutral-100 dark:bg-zinc-800 m-10 rounded-xl">
         <h1 className="text-3xl font-bold text-emerald-600 dark:text-emerald-300">
           Centro de administración de ofertas
         </h1>

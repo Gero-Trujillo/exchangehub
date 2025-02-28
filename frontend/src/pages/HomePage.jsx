@@ -1,11 +1,13 @@
+import React, { useEffect, useState } from "react";
 import AdvantagesHome from "../components/AdvantagesHome";
 import ProductCard from "../components/ProductCard";
 import Button1 from "../components/Button1";
-import { useEffect, useState } from "react";
 import { useArticle } from "../context/ArticleContext.jsx";
 import AdSubscription from "../components/AdSubscription.jsx";
 import StatsHome from "../components/StatsHome.jsx";
 import MembersGroup from "../components/MembersGroup.jsx";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
@@ -38,9 +40,20 @@ function HomePage() {
     }
   }, [articles]);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1500, // Duración de la animación en milisegundos
+      once: false, // Permitir que la animación ocurra cada vez que el elemento entre en la vista
+      mirror: true, // Permitir que la animación ocurra al hacer scroll hacia arriba
+    });
+  }, []);
+
   return (
     <>
-      <section className="flex justify-center items-center min-h-full p-20 w-full max-w-full">
+      <section
+        className="flex justify-center items-center min-h-full p-20 w-full max-w-full"
+        data-aos="fade-up"
+      >
         <div className="flex flex-col gap-2 max-w-full items-center justify-center md:justify-start md:items-start">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold text-wrap animate-fade-left text-zinc-900 dark:text-slate-100 text-center md:text-start">
             Productos que no utilizas?
@@ -54,7 +67,10 @@ function HomePage() {
           <Button1 />
         </div>
       </section>
-      <section className="bg-neutral-100 dark:bg-zinc-900 m-10 rounded-lg p-10 h-auto flex flex-col justify-center items-center gap-10">
+      <section
+        className="bg-neutral-100 dark:bg-zinc-900 m-10 rounded-lg p-10 h-auto flex flex-col justify-center items-center gap-10"
+        data-aos="fade-up"
+      >
         <h1 className="text-4xl font-bold text-emerald-600 dark:text-emerald-300">
           Mas populares
         </h1>
@@ -68,12 +84,13 @@ function HomePage() {
                 user={article.idOwner}
                 description={article.description}
                 images={articlesImages[article.idArticle]}
+                data-aos="fade-up"
               />
             );
           })}
         </div>
       </section>
-      <AdSubscription/>
+      <AdSubscription />
       <StatsHome />
       <MembersGroup />
       <AdvantagesHome />

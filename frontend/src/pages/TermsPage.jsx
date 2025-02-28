@@ -2,7 +2,7 @@ import React from 'react';
 
 function TermsPage() {
   return (
-    <div className="p-8 bg-neutral-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 m-20 rounded-xl">
+    <div data-aos="fade-up" className="p-8 bg-neutral-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 m-20 rounded-xl">
       <h1 className="text-3xl font-bold mb-4">Términos y Condiciones</h1>
       <p className="mb-4">
         Bienvenido a ExchangeHub. Estos términos y condiciones describen las reglas y regulaciones para el uso de nuestro aplicativo de intercambio de productos.

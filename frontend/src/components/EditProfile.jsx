@@ -36,7 +36,7 @@ export default function EditProfile() {
   };
 
   return (
-    <div className="min-h-screen p-4 flex items-center justify-center">
+    <div data-aos="fade-up" className="min-h-screen p-4 flex items-center justify-center">
       <div className="w-full max-w-3xl bg-white dark:bg-zinc-900 shadow-lg rounded-2xl p-6 border border-emerald-600">
         <div className="mb-6 text-center">
           <h2 className="text-2xl font-bold text-emerald-800  dark:text-emerald-400">Edit Profile</h2>

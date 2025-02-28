@@ -7,7 +7,7 @@ function ChatHomePage() {
   const { selectedUser } = useChatStore();
   return (
     <>
-      <div className="h-screen bg-transparent">
+      <div data-aos="fade-left" className="h-screen bg-transparent">
         <div className="flex items-center justify-center pt-8 px-4">
           <div className="rounded-lg shadow-md shadow-neutral-200 dark:shadow-zinc-800 w-full max-w-8xl h-[calc(100vh-8rem)] bg-transparent dark:bg-transparent">
             <div className="flex h-full rounded-lg overflow-hidden">

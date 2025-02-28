@@ -5,7 +5,9 @@ const WhatsAppButton = () => {
   const handleWhatsAppClick = () => {
     const phoneNumber = "+573104049506"; // Reemplaza con tu número de WhatsApp
     const message = "¡Hola! Necesito ayuda";
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
     window.open(url, "_blank");
   };
 

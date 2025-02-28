@@ -39,7 +39,7 @@ function LoginRegister() {
   }, [isAuthenticated]);
   return (
     <>
-      <section class="loginContainer dark:bg-zinc-950 mt-[-300px] md:mt-[-320px] lg:mt-[-300px] xl:mt-[-200px]">
+      <section data-aos="fade-up" class="loginContainer dark:bg-zinc-950 mt-[-300px] md:mt-[-320px] lg:mt-[-300px] xl:mt-[-200px]">
         <div class="contenedor-login h-[1330px]">
           <div class="main w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-xl lg:rounded-r-none dark:bg-zinc-900">
             <input type="checkbox" id="chk" aria-hidden="true" />

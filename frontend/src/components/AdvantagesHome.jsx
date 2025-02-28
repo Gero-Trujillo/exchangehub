@@ -2,7 +2,7 @@
 function AdvantagesHome() {
   return (
     <>
-      <section className="w-full p-20 flex flex-col lg:flex-row justify-center items-center lg:items-start gap-20 dark:text-slate-100 my-10">
+      <section data-aos="zoom-in-right" className="w-full p-20 flex flex-col lg:flex-row justify-center items-center lg:items-start gap-20 dark:text-slate-100 my-10">
         <div className="flex flex-col gap-4 items-center max-w-sm">
             <span className="text-8xl text-emerald-300"><ion-icon name="ban-outline"></ion-icon><ion-icon name="cash-outline"></ion-icon></span>
             <h1 className="font-semibold text-2xl text-zinc-800 dark:text-slate-100">Sin dinero</h1>

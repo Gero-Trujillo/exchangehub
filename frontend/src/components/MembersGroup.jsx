@@ -55,7 +55,7 @@ function MembersGroup() {
           >
             {people.map((person) => (
               <li key={person.name}>
-                <div className="flex items-center gap-x-6">
+                <div data-aos="fade-left" className="flex items-center gap-x-6">
                   <img
                     alt=""
                     src={person.imageUrl}
@@ -73,19 +73,19 @@ function MembersGroup() {
                         to={person.linkedin}
                         target="_blank"
                       >
-                        <Linkedin className="w-6 h-6 text-black" />
+                        <Linkedin className="w-6 h-6 text-black dark:text-white" />
                       </Link>
                       <Link
                         to={person.github}
                         target="_blank"
                       >
-                        <Github className="w-6 h-6 text-black" />
+                        <Github className="w-6 h-6 text-black dark:text-white" />
                       </Link>
                       <Link
                         to={person.instagram}
                         target="_blank"
                       >
-                        <Instagram className="w-6 h-6 text-black" />
+                        <Instagram className="w-6 h-6 text-black dark:text-white" />
                       </Link>
                     </div>
                   </div>

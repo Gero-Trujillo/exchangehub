@@ -2,7 +2,7 @@ import React from 'react';
 
 function ContactPage() {
   return (
-    <div className="max-w-md p-8 bg-neutral-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 m-auto my-20 rounded-xl">
+    <div data-aos="fade-left" className="max-w-md p-8 bg-neutral-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 m-auto my-20 rounded-xl">
       <h1 className="text-3xl font-bold mb-6 text-emerald-600 dark:text-emerald-300">Contáctanos</h1>
       <form className="space-y-6">
         <div>

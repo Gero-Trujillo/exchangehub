@@ -1,6 +1,7 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
@@ -19,9 +20,19 @@ import TermsPage from "./pages/TermsPage";
 import PolicyPage from "./pages/PolicyPage";
 import ContactPage from "./pages/ContactPage";
 import WhatsAppButton from "./components/WhatsAppButton";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function App() {
   const { onlineUsers } = useAuthStore();
+
+  useEffect(() => {
+      AOS.init({
+        duration: 1500, // Duración de la animación en milisegundos
+        once: false, // Permitir que la animación ocurra cada vez que el elemento entre en la vista
+        mirror: true, // Permitir que la animación ocurra al hacer scroll hacia arriba
+      });
+    }, []);
 
   return (
     <>

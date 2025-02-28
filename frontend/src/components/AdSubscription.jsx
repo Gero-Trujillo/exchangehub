@@ -4,8 +4,7 @@ import buho from "../assets/buho.png";
 function AdSubscription() {
   return (
     <>
-      <div>
-        <div className="mx-auto max-w-7xl my-20 lg:px-8">
+        <div data-aos="zoom-in" className="mx-auto max-w-7xl my-20 lg:px-8">
           <div className="relative isolate overflow-hidden bg-emerald-600 dark:bg-emerald-950 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
             <svg
               viewBox="0 0 1024 1024"
@@ -53,7 +52,6 @@ function AdSubscription() {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 }
