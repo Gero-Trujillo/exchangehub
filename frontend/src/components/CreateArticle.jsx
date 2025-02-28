@@ -105,7 +105,7 @@ function CreateArticle(props) {
 
   return (
     <>
-      <section className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-[#000000dd] z-50">
+      <section className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center z-50 backdrop-blur-sm">
         <div className="w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 bg-neutral-100 p-4 rounded-xl flex flex-col gap-4 dark:bg-zinc-900">
           <div className="w-full flex justify-end">
             <button className="text-emerald-600 dark:text-emerald-300 text-3xl" onClick={handleClose}>
