@@ -70,6 +70,7 @@ function ArticlesPage() {
                     idArticle={article.idArticle}
                     name={article.name}
                     user={article.idOwner}
+                    ownerName={article.ownerName}
                     description={article.description}
                     images={articlesImages[article.idArticle]}
                   />
@@ -82,6 +83,7 @@ function ArticlesPage() {
                     idArticle={article.idArticle}
                     name={article.name}
                     user={article.idOwner}
+                    ownerName={article.ownerName}
                     description={article.description}
                     images={articlesImages[article.idArticle]}
                   />

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function ProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
-  const { name, user, description, images, idArticle } = props;
+  const { name, user, description, images, idArticle, ownerName } = props;
   const [product, setProduct] = useState(false);
   const [mainImage, setMainImage] = useState(null);
   const { setSelectedUser, getUser } = useChatStore();
@@ -48,6 +48,7 @@ function ProductCard(props) {
       idArticle,
       name,
       user,
+      ownerName,
       description,
       images,
     }
@@ -55,6 +56,7 @@ function ProductCard(props) {
     navigate(`/Ofertar`);
   };
 
+  console.log(ownerName)
   return (
     <>
       {product && (
@@ -71,7 +73,7 @@ function ProductCard(props) {
                   <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-300">
                     {name}
                   </h3>
-                  <p className="text-xs text-emerald-300">{user}</p>
+                  <p className="text-xs text-emerald-300">{ownerName}</p>
                 </div>
               </div>
               <div className="flex flex-row justify-between w-full gap-2">
@@ -160,7 +162,7 @@ function ProductCard(props) {
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
               <span className="text-xl text-emerald-600 font-bold">{name}</span>
-              <p className="text-xs text-gray-400">{user}</p>
+              <p className="text-xs text-gray-400">{ownerName}</p>
             </div>
           </div>
           <button
