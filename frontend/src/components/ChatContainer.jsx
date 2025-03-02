@@ -5,6 +5,7 @@ import MessageSkeleton from "./skeletons/MessageSkeleton";
 import MessageInput from "./MessageInput";
 import { useAuth } from "../context/AuthContext";
 import { formatMessageTime } from "../libs/utils";
+import SeeOffer from "./SeeOffer";
 
 function ChatContainer() {
   const {
@@ -18,6 +19,8 @@ function ChatContainer() {
 
   const { user } = useAuth();
   const messageEndRef = useRef(null);
+  const [selectedOffer, setSelectedOffer] = useState(null);
+  const [idMessage, setIdMessage] = useState(null);
 
   useEffect(() => {
     getMessages(selectedUser.idUser, user.idUser);
@@ -30,6 +33,12 @@ function ChatContainer() {
     unsubscribeFromMessages,
     user.idUser,
   ]);
+
+  const handleViewOffer = (offerDetails, idMessage) => {
+    setSelectedOffer(offerDetails);
+    setIdMessage(idMessage);
+    document.getElementById('seeOfferModal').showModal();
+  };
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -94,17 +103,18 @@ function ChatContainer() {
                   />
                 )}
                 {message.text && <p>{message.text}</p>}
-                {message.isSpecial && (
-                  <button className="btn bg-neutral-100 border-neutral-100 text-zinc-800 hover:text-neutral-100 dark:bg-zinc-800 dark:border-zinc-800 dark:text-neutral-100 dark:hover:bg-neutral-100 dark:hover:text-zinc-800 mt-2">
+                {message.isSpecial ? (
+                  <button className="btn bg-neutral-100 border-neutral-100 text-zinc-800  hover:bg-neutral-200 hover:border-neutral-200 dark:bg-zinc-800 dark:border-zinc-800 dark:text-neutral-100 dark:hover:bg-zinc-700 mt-2" onClick={()=>handleViewOffer(message.offerDetails, message.idMessage)}>
                     Ver oferta
                   </button>
-                )}
+                ): null}
               </div>
             </div>
           ))}
         </div>
 
         <MessageInput />
+        {selectedOffer && <SeeOffer offer={selectedOffer} idMessage={idMessage} />}
       </div>
     </>
   );

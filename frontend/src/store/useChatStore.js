@@ -106,5 +106,13 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
+  updateIsSpecialStatus: async (idMessage) => {
+    try {
+      await axios.patch(`/messages/${idMessage}`);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   setSelectedUser: (selectedUser) => set({ selectedUser }),
 }));
