@@ -1,11 +1,12 @@
 import { Router } from "express";
 import {
+  cancelExchange,
   createExchange,
-  deleteExchange,
   getExchangeById,
   getExchangeByStatus,
   getExchangeByUserId,
   getExchanges,
+  getExchangesByProductos,
   updateExchange,
 } from "../controllers/exchanges.controller.js";
 
@@ -16,7 +17,8 @@ router.get("/api/exchanges/:id", getExchangeById);
 router.get("/api/exchanges/user/:id", getExchangeByUserId);
 router.get("/api/exchanges/status/:status", getExchangeByStatus);
 router.post("/api/exchanges", createExchange);
-router.put("/api/exchanges/:id", updateExchange);
-router.delete("/api/exchanges/:id", deleteExchange);
+router.patch("/api/exchanges/:id", updateExchange);
+router.patch("/api/exchanges/cancel/:id", cancelExchange);
+router.get("/api/exchanges/articles/:idProductoOne/:idProductoTwo", getExchangesByProductos);
 
 export default router;

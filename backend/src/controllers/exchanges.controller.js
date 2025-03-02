@@ -39,16 +39,11 @@ export const getExchangeByUserId = async (req, res) => {
 export const createExchange = async (req, res) => {
     try {
         const { idUserOne, idUserTwo, idProductoOne, idProductoTwo, status } = req.body;
-        const response = await pool.query(
-            "INSERT INTO tblExchanges (idUserOne, idUserTwo, idProductoOne, idProductoTwo, status) VALUES (?, ?, ?, ?, ?)",
+        const [rows] = await pool.query(
+            "INSERT INTO exchanges (idUserOne, idUserTwo, idProductoOne, idProductoTwo, status) VALUES (?, ?, ?, ?, ?)",
             [idUserOne, idUserTwo, idProductoOne, idProductoTwo, status]
         );
-        res.json({
-            message: "Exchange created successfully",
-            body: {
-                exchange: { idUserOne, idUserTwo, category, description, status }
-            },
-        });
+        res.status(201).json("Exchange created successfully");
     } catch (error) {
         console.log(error);
     }
@@ -58,8 +53,8 @@ export const updateExchange = async (req, res) => {
     try {
         const id = req.params.id;
         const { status } = req.body;
-        const response = await pool.query(
-            "UPDATE tblExchanges SET status = ? WHERE idExchange = ?",
+        const [rows] = await pool.query(
+            "UPDATE exchanges SET status = ? WHERE idExchange = ?",
             [status, id]
         );
         res.json("Exchange updated successfully");
@@ -68,14 +63,15 @@ export const updateExchange = async (req, res) => {
     }
 }
 
-export const deleteExchange = async (req, res) => {
+export const cancelExchange = async (req, res) => {
     try {
         const id = req.params.id;
-        const response = await pool.query(
-            "DELETE FROM tblExchanges WHERE idExchange = ?",
-            [id]
+        const { status } = req.body;
+        const [rows] = await pool.query(
+            "UPDATE exchanges SET status = ? WHERE idExchange = ?",
+            [status, id]
         );
-        res.json("Exchange deleted successfully");
+        res.json("Exchange updated successfully");
     } catch (error) {
         console.log(error);
     }
@@ -89,6 +85,19 @@ export const getExchangeByStatus = async (req, res) => {
             [status]
         );
         res.json(response.rows);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getExchangesByProductos = async (req, res) => {
+    try {
+        const { idProductoOne, idProductoTwo } = req.params;
+        const [rows] = await pool.query(
+            "SELECT * FROM exchanges WHERE idProductoOne = ? OR idProductoTwo = ?",
+            [idProductoOne, idProductoTwo]
+        );
+        res.json(rows[0]);
     } catch (error) {
         console.log(error);
     }
