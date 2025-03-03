@@ -2,13 +2,13 @@ import logo from "../assets/exchangeLogo.png";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useChatStore } from "../store/useChatStore"; // Importamos el store del chat
+import { useChatStore } from "../store/useChatStore";
 import "./Navbar.css";
 
 function Navbar() {
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
-  const { unreadMessages, users } = useChatStore(); // Obtener mensajes no leídos
+  const { isAuthenticated, user } = useAuth();
+  const { unreadMessages, users, getUsers } = useChatStore(); // Obtener mensajes no leídos
 
   const Menus = [
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0" },
@@ -33,6 +33,12 @@ function Navbar() {
       setActive(activeIndex);
     }
   }, [location.pathname, Menus]);
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      getUsers(user.idUser); // Obtener usuarios y mensajes no leídos
+    }
+  }, [isAuthenticated, user, getUsers]);
 
   useEffect(() => {
     if (theme === "dark") {
