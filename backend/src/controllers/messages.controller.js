@@ -76,3 +76,19 @@ export const changeSpecialMessageStatus = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 }
+
+export const markMessagesAsRead = async (req, res) => {
+  try {
+    const { idUser, myId } = req.params;
+
+    const [rows] = await pool.query(
+      `UPDATE messages SET \`read\` = true WHERE idSender = ? AND idReceiver = ? AND \`read\` = false`,
+      [idUser, myId]
+    );
+
+    res.status(200).json({ message: 'Mensajes marcados como leídos' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -69,9 +69,6 @@ export const useChatStore = create((set, get) => ({
     set((state) => ({ messages: [...state.messages, message] })),
 
   subscribeToMessages: () => {
-    const { selectedUser } = get();
-    if (!selectedUser) return;
-
     const socket = useAuthStore.getState().socket;
 
     if (!socket) return;
@@ -80,6 +77,11 @@ export const useChatStore = create((set, get) => ({
       set((state) => ({
         messages: [...state.messages, message],
         unreadMessages: state.unreadMessages + 1, // 🔔 Aumentar contador
+        users: state.users.map((user) =>
+          user.id === message.idSender
+            ? { ...user, hasUnreadMessages: true }
+            : user
+        ),
       }));
     });
   },

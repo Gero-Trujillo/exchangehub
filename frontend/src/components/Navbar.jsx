@@ -1,14 +1,15 @@
 import logo from "../assets/exchangeLogo.png";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useChatStore } from "../store/useChatStore";
 import "./Navbar.css";
 
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
-  const { unreadMessages, users, getUsers } = useChatStore(); // Obtener mensajes no leídos
+  const { unreadMessages, users, getUsers, messages } = useChatStore(); // Obtener mensajes no leídos
 
   const Menus = [
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0" },
@@ -35,7 +36,7 @@ function Navbar() {
   }, [location.pathname, Menus]);
 
   useEffect(() => {
-    if (isAuthenticated && user) {
+    if (isAuthenticated && user && user.idUser) {
       getUsers(user.idUser); // Obtener usuarios y mensajes no leídos
     }
   }, [isAuthenticated, user, getUsers]);
@@ -51,6 +52,11 @@ function Navbar() {
 
   const handleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
+  const handleNotificationClick = (idSender) => {
+    setShowNotifications(false);
+    navigate('/mensajes', { state: { redirectToChat: idSender } });
   };
 
   return (
@@ -114,23 +120,22 @@ function Navbar() {
                 </span>
               </div>
 
-              {/* 📩 Lista de mensajes no leídos */}
               {showNotifications && unreadMessages > 0 && (
                 <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 w-64">
                   <h3 className="font-bold text-black dark:text-white mb-2">
                     Mensajes nuevos
                   </h3>
-                  {users
-                    .filter((user) => user.hasUnreadMessages)
-                    .map((user) => (
-                      <Link
-                        key={user.id}
-                        to={`/chat/${user.id}`}
-                        className="block p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
-                        onClick={() => setShowNotifications(false)}
+                  {messages
+                    .filter((message) => !message.read)
+                    .map((message) => (
+                      <div
+                        key={message.idMessage}
+                        className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
+                        onClick={() => handleNotificationClick(message.idSender)}
                       >
-                        {user.username}
-                      </Link>
+                        <strong>{users.find((user) => user.id === message.idSender)?.name}</strong>
+                        <p className="text-sm">{message.text || "Imagen adjunta"}</p>
+                      </div>
                     ))}
                 </div>
               )}
