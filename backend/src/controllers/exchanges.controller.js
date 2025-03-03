@@ -25,11 +25,23 @@ export const getExchangeById = async (req, res) => {
 export const getExchangeByUserId = async (req, res) => {
     try {
         const id = req.params.id;
-        const response = await pool.query(
-            "SELECT * FROM tblExchanges WHERE idUserOne = ? OR idUserTwo = ?",
+        const [rows] = await pool.query(
+            `SELECT 
+                e.idExchange,
+                CONCAT(u1.name, ' ', u1.lastname) AS userOneName,
+                a1.name AS productOneName,
+                CONCAT(u2.name, ' ', u2.lastname) AS userTwoName,
+                a2.name AS productTwoName,
+                e.status
+            FROM exchanges e
+            JOIN users u1 ON e.idUserOne = u1.idUser
+            JOIN articles a1 ON e.idProductoOne = a1.idArticle
+            JOIN users u2 ON e.idUserTwo = u2.idUser
+            JOIN articles a2 ON e.idProductoTwo = a2.idArticle
+            WHERE e.idUserOne = ? OR e.idUserTwo = ?`,
             [id, id]
         );
-        res.json(response.rows);
+        res.json(rows);
     } catch (error) {
         console.log(error);
     }
@@ -39,16 +51,11 @@ export const getExchangeByUserId = async (req, res) => {
 export const createExchange = async (req, res) => {
     try {
         const { idUserOne, idUserTwo, idProductoOne, idProductoTwo, status } = req.body;
-        const response = await pool.query(
-            "INSERT INTO tblExchanges (idUserOne, idUserTwo, idProductoOne, idProductoTwo, status) VALUES (?, ?, ?, ?, ?)",
+        const [rows] = await pool.query(
+            "INSERT INTO exchanges (idUserOne, idUserTwo, idProductoOne, idProductoTwo, status) VALUES (?, ?, ?, ?, ?)",
             [idUserOne, idUserTwo, idProductoOne, idProductoTwo, status]
         );
-        res.json({
-            message: "Exchange created successfully",
-            body: {
-                exchange: { idUserOne, idUserTwo, category, description, status }
-            },
-        });
+        res.status(201).json("Exchange created successfully");
     } catch (error) {
         console.log(error);
     }
@@ -58,8 +65,8 @@ export const updateExchange = async (req, res) => {
     try {
         const id = req.params.id;
         const { status } = req.body;
-        const response = await pool.query(
-            "UPDATE tblExchanges SET status = ? WHERE idExchange = ?",
+        const [rows] = await pool.query(
+            "UPDATE exchanges SET status = ? WHERE idExchange = ?",
             [status, id]
         );
         res.json("Exchange updated successfully");
@@ -68,14 +75,15 @@ export const updateExchange = async (req, res) => {
     }
 }
 
-export const deleteExchange = async (req, res) => {
+export const cancelExchange = async (req, res) => {
     try {
         const id = req.params.id;
-        const response = await pool.query(
-            "DELETE FROM tblExchanges WHERE idExchange = ?",
-            [id]
+        const { status } = req.body;
+        const [rows] = await pool.query(
+            "UPDATE exchanges SET status = ? WHERE idExchange = ?",
+            [status, id]
         );
-        res.json("Exchange deleted successfully");
+        res.json("Exchange updated successfully");
     } catch (error) {
         console.log(error);
     }
@@ -89,6 +97,19 @@ export const getExchangeByStatus = async (req, res) => {
             [status]
         );
         res.json(response.rows);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getExchangesByProductos = async (req, res) => {
+    try {
+        const { idProductoOne, idProductoTwo } = req.params;
+        const [rows] = await pool.query(
+            "SELECT * FROM exchanges WHERE idProductoOne = ? OR idProductoTwo = ?",
+            [idProductoOne, idProductoTwo]
+        );
+        res.json(rows[0]);
     } catch (error) {
         console.log(error);
     }

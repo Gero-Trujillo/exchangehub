@@ -8,6 +8,7 @@ import userRoutes from "./routes/users.routes.js";
 import articleRoutes from './routes/articles.routes.js'
 import messageRoutes from './routes/messages.routes.js'
 import dashboardRoutes from './routes/dashboard.routes.js'
+import exchangesRoutes from './routes/exchanges.routes.js'
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(userRoutes);
 app.use(articleRoutes);
 app.use(messageRoutes);
 app.use(dashboardRoutes);
+app.use(exchangesRoutes);
 
 server.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);

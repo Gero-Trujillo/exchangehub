@@ -7,8 +7,8 @@ function ChatHomePage() {
   const { selectedUser } = useChatStore();
   return (
     <>
-      <div data-aos="fade-left" className="h-screen bg-transparent">
-        <div className="flex items-center justify-center pt-8 px-4">
+      <div data-aos="fade-left" className="h-full bg-transparent flex flex-col flex-1 mb-16 md:mb-0">
+        <div className="flex items-center justify-center pp-8">
           <div className="rounded-lg shadow-md shadow-neutral-200 dark:shadow-zinc-800 w-full max-w-8xl h-[calc(100vh-8rem)] bg-transparent dark:bg-transparent">
             <div className="flex h-full rounded-lg overflow-hidden">
               <SidebarChat />

@@ -33,17 +33,16 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   try {
-    const { text, image, isSpecial } = req.body;
+    const { text, image, isSpecial, offerDetails } = req.body;
     const { receiverId, senderId } = req.params;
 
     const [rows] = await pool.query(
-      `INSERT INTO messages (idSender, idReceiver, text, image, isSpecial) VALUES (?, ?, ?, ?, ?)`,
-      [senderId, receiverId, text, image, isSpecial]
+      `INSERT INTO messages (idSender, idReceiver, text, image, isSpecial, offerDetails) VALUES (?, ?, ?, ?, ?, ?)`,
+      [senderId, receiverId, text, image, isSpecial, JSON.stringify(offerDetails)]
     );
 
-    console.log("receiverId", receiverId);
     const receiverSocketId = getReceiverSocketId(receiverId);
-    console.log(`Receiver socket id: ${receiverSocketId}`);
+
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", {
         idSender: senderId,
@@ -51,6 +50,7 @@ export const sendMessage = async (req, res) => {
         text,
         image,
         isSpecial,
+        offerDetails,
       });
     }
 
@@ -60,3 +60,19 @@ export const sendMessage = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const changeSpecialMessageStatus = async (req, res) => {
+  try {
+    const { idMessage } = req.params;
+
+    const [rows] = await pool.query(
+      `UPDATE messages SET isSpecial = false WHERE idMessage = ?`,
+      [idMessage]
+    );
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}

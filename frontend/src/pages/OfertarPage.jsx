@@ -7,6 +7,7 @@ import { useArticle } from "../context/ArticleContext";
 import { useChatStore } from "../store/useChatStore";
 import ProductCardOfferView from "../components/ProductCardOfferView";
 import { Link, useNavigate } from "react-router-dom";
+import { createExchange } from "../api/exchanges.js";
 
 function OfertarPage() {
   const { articleToOffer: article, articleToGive } = useArticleStore();
@@ -61,6 +62,25 @@ function OfertarPage() {
       }
     }
 
+    const offerDetails = {
+      articleToOffer: article,
+      articleToGive: articleToGive,
+    };
+
+    // Agregar intercambio
+    const exchangeDetails = {
+      idUserOne: article.user,
+      idProductoOne: article.idArticle,
+      idUserTwo: articleToGive.user,
+      idProductoTwo: articleToGive.idArticle,
+      status: "pendiente",
+    }
+
+    try {
+      await createExchange(exchangeDetails);
+    } catch (error) {
+      console.error("Error creating exchange:", error);
+    }
 
     addMessage({
       text: "¡Hola! Tengo una oferta para ti",
@@ -68,6 +88,7 @@ function OfertarPage() {
       idSender: user.idUser,
       sentAt: new Date().toISOString(),
       isSpecial: true,
+      offerDetails,
     });
     await sendMessage(
       {
@@ -75,6 +96,7 @@ function OfertarPage() {
         image: mainImage,
         sentAt: new Date().toISOString(),
         isSpecial: true,
+        offerDetails,
       },
       user.idUser
     );

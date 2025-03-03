@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./TableHistorial.css";
 import "./AsideProfile"
 import {
@@ -9,29 +9,48 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import data from "./MOCK_DATA.json";
+import { getExchangeByUserId } from "../api/exchanges.js";
+import { useAuth } from "../context/AuthContext";
+import { TbArrowsCross } from "react-icons/tb";
 
 function TableHistorial({ onClose }) {
+
+  const { user } = useAuth();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getExchangeByUserId(user.idUser)
+        setData(res.data);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData();
+  }, []);
+
+
   const columns = [
     {
       header: "ID Intercambio",
       accessorKey: "idExchange",
     },
     {
-      header: "Nombre de tu Producto",
-      accessorKey: "NameProductUno",
+      header: "Producto uno",
+      accessorKey: "productOneName",
     },
     {
-      header: "Nombre Producto externo",
-      accessorKey: "NameProductTwo",
+      header: "Producto dos",
+      accessorKey: "productTwoName",
     },
     {
       header: "Estado del intercambio",
-      accessorKey: "StateExchange",
+      accessorKey: "status",
     },
     {
       header: "Nombre del cambiador",
-      accessorKey: "NameUserTwo",
+      accessorKey: "userTwoName",
     },
   ];
 
@@ -57,7 +76,7 @@ function TableHistorial({ onClose }) {
     <div className="overlay ">
       <div className="table-container dark:bg-zinc-700">
         <div className="filtersTable">
-        <button onClick={onClose} className="dismiss" type="button">×</button>
+          <span className="text-black cursor-pointer hover:text-red-500 transition-all duration-300 ease-in text-2xl w-6 h-6" onClick={onClose}><TbArrowsCross /></span>
           <input
             type="text"
             className="filter-input"

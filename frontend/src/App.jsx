@@ -2,7 +2,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -61,12 +61,17 @@ function App() {
               </Route>
             </Routes>
             <WhatsAppButton />
-            <Footer />
+            <FooterWrapper />
           </BrowserRouter>
         </ArticleProvider>
       </AuthProvider>
     </>
   );
+}
+
+function FooterWrapper() {
+  const location = useLocation();
+  return location.pathname !== "/Mensajes" ? <Footer /> : null;
 }
 
 export default App;
