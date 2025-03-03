@@ -24,12 +24,10 @@ export const verifyPayment = async (req, res) => {
       const currency = purchase_units[0].amount.currency_code;
       const email = payer.email_address;
 
-      // Guarda en la base de datos
-      const query = `
+      await pool.query(`
         INSERT INTO payment (transaction_id, user_id, amount, currency, status, payer_email)
         VALUES (?, ?, ?, ?, ?, ?)
-      `;
-      await db.execute(query, [id, req.user.id, amount, currency, "completed", email]);
+      `, [id, req.user.id, amount, currency, "completed", email]);
 
       return res.json({ success: true, message: "Pago registrado correctamente" });
     } else {
@@ -37,6 +35,16 @@ export const verifyPayment = async (req, res) => {
     }
   } catch (error) {
     console.error("Error verificando el pago:", error);
+    return res.status(500).json({ success: false, message: "Error en el servidor" });
+  }
+};
+
+export const getPayments = async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM payment");
+    return res.json(rows);
+  } catch (error) {
+    console.error("Error obteniendo los pagos:", error);
     return res.status(500).json({ success: false, message: "Error en el servidor" });
   }
 };
