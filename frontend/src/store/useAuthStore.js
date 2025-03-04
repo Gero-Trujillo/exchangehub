@@ -30,8 +30,6 @@ export const useAuthStore = create((set, get) => ({
     set({ isSigningUp: true });
     try {
       const res = await registerUser(data);
-      set({ authUser: res.data });
-      get().connectSocket();
     } catch (error) {
       console.log(error.response.data.message);
     } finally {

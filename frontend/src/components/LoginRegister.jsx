@@ -8,6 +8,7 @@ import { useAuthStore } from "../store/useAuthStore";
 function LoginRegister() {
   const { singin, isAuthenticated, error, singup } = useAuth();
   const { login, singup: registering } = useAuthStore();
+  const navigate = useNavigate();
   // useForm para el formulario de inicio de sesión
   const {
     register: registerLogin,
@@ -29,9 +30,8 @@ function LoginRegister() {
 
   const onSubmitSignup = (values) => {
     singup(values);
-    registering(values);
   };
-  const navigate = useNavigate();
+  
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");

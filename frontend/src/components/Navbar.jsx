@@ -69,14 +69,14 @@ function Navbar() {
 
   return (
     <nav className="navbar w-[100%] flex flex-col md:flex-row justify-evenly items-center p-4 sticky top-0 border-b-2 z-20 bg-neutral-100 dark:bg-zinc-900 py-6">
-      <a href="/">
+      <Link to="/">
         <div className="flex items-center">
           <img src={logo} alt="logo" className="w-24" />
           <h1 className="text-4xl font-bold text-emerald-600">
             Exchange<span className="text-emerald-300">Hub</span>
           </h1>
         </div>
-      </a>
+      </Link>
 
       {isAuthenticated ? (
         <div className="bg-emerald-600 dark:bg-emerald-300 max-h-[4.4rem] px-6 md:rounded-xl w-full md:max-w-fit flex gap-8 items-center fixed bottom-0 md:relative">
