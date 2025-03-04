@@ -19,9 +19,9 @@ import OfertarPage from "./pages/OfertarPage";
 import TermsPage from "./pages/TermsPage";
 import PolicyPage from "./pages/PolicyPage";
 import ContactPage from "./pages/ContactPage";
-import WhatsAppButton from "./components/WhatsAppButton";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ProfileAnyUserPage from "./pages/ProfileAnyUserPage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -57,10 +57,9 @@ function App() {
                 <Route path="/Perfil" element={<ProfilePage />} />
                 <Route path="/EditProfile" element={<EditProfile />} />
                 <Route path="/Ofertar" element={<OfertarPage />} />
-                <Route path="/Settings" element />
+                <Route path="/Perfil/Usuario/:id" element={<ProfileAnyUserPage />} />
               </Route>
             </Routes>
-            <WhatsAppButton />
             <FooterWrapper />
           </BrowserRouter>
         </ArticleProvider>

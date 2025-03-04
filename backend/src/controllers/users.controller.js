@@ -32,7 +32,7 @@ export const addUser = async (req, res) => {
 };
 
 export const consultUsers = async (req, res) => {
-  const query = "SELECT * FROM Tblusers";
+  const query = "SELECT * FROM users";
   try {
     const [rows] = await pool.execute(query);
     res.status(200).json(rows);
@@ -129,5 +129,20 @@ export const updateImage = async (req, res) => {
   } catch (error) {
     console.error("Error al actualizar la imagen: ", error);
     res.status(500).json({ error: "Error al actualizar la imagen" });
+  }
+};
+
+
+export const updateUserState = async (req, res) => {
+  const { id } = req.params;
+  const { state } = req.body;
+
+  const query = "UPDATE users SET state = ? WHERE idUser = ?";
+  try {
+    const [rows] = await pool.execute(query, [state, id]);
+    res.status(200).json({ message: "Estado de usuario actualizado con éxito" });
+  } catch (error) {
+    console.error("Error al actualizar el estado del usuario: ", error);
+    res.status(500).json({ error: "Error al actualizar el estado del usuario" });
   }
 };

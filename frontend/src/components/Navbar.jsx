@@ -12,11 +12,31 @@ function Navbar() {
   const { unreadMessages, users, getUsers, messages } = useChatStore(); // Obtener mensajes no leídos
 
   const Menus = [
-    { name: "Inicio", icon: "home-outline", dis: "translate-x-0" },
-    { name: "Perfil", icon: "person-outline", dis: "translate-x-16" },
-    { name: "Mensajes", icon: "chatbubble-outline", dis: "translate-x-32" },
-    { name: "Productos", icon: "bag-handle-outline", dis: "translate-x-48" },
-    { name: "Premium", icon: "rocket-outline", dis: "translate-x-64" },
+    { name: "Inicio", icon: "home-outline", dis: "translate-x-0", path: "/" },
+    {
+      name: "Perfil",
+      icon: "person-outline",
+      dis: "translate-x-16",
+      path: "/Perfil",
+    },
+    {
+      name: "Mensajes",
+      icon: "chatbubble-outline",
+      dis: "translate-x-32",
+      path: "/Mensajes",
+    },
+    {
+      name: "Productos",
+      icon: "bag-handle-outline",
+      dis: "translate-x-48",
+      path: "/Productos",
+    },
+    {
+      name: "Premium",
+      icon: "rocket-outline",
+      dis: "translate-x-64",
+      path: "/Premium",
+    },
   ];
 
   const [active, setActive] = useState(0);
@@ -28,7 +48,7 @@ function Navbar() {
   useEffect(() => {
     const currentPath = location.pathname.slice(1).toLowerCase();
     const activeIndex = Menus.findIndex(
-      (menu) => menu.name.toLowerCase() === currentPath
+      (menu) => menu.name.toLowerCase() === currentPath || currentPath.startsWith(menu.name.toLowerCase())
     );
     if (activeIndex !== -1) {
       setActive(activeIndex);

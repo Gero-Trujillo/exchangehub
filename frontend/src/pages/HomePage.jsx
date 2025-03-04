@@ -6,6 +6,7 @@ import { useArticle } from "../context/ArticleContext.jsx";
 import AdSubscription from "../components/AdSubscription.jsx";
 import StatsHome from "../components/StatsHome.jsx";
 import MembersGroup from "../components/MembersGroup.jsx";
+import WhatsAppButton from "../components/WhatsAppButton.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -94,6 +95,7 @@ function HomePage() {
       <StatsHome />
       <MembersGroup />
       <AdvantagesHome />
+      <WhatsAppButton />
     </>
   );
 }

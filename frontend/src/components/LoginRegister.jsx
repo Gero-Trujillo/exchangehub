@@ -81,6 +81,11 @@ function LoginRegister() {
                 >
                   Registrarse
                 </label>
+                {error && (
+                  <p className="w-full bg-yellow-400 py-2 rounded-md">
+                    {error}
+                  </p>
+                )}
                 <input
                   placeholder="Name"
                   id="name"
