@@ -13,6 +13,10 @@ export const loginUser = async (req, res) => {
     if (rows.length === 0) {
       return res.status(401).json({ message: "Credenciales invalidas" });
     }
+
+    if(rows[0].state === "inActive"){
+      return res.status(401).json({ message: "Usuario inactivo" });
+    }
     const token = await createAccessToken({ idUser: rows[0].idUser });
     res.cookie("accessToken", token);
     res.json(rows[0]);
