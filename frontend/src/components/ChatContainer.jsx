@@ -15,6 +15,7 @@ function ChatContainer() {
     isMessagesLoading,
     subscribeToMessages,
     unsubscribeFromMessages,
+    markMessagesAsRead,
   } = useChatStore();
 
   const { user } = useAuth();
@@ -23,16 +24,16 @@ function ChatContainer() {
   const [idMessage, setIdMessage] = useState(null);
 
   useEffect(() => {
-    getMessages(selectedUser.idUser, user.idUser);
+    if (selectedUser && user) {
+      getMessages(selectedUser.idUser, user.idUser);
+      markMessagesAsRead(selectedUser.idUser, user.idUser); // Marcar mensajes como leídos
+    }
+  }, [selectedUser, user, getMessages, markMessagesAsRead]);
+
+  useEffect(() => {
     subscribeToMessages();
     return () => unsubscribeFromMessages();
-  }, [
-    selectedUser.idUser,
-    getMessages,
-    subscribeToMessages,
-    unsubscribeFromMessages,
-    user.idUser,
-  ]);
+  }, [subscribeToMessages, unsubscribeFromMessages]);
 
   const handleViewOffer = (offerDetails, idMessage) => {
     setSelectedOffer(offerDetails);

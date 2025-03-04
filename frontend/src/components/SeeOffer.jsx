@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { TbArrowsExchange2 } from "react-icons/tb";
 import ProductCardOnlyInfo from "./ProductCardOnlyInfo";
