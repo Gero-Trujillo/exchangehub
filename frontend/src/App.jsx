@@ -19,7 +19,6 @@ import OfertarPage from "./pages/OfertarPage";
 import TermsPage from "./pages/TermsPage";
 import PolicyPage from "./pages/PolicyPage";
 import ContactPage from "./pages/ContactPage";
-import WhatsAppButton from "./components/WhatsAppButton";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -60,7 +59,6 @@ function App() {
                 <Route path="/Settings" element />
               </Route>
             </Routes>
-            <WhatsAppButton />
             <FooterWrapper />
           </BrowserRouter>
         </ArticleProvider>
