@@ -33,6 +33,7 @@ export const useChatStore = create((set, get) => ({
     try {
       const res = await axios.get(`/users/${id}`);
       set({ selectedUser: res.data });
+      return res.data;
     } catch (error) {
       console.log(error);
     }
