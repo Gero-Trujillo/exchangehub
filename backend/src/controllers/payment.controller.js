@@ -41,7 +41,7 @@ export const verifyPayment = async (req, res) => {
 
 export const getPayments = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM payment");
+    const [rows] = await pool.query("SELECT * FROM payment WHERE status = 'completed'");
     return res.json(rows);
   } catch (error) {
     console.error("Error obteniendo los pagos:", error);

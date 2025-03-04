@@ -13,7 +13,8 @@ export const getExchanges = async (req, res) => {
                 u2.idUser AS userTwoId,
                 a2.name AS productTwoName,
                 a2.idArticle AS productTwoId,
-                e.status
+                e.status,
+                e.exchangeDate
             FROM exchanges e
             JOIN users u1 ON e.idUserOne = u1.idUser
             JOIN articles a1 ON e.idProductoOne = a1.idArticle
