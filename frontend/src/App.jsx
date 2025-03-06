@@ -16,6 +16,8 @@ import { useAuthStore } from "./store/useAuthStore";
 import SuscriptionPage from "./pages/SuscriptionPage";
 import EditProfile from "./components/EditProfile";
 import OfertarPage from "./pages/OfertarPage";
+import EditArticle from "./components/EditArticle";
+import MyProducts from "./components/MyProducts";
 import TermsPage from "./pages/TermsPage";
 import PolicyPage from "./pages/PolicyPage";
 import ContactPage from "./pages/ContactPage";
@@ -56,7 +58,9 @@ function App() {
                 <Route path="/Mensajes" element={<ChatHomePage />} />
                 <Route path="/Perfil" element={<ProfilePage />} />
                 <Route path="/EditProfile" element={<EditProfile />} />
+                <Route path="/EditArticle/:articleId" element={<EditArticle />} />
                 <Route path="/Ofertar" element={<OfertarPage />} />
+                <Route path="/MyProducts" element={<MyProducts />} />
                 <Route path="/Settings" element />
               </Route>
             </Routes>

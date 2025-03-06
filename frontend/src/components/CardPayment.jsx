@@ -52,6 +52,14 @@ export default function PayPalCard() {
       }
     };
     document.body.appendChild(script);
+
+    // Cleanup function to remove the script when the component unmounts
+    return () => {
+      document.body.removeChild(script);
+      if (window.paypal) {
+        window.paypal.Buttons().close();
+      }
+    };
   }, []);
 
   return (

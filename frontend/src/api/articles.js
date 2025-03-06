@@ -9,3 +9,8 @@ export const getArticlesBySearch = (search) =>
   axios.get(`/articles/search/${search}`);
 export const getArticlesByCategory = (category) =>
   axios.get(`/articles/category/${category}`);
+export const getArticleById = async (articleId) => {
+  const response = await axios.get(`/articles/${articleId}`);
+  return response.data;
+};
+export const updateArticle = (articleId, data) => axios.put(`/articles/${articleId}`, data);

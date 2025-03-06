@@ -168,7 +168,7 @@ function ProductCard(props) {
             className="hover:bg-emerald-700 text-gray-50 bg-emerald-600 py-2 rounded-br-xl dark:bg-emerald-300 dark:text-black dark:hover:bg-emerald-400"
             onClick={handleProduct}
           >
-            Ver mas
+            Ver más
           </button>
         </div>
       </div>

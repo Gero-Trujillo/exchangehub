@@ -133,7 +133,7 @@ function Navbar() {
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
                         onClick={() => handleNotificationClick(message.idSender)}
                       >
-                        <strong>{users.find((user) => user.id === message.idSender)?.name}</strong>
+                        <strong>{users.find((user) => user.idUser === message.idSender)?.name}</strong>
                         <p className="text-sm">{message.text || "Imagen adjunta"}</p>
                       </div>
                     ))}

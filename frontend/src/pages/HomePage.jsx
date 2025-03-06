@@ -8,12 +8,15 @@ import StatsHome from "../components/StatsHome.jsx";
 import MembersGroup from "../components/MembersGroup.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useChatStore } from "../store/useChatStore.js";
 
 function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
     useArticle();
 
+  const { getUser, selectedUser } = useChatStore();
   const [articlesImages, setArticlesImages] = useState([]);
+  const [premiumUsers, setPremiumUsers] = useState({});
 
   useEffect(() => {
     getAllArticles();
@@ -41,6 +44,29 @@ function HomePage() {
   }, [articles]);
 
   useEffect(() => {
+    // Función para obtener los usuarios premium
+    const fetchPremiumUsers = async () => {
+      try {
+        const users = {};
+        for (const article of articles) {
+          const user = await getUser(article.idOwner);
+          if (user && user.isPremium) {
+            users[article.idOwner] = user;
+          }
+        }
+
+        setPremiumUsers(users);
+      } catch (error) {
+        console.error("Error fetching premium users:", error);
+      }
+    };
+
+    if (articles.length > 0) {
+      fetchPremiumUsers();
+    }
+  }, [articles]);
+
+  useEffect(() => {
     AOS.init({
       duration: 1500, // Duración de la animación en milisegundos
       once: false, // Permitir que la animación ocurra cada vez que el elemento entre en la vista
@@ -56,7 +82,7 @@ function HomePage() {
       >
         <div className="flex flex-col gap-2 max-w-full items-center justify-center md:justify-start md:items-start">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold text-wrap animate-fade-left text-zinc-900 dark:text-slate-100 text-center md:text-start">
-            Productos que no utilizas?
+            ¿Productos que no utilizas?
           </h1>
           <span className="text-emerald-600 animate-pulse animate-ease-in text-5xl md:text-6xl lg:text-8xl font-bold">
             Exchange<span className="text-emerald-300">Hub</span>
@@ -72,21 +98,25 @@ function HomePage() {
         data-aos="fade-up"
       >
         <h1 className="text-4xl font-bold text-emerald-600 dark:text-emerald-300">
-          Mas populares
+          Más populares
         </h1>
         <div className="flex flex-wrap gap-8 w-full justify-center">
           {articles.map((article) => {
-            return (
-              <ProductCard
-                key={article.idArticle}
-                idArticle={article.idArticle}
-                name={article.name}
-                user={article.idOwner}
-                description={article.description}
-                images={articlesImages[article.idArticle]}
-                data-aos="fade-up"
-              />
-            );
+            const user = premiumUsers[article.idOwner];
+            if (user && user.isPremium) {
+              return (
+                <ProductCard
+                  key={article.idArticle}
+                  idArticle={article.idArticle}
+                  name={article.name}
+                  user={article.idOwner}
+                  description={article.description}
+                  images={articlesImages[article.idArticle]}
+                  data-aos="fade-up"
+                />
+              );
+            }
+            return null;
           })}
         </div>
       </section>

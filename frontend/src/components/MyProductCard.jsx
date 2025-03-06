@@ -7,7 +7,7 @@ import { useChatStore } from "../store/useChatStore";
 import { useArticleStore } from "../store/useArticleStore";
 import { useNavigate } from "react-router-dom";
 
-function ProductCard(props) {
+function MyProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
   const { name, user, description, images, idArticle, ownerName } = props;
   const [product, setProduct] = useState(false);
@@ -40,6 +40,10 @@ function ProductCard(props) {
 
   const handleProduct = () => {
     setProduct(!product);
+  };
+
+  const handleEditArticle = () => {
+    navigate(`/EditArticle/${idArticle}`);
   };
 
   return (
@@ -120,8 +124,13 @@ function ProductCard(props) {
             </div>
 
             <div className="w-full flex flex-row gap-2">
-              <button className="btn btn-outline btn-info">Editar articulo</button>
-              <button className="btn btn-outline btn-error">Eliminar articulo</button>
+              <button
+                className="btn btn-outline btn-info"
+                onClick={handleEditArticle}
+              >
+                Editar artículo
+              </button>
+              <button className="btn btn-outline btn-error">Eliminar artículo</button>
             </div>
           </div>
         </section>
@@ -154,7 +163,7 @@ function ProductCard(props) {
             className="hover:bg-emerald-700 text-gray-50 bg-emerald-600 py-2 rounded-br-xl dark:bg-emerald-300 dark:text-black dark:hover:bg-emerald-400"
             onClick={handleProduct}
           >
-            Ver mas
+            Ver más
           </button>
         </div>
       </div>
@@ -162,4 +171,4 @@ function ProductCard(props) {
   );
 }
 
-export default ProductCard;
+export default MyProductCard;
