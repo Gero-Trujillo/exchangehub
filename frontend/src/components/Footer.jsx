@@ -1,4 +1,5 @@
-import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
+import { FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { Link as ScrollLink } from "react-scroll";
 import { Link } from "react-router-dom";
 
@@ -33,13 +34,14 @@ function Footer() {
         </nav>
         <nav>
           <div className="grid grid-flow-col gap-4">
-            <a className="text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300">
+            <a href="https://www.instagram.com/exchangehub__official/"target="_blank" className="text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300">
               <FaInstagram />
+              
             </a>
-            <a className="text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300">
-              <FaFacebook />
+            <a href="https://x.com/ExchangeHub_" target="_blank" className="text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300">
+              <FaXTwitter />
             </a>
-            <a className="text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300">
+            <a href="https://www.tiktok.com/@exchangehub_official" target="_blank" className="text-2xl cursor-pointer text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-300">
               <FaTiktok />
             </a>
           </div>
