@@ -120,7 +120,7 @@ function CreateArticle(props) {
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
-              className="rounded-md p-2 w-full outline-none dark:bg-zinc-900"
+              className="rounded-md p-2 w-full outline-none bg-neutral-100 text-zinc-800 dark:bg-zinc-900 dark:text-white"
               type="text"
               placeholder="Nombre del producto"
               {...register("name", { required: true })}
@@ -129,7 +129,7 @@ function CreateArticle(props) {
               <p className="w-full text-yellow-500">El nombre es obligatorio</p>
             )}
             <textarea
-              className="rounded-md p-2 w-full h-28 outline-none resize-none dark:bg-zinc-900"
+              className="rounded-md p-2 w-full h-28 outline-none resize-none bg-neutral-100 text-zinc-800 dark:bg-zinc-900 dark:text-white"
               type="text"
               placeholder="Descripcion del producto. *Especificar que desea obtener a cambio*"
               {...register("description", { required: true })}
@@ -140,7 +140,7 @@ function CreateArticle(props) {
               </p>
             )}
             <select
-              className="p-2 rounded-md outline-none dark:bg-zinc-900"
+              className="p-2 rounded-md outline-none bg-neutral-100 text-zinc-800 dark:bg-zinc-900 dark:text-white"
               {...register("category", { required: true })}
             >
               <option selected disabled>
@@ -156,7 +156,7 @@ function CreateArticle(props) {
                 La categoria es obligatoria
               </p>
             )}
-            <p className="text-neutral-400">
+            <p className="text-yellow-600">
               *NOTA: Haz click sobre la imagen que quieres que sea la principal*
             </p>
             <div className="bg-neutral-100 p-2 rounded-md flex flex-col gap-2 cursor-cell dark:bg-zinc-700">

@@ -9,7 +9,7 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
-  const { unreadMessages, users, getUsers, messages } = useChatStore(); // Obtener mensajes no leídos
+  const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtener mensajes no leídos
 
   const Menus = [
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0", path: "/" },
@@ -76,7 +76,8 @@ function Navbar() {
 
   const handleNotificationClick = (idSender) => {
     setShowNotifications(false);
-    navigate('/mensajes', { state: { redirectToChat: idSender } });
+    getUser(idSender);
+    navigate('/mensajes');
   };
 
   return (

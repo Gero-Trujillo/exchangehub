@@ -15,7 +15,7 @@ function HomePage() {
   const { getAllArticles, articles, getArticlesImages, articleImgs } =
     useArticle();
 
-  const { getUser, selectedUser } = useChatStore();
+  const { getUser, selectedUser, setSelectedUser } = useChatStore();
   const [articlesImages, setArticlesImages] = useState([]);
   const [premiumUsers, setPremiumUsers] = useState({});
 
@@ -51,6 +51,7 @@ function HomePage() {
         const users = {};
         for (const article of articles) {
           const user = await getUser(article.idOwner);
+          setSelectedUser(null)
           if (user && user.isPremium) {
             users[article.idOwner] = user;
           }

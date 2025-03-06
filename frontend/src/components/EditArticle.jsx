@@ -100,7 +100,10 @@ const EditArticle = () => {
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="form-group">
-          <label htmlFor="name" className="block text-emerald-600 dark:text-emerald-300 mb-1">
+          <label
+            htmlFor="name"
+            className="block text-emerald-600 dark:text-emerald-300 mb-1"
+          >
             Nombre del artículo:
           </label>
           <input
@@ -109,13 +112,16 @@ const EditArticle = () => {
             name="name"
             value={article.name}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-zinc-700 dark:text-white"
+            className="w-full px-4 py-2 border border-gray-300 bg-neutral-100 text-zinc-800 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-zinc-700 dark:text-white"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="description" className="block text-emerald-600 dark:text-emerald-300 mb-1">
+          <label
+            htmlFor="description"
+            className="block text-emerald-600 dark:text-emerald-300 mb-1"
+          >
             Descripción:
           </label>
           <textarea
@@ -124,13 +130,16 @@ const EditArticle = () => {
             value={article.description}
             onChange={handleChange}
             rows={4}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-zinc-700 dark:text-white"
+            className="w-full px-4 py-2 border border-gray-300 bg-neutral-100 text-zinc-800 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-zinc-700 dark:text-white"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="category" className="block text-emerald-600 dark:text-emerald-300 mb-1">
+          <label
+            htmlFor="category"
+            className="block text-emerald-600 dark:text-emerald-300 mb-1"
+          >
             Categoría:
           </label>
           <select
@@ -138,7 +147,7 @@ const EditArticle = () => {
             name="category"
             value={article.category}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-zinc-700 dark:text-white"
+            className="w-full px-4 py-2 border border-gray-300 bg-neutral-100 text-zinc-800 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-zinc-700 dark:text-white"
             required
           >
             <option value="">Selecciona una categoría</option>
@@ -151,7 +160,10 @@ const EditArticle = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="images" className="block text-emerald-600 dark:text-emerald-300 mb-1">
+          <label
+            htmlFor="images"
+            className="block text-emerald-600 dark:text-emerald-300 mb-1"
+          >
             Imágenes del artículo:
           </label>
           <input
@@ -164,7 +176,14 @@ const EditArticle = () => {
           />
         </div>
 
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4 gap-4">
+          <button
+            type="submit"
+            onClick={() => navigate("/Perfil")}
+            className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-red-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-red-600 hover:text-red-300 dark:bg-zinc-900 dark:border-red-300 dark:before:bg-red-300 dark:text-red-300 dark:hover:text-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Cancelar
+          </button>
           <button
             type="submit"
             disabled={isSubmitting}
@@ -179,4 +198,3 @@ const EditArticle = () => {
 };
 
 export default EditArticle;
-
