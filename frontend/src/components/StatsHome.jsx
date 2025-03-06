@@ -14,7 +14,7 @@ function StatsHome() {
     },
     {
       id: 3,
-      name: "Economia circular. Esto indica un cambio hacia modelos de consumo más responsables y sostenibles.",
+      name: "Economía circular. Esto indica un cambio hacia modelos de consumo más responsables y sostenibles.",
       value: "Aumento",
     },
   ];

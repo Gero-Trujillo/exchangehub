@@ -24,12 +24,12 @@ function Footer() {
           <Link
           to="/terms"
           className="link link-hover text-emerald-600 dark:text-emerald-300">
-            Terminos y condiciones
+            Términos y condiciones
           </Link>
           <Link
           to="/privacy"
           className="link link-hover text-emerald-600 dark:text-emerald-300">
-            Politica de privacidad
+            Política de privacidad
           </Link>
         </nav>
         <nav>
