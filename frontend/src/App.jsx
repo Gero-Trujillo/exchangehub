@@ -24,6 +24,8 @@ import ContactPage from "./pages/ContactPage";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ProfileAnyUserPage from "./pages/ProfileAnyUserPage";
+import ConfirmAccountPage from "./pages/ConfirmAccountPage";
+import RegisterResponsePage from "./pages/RegisterResponsePage";
 
 function App() {
   const { onlineUsers } = useAuthStore();
@@ -52,6 +54,8 @@ function App() {
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/privacy" element={<PolicyPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/confirm/:idUser" element={<ConfirmAccountPage />} />
+              <Route path="/register/response" element={<RegisterResponsePage />} />
 
 
               <Route element={<ProtectedRoute />}>

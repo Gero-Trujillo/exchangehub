@@ -82,29 +82,19 @@ function ProductCard(props) {
                   <div className="flex flex-row">
                     <div className="rating">
                       <input
-                        type="radio"
-                        name="rating-4"
                         className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
                       />
                       <input
-                        type="radio"
-                        name="rating-4"
                         className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
                         defaultChecked
                       />
                       <input
-                        type="radio"
-                        name="rating-4"
                         className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
                       />
                       <input
-                        type="radio"
-                        name="rating-4"
                         className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
                       />
                       <input
-                        type="radio"
-                        name="rating-4"
                         className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
                       />
                     </div>

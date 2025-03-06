@@ -1,7 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { loginUser, registerUser, verifyToken } from "../api/auth.js";
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -31,8 +30,7 @@ export const AuthProvider = ({ children }) => {
   const singup = async (user) => {
     try {
       const response = await registerUser(user);
-      setUser(response.data);
-      setIsAuthenticated(true);
+      window.location.href = "/register/response";
     } catch (error) {
       setError(error.response.data.message);
     }
