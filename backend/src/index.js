@@ -9,6 +9,8 @@ import articleRoutes from './routes/articles.routes.js'
 import messageRoutes from './routes/messages.routes.js'
 import dashboardRoutes from './routes/dashboard.routes.js'
 import exchangesRoutes from './routes/exchanges.routes.js'
+import paymentRoutes from './routes/payment.routes.js'
+
 
 dotenv.config();
 
@@ -18,7 +20,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: FRONTEND_URL,
+  origin: [FRONTEND_URL, "http://localhost:3000"],
   credentials: true,
 }));
 
@@ -29,6 +31,7 @@ app.use(articleRoutes);
 app.use(messageRoutes);
 app.use(dashboardRoutes);
 app.use(exchangesRoutes);
+app.use(paymentRoutes);
 
 server.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);

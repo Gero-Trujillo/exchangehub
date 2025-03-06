@@ -1,6 +1,7 @@
 import { X } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
+import { Link } from "react-router-dom";
 
 function ChatHeader() {
   const { selectedUser, setSelectedUser } = useChatStore();
@@ -13,10 +14,13 @@ function ChatHeader() {
           {/* Avatar */}
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img className="rounded-full w-full h-full"
-                src={selectedUser.profileImageUrl || "https://robohash.org/1"}
-                alt={selectedUser.name}
-              />
+              <Link to={`/Perfil/Usuario/${selectedUser.idUser}`}>
+                <img
+                  className="rounded-full w-full h-full cursor-pointer"
+                  src={selectedUser.profileImageUrl || "https://robohash.org/1"}
+                  alt={selectedUser.name}
+                />
+              </Link>
             </div>
           </div>
 
@@ -26,7 +30,9 @@ function ChatHeader() {
               {selectedUser.name} {selectedUser.lastname}
             </h3>
             <p className="text-sm text-emerald-600">
-              {onlineUsers.includes(selectedUser.idUser.toString()) ? "En linea" : "Desconectado"}
+              {onlineUsers.includes(selectedUser.idUser.toString())
+                ? "En linea"
+                : "Desconectado"}
             </p>
           </div>
         </div>

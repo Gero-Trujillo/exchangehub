@@ -6,6 +6,7 @@ import {
     deleteUserUpdateState,
     resetUserUpdateState,
     updateImage,
+    updateUserState,
   } from "../controllers/users.controller.js";
   import { Router } from "express";
   
@@ -17,5 +18,6 @@ import {
   router.delete("/api/users/:iduser", deleteUserUpdateState);
   router.post("/api/users/:iduser", resetUserUpdateState);
   router.patch("/api/users/:iduser/image", updateImage);
+  router.patch("/api/users/:id/state", updateUserState);
   
   export default router;
