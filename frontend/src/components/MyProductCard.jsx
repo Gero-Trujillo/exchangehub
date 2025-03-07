@@ -6,7 +6,7 @@ import { useArticle } from "../context/ArticleContext";
 import { useChatStore } from "../store/useChatStore";
 import { useArticleStore } from "../store/useArticleStore";
 import { useNavigate } from "react-router-dom";
-
+import { deleteArticle } from '../api/articles'
 function ProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
   const { name, user, description, images, idArticle, ownerName } = props;
@@ -28,6 +28,19 @@ function ProductCard(props) {
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  const handleDeleteProduct = () => {
+    deleteArticle(idArticle)
+     .then(() => {
+        window.location.reload()
+        alert('Producto eliminado con exito')
+      })
+     .catch((error) => {
+        console.error('Error en borrar el producto:', error);
+        alert('A ocurrido un error borrando el producto')
+      });
+    
+  }
 
   useEffect(() => {
     if (images && images.length > 0) {
@@ -121,7 +134,7 @@ function ProductCard(props) {
 
             <div className="w-full flex flex-row gap-2">
               <button className="btn btn-outline btn-info">Editar articulo</button>
-              <button className="btn btn-outline btn-error">Eliminar articulo</button>
+              <button className="btn btn-outline btn-error" onClick={handleDeleteProduct}>Eliminar articulo</button>
             </div>
           </div>
         </section>
