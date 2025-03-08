@@ -6,6 +6,7 @@ import { useArticle } from "../context/ArticleContext";
 import { useChatStore } from "../store/useChatStore";
 import { useArticleStore } from "../store/useArticleStore";
 import { useNavigate } from "react-router-dom";
+import { deleteArticle } from '../api/articles'
 
 function MyProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
@@ -137,13 +138,6 @@ function MyProductCard(props) {
             </div>
 
             <div className="w-full flex flex-row gap-2">
-              <button
-                className="btn btn-outline btn-info"
-                onClick={handleEditArticle}
-              >
-                Editar artículo
-              </button>
-              <button className="btn btn-outline btn-error">Eliminar artículo</button>
               <button className="btn btn-outline btn-info">Editar articulo</button>
               <button className="btn btn-outline btn-error" onClick={handleDeleteProduct}>Eliminar articulo</button>
             </div>
