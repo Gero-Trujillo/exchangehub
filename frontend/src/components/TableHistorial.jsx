@@ -12,6 +12,7 @@ import {
 import { getExchangeByUserId } from "../api/exchanges.js";
 import { useAuth } from "../context/AuthContext";
 import { TbArrowsCross } from "react-icons/tb";
+import { RiCloseFill } from "react-icons/ri";
 
 function TableHistorial({ onClose }) {
 
@@ -76,7 +77,7 @@ function TableHistorial({ onClose }) {
     <div className="overlay ">
       <div className="table-container dark:bg-zinc-700">
         <div className="filtersTable">
-          <span className="text-black cursor-pointer hover:text-red-500 transition-all duration-300 ease-in text-2xl w-6 h-6" onClick={onClose}><TbArrowsCross /></span>
+          <span className="text-black font-bold cursor-pointer hover:text-red-500 transition-all duration-300 ease-in text-2xl w-6 h-6" onClick={onClose}><RiCloseFill /></span>
           <input
             type="text"
             className="filter-input"

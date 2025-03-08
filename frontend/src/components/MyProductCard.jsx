@@ -29,6 +29,19 @@ function MyProductCard(props) {
     );
   };
 
+  const handleDeleteProduct = () => {
+    deleteArticle(idArticle)
+     .then(() => {
+        window.location.reload()
+        alert('Producto eliminado con exito')
+      })
+     .catch((error) => {
+        console.error('Error en borrar el producto:', error);
+        alert('A ocurrido un error borrando el producto')
+      });
+    
+  }
+
   useEffect(() => {
     if (images && images.length > 0) {
       const mainImageFind = images.find((img) => img.is_main);
@@ -131,6 +144,8 @@ function MyProductCard(props) {
                 Editar artículo
               </button>
               <button className="btn btn-outline btn-error">Eliminar artículo</button>
+              <button className="btn btn-outline btn-info">Editar articulo</button>
+              <button className="btn btn-outline btn-error" onClick={handleDeleteProduct}>Eliminar articulo</button>
             </div>
           </div>
         </section>
