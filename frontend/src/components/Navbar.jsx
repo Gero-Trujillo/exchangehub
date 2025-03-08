@@ -9,7 +9,7 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
-  const { unreadMessages, users, getUsers, messages } = useChatStore(); // Obtener mensajes no leídos
+  const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtener mensajes no leídos
 
   const Menus = [
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0", path: "/" },
@@ -76,7 +76,8 @@ function Navbar() {
 
   const handleNotificationClick = (idSender) => {
     setShowNotifications(false);
-    navigate('/mensajes', { state: { redirectToChat: idSender } });
+    getUser(idSender);
+    navigate('/mensajes');
   };
 
   return (
@@ -153,7 +154,7 @@ function Navbar() {
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
                         onClick={() => handleNotificationClick(message.idSender)}
                       >
-                        <strong>{users.find((user) => user.id === message.idSender)?.name}</strong>
+                        <strong>{users.find((user) => user.idUser === message.idSender)?.name}</strong>
                         <p className="text-sm">{message.text || "Imagen adjunta"}</p>
                       </div>
                     ))}

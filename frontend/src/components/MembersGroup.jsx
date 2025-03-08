@@ -46,7 +46,7 @@ function MembersGroup() {
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600 dark:text-white">
               Somos el equipo encargado del desarrollo y seguimiento de
-              ExchangeHub, desde la planinificación hasta la implementación.
+              ExchangeHub, desde la planificación hasta la implementación.
             </p>
           </div>
           <ul

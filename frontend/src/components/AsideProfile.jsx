@@ -9,6 +9,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useAuth } from "../context/AuthContext";
 import { uploadImage } from "../api/profile";
 import { Link } from "react-router-dom";
+import { MdOutlineWorkspacePremium } from "react-icons/md";
 
 function AsideProfile() {
   const { user, logout } = useAuth();
@@ -159,7 +160,7 @@ function AsideProfile() {
             }}
           ></div>
           <div className="z-10 group-hover:-translate-y-10 transition-all duration-500">
-            <span className="text-2xl font-semibold text-zinc-800 dark:text-slate-100">{`${user.name} ${user.lastname}`}</span>
+            <span className="text-2xl font-semibold text-zinc-800 dark:text-slate-100 flex items-center">{`${user.name} ${user.lastname}`}  {user.isPremium ? <span className="text-yellow-400"> <MdOutlineWorkspacePremium /></span> : null}</span>
             <p className="text-zinc-600 dark:text-zinc-500">{user.email}</p>
           </div>
           <div className="flex flex-col gap-2 items-center">

@@ -16,13 +16,18 @@ export const getArticles = async (req, res) => {
 export const getArticleById = async (req, res) => {
   try {
     const id = req.params.id;
-    const response = await pool.query(
+    const [rows] = await pool.query(
       "SELECT * FROM articles WHERE idArticle = ?",
       [id]
     );
-    res.json(response.rows);
+    if (rows.length > 0) {
+      res.json(rows[0]); // Asegúrate de devolver el primer artículo
+    } else {
+      res.status(404).json({ message: "Article not found" });
+    }
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: "Error fetching article" });
   }
 };
 

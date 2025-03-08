@@ -28,8 +28,8 @@ function OptionsArticles() {
     <>
       <section className="w-full flex flex-col items-center gap-4 md:flex-row dark:flex-col-reverse dark:md:flex-row-reverse md:justify-between lg:px-12 xl:px-20 2xl:px-36">
         <div className="flex flex-col gap-2 items-start dark:items-end">
-          <div class="p-5 overflow-hidden w-[60px] h-[40px] hover:w-[270px] hover:bg-white hover:text-emerald-600 bg-emerald-600 dark:bg-emerald-300 dark:hover:bg-zinc-950 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
-            <div class="flex items-center justify-center fill-emerald-300 dark:fill-emerald-600">
+          <div className="p-5 overflow-hidden w-[60px] h-[40px] hover:w-[270px] hover:bg-white hover:text-emerald-600 bg-emerald-600 dark:bg-emerald-300 dark:hover:bg-zinc-950 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
+            <div className="flex items-center justify-center fill-emerald-300 dark:fill-emerald-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 id="Isolation_Mode"
@@ -43,7 +43,7 @@ function OptionsArticles() {
             </div>
             <input
               type="text"
-              class="outline-none text-[20px] bg-transparent w-full font-normal px-4"
+              className="outline-none text-[20px] bg-transparent w-full font-normal px-4"
               onChange={(e) => setOnSearch(e.target.value)}
               value={onSearch}
             />
@@ -73,7 +73,7 @@ function OptionsArticles() {
               setAccesorios(false);
               setOnCategory("tecnologia");
             }}>
-              Tecnologia
+              Tecnología
             </div>
 
             <div className={`p-2 border-2 border-emerald-600 rounded-full cursor-pointer text-emerald-600 dark:border-emerald-300 dark:text-emerald-300 ${deportes ? "bg-emerald-600 text-white" : ""}`} onClick={()=>{
