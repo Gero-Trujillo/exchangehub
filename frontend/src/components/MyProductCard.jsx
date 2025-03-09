@@ -138,7 +138,7 @@ function MyProductCard(props) {
             </div>
 
             <div className="w-full flex flex-row gap-2">
-              <button className="btn btn-outline btn-info">Editar articulo</button>
+              <button className="btn btn-outline btn-info" onClick={handleEditArticle}>Editar articulo</button>
               <button className="btn btn-outline btn-error" onClick={handleDeleteProduct}>Eliminar articulo</button>
             </div>
           </div>
