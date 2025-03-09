@@ -3,6 +3,7 @@ import {
   createArticle,
   createArticleImage,
   deleteArticle,
+  deleteArticleImage,
   getArticleByCategory,
   getArticleById,
   getArticleBySearch,
@@ -25,5 +26,6 @@ router.put("/api/articles/:id", authRequired, updateArticle);
 router.delete("/api/articles/:id", authRequired, deleteArticle);
 router.post("/api/articles/image", authRequired, createArticleImage);
 router.get("/api/articles/image/:id", getArticleImages);
+router.delete("/api/articles/image/:id", authRequired, deleteArticleImage);
 
 export default router;
