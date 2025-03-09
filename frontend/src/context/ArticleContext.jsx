@@ -2,11 +2,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   createArticle,
   createArticleImage,
+  deleteArticleImage,
+  getArticleById,
   getArticleImages,
   getArticles,
   getArticlesByCategory,
   getArticlesBySearch,
   getArticlesByUserId,
+  updateArticle,
 } from "../api/articles.js";
 
 const ArticleContext = createContext();
@@ -21,6 +24,7 @@ export const useArticle = () => {
 
 export const ArticleProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
+  const [article, setArticle] = useState({});
   const [articlesFound, setArticlesFound] = useState([]);
   const [articlesCategory, setArticlesCategory] = useState([]);
   const [articleImgs, setArticleImgs] = useState([]);
@@ -56,7 +60,6 @@ export const ArticleProvider = ({ children }) => {
   const createArticlesImage = async (data) => {
     try {
       const res = await createArticleImage(data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -84,8 +87,34 @@ export const ArticleProvider = ({ children }) => {
   const searchCategory = async (category) => {
     try {
       const res = await getArticlesByCategory(category);
-      setArticlesCategory(res.data)
+      setArticlesCategory(res.data);
       console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getArticle = async (id) => {
+    try {
+      const res = await getArticleById(id);
+      setArticle(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editArticle = async (articleId, data) => {
+    try {
+      const res = await updateArticle(articleId, data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteImages = async (id) => {
+    try {
+      await deleteArticleImage(id);
     } catch (error) {
       console.log(error);
     }
@@ -99,6 +128,7 @@ export const ArticleProvider = ({ children }) => {
         articleImgs,
         articlesFound,
         articlesCategory,
+        article,
         getAllArticles,
         getArticlesOfUser,
         createArticles,
@@ -106,6 +136,9 @@ export const ArticleProvider = ({ children }) => {
         getArticlesImages,
         searchArticles,
         searchCategory,
+        getArticle,
+        editArticle,
+        deleteImages,
       }}
     >
       {children}

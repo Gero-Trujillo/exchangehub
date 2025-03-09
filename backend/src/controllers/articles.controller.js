@@ -152,3 +152,21 @@ export const getArticleImages = async (req, res) => {
     console.log(error);
   }
 };
+
+export const deleteArticleImage = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const [rows] = await pool.query(
+      "DELETE FROM articlesImages WHERE idImage = ?",
+      [id]
+    );
+    res.json({
+      message: "Image deleted successfully",
+      body: {
+        image: { id },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

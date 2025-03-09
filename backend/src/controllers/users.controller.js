@@ -60,7 +60,7 @@ export const updateUser = async (req, res) => {
   const { iduser } = req.params;
 
   const query =
-    " UPDATE TblUsers SET name = ?, lastname = ?, email = ?, address = ?, cellphone = ?, password = ? WHERE iduser = ? ";
+    " UPDATE users SET name = ?, lastname = ?, email = ?, address = ?, cellphone = ?, password = ? WHERE iduser = ? ";
   try {
     const [result] = await pool.execute(query, [
       name,

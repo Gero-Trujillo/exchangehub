@@ -7,6 +7,7 @@ import { useChatStore } from "../store/useChatStore";
 import { useArticleStore } from "../store/useArticleStore";
 import { useNavigate } from "react-router-dom";
 import { deleteArticle } from '../api/articles'
+import EditArticle from "./EditArticle";
 
 function MyProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
@@ -15,6 +16,7 @@ function MyProductCard(props) {
   const [mainImage, setMainImage] = useState(null);
   const { setSelectedUser, getUser } = useChatStore();
   const { setArticleToOffer } = useArticleStore();
+  const [showAddArt, setShowAddArt] = useState(false); 
   const navigate = useNavigate();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -56,12 +58,14 @@ function MyProductCard(props) {
     setProduct(!product);
   };
 
-  const handleEditArticle = () => {
-    navigate(`/EditArticle/${idArticle}`);
+  const handleShowAddArt = () => {
+    setShowAddArt(!showAddArt);
+    handleProduct();
   };
 
   return (
     <>
+      {showAddArt && <EditArticle showAddArt={setShowAddArt} idArticle={idArticle} />}
       {product && (
         <section className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-[#000000dd] z-50">
           <div className="flex flex-col gap-2 dark:text-white max-w-lg w-5/6 bg-white dark:bg-zinc-900 p-5 rounded-xl mt-8 shadow-md hover:duration-150 duration-150">
@@ -138,7 +142,7 @@ function MyProductCard(props) {
             </div>
 
             <div className="w-full flex flex-row gap-2">
-              <button className="btn btn-outline btn-info" onClick={handleEditArticle}>Editar articulo</button>
+              <button className="btn btn-outline btn-info" onClick={handleShowAddArt}>Editar articulo</button>
               <button className="btn btn-outline btn-error" onClick={handleDeleteProduct}>Eliminar articulo</button>
             </div>
           </div>
