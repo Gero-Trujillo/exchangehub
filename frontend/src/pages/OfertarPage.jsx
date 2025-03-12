@@ -7,7 +7,7 @@ import { useArticle } from "../context/ArticleContext";
 import { useChatStore } from "../store/useChatStore";
 import ProductCardOfferView from "../components/ProductCardOfferView";
 import { Link, useNavigate } from "react-router-dom";
-import { createExchange } from "../api/exchanges.js";
+import { createExchange, sendNotificationEmail } from "../api/exchanges.js";
 
 function OfertarPage() {
   const { articleToOffer: article, articleToGive } = useArticleStore();
@@ -100,6 +100,17 @@ function OfertarPage() {
       },
       user.idUser
     );
+
+    // Enviar notificación por correo
+    const notificationData = {
+      email: selectedUser.email,
+    }
+
+    try {
+      await sendNotificationEmail(notificationData);
+    } catch (error) {
+      console.error("Error sending notification email:", error);
+    }
 
     // Navegar a la conversación
     getUser(selectedUser.idUser);
