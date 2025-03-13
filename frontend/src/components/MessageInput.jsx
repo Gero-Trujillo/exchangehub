@@ -33,17 +33,31 @@ function Messageinput() {
     e.preventDefault();
     if (!text.trim() && !imagePreview) return;
 
+    const formData = new FormData();
+    formData.append("file", imagePreview);
+    formData.append("upload_preset", "iy7b0j5h");
+    formData.append("api_key", "233885991187399");
+
     try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/demo/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+      const image = data.secure_url;
       addMessage({
         text: text.trim(),
-        image: imagePreview,
+        image: image,
         idSender: user.idUser,
         sentAt: new Date().toISOString(),
       });
       await sendMessage(
         {
           text: text.trim(),
-          image: imagePreview,
+          image: image,
           sentAt: new Date().toISOString(),
         },
         user.idUser
