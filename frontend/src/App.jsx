@@ -28,7 +28,11 @@ import ConfirmAccountPage from "./pages/ConfirmAccountPage";
 import RegisterResponsePage from "./pages/RegisterResponsePage";
 
 function App() {
-  const { onlineUsers } = useAuthStore();
+  const reconnectSocketOnLoad = useAuthStore((state) => state.reconnectSocketOnLoad);
+
+  useEffect(() => {
+    reconnectSocketOnLoad();
+  }, []);
 
   useEffect(() => {
       AOS.init({

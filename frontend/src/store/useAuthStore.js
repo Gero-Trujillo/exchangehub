@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 const BASE_URL = "http://localhost:3000";
 
 export const useAuthStore = create((set, get) => ({
-  authUser: null,
+  authUser: JSON.parse(localStorage.getItem("authUser")) || null,
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
@@ -18,6 +18,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await loginUser(data);
       set({ authUser: res.data });
+      localStorage.setItem("authUser", JSON.stringify(res.data));
       get().connectSocket();
     } catch (error) {
       console.log(error.response.data.message);
@@ -67,5 +68,12 @@ export const useAuthStore = create((set, get) => ({
 
   disconnectSocket: () => {
     if (get().socket?.connected) get().socket.disconnect();
+  },
+
+  reconnectSocketOnLoad: () => {
+    const authUser = get().authUser;
+    if (authUser) {
+      get().connectSocket(); // Reconectar el socket si el usuario está autenticado
+    }
   },
 }));
