@@ -1,0 +1,275 @@
+openapi: 3.0.0
+info:
+  title: ExchangeHub API
+  description: API para la gestión de intercambios en ExchangeHub
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Servidor local
+paths:
+  /register:
+    post:
+      summary: Registra un nuevo usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                cellphone:
+                  type: integer
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Usuario registrado con éxito
+  
+  /login:
+    post:
+      summary: Inicia sesión en la plataforma
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Inicio de sesión exitoso
+
+  /logout:
+    post:
+      summary: Cierra la sesión del usuario
+      responses:
+        '200':
+          description: Sesión cerrada exitosamente
+
+  /verify:
+    get:
+      summary: Verifica si el usuario tiene sesión activa
+      responses:
+        '200':
+          description: Usuario verificado
+
+  /articles:
+    get:
+      summary: Obtiene todos los artículos disponibles
+      responses:
+        '200':
+          description: Lista de artículos
+    post:
+      summary: Crea un nuevo artículo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                descripcion:
+                  type: string
+                categoria:
+                  type: string
+                imagen:
+                  type: string
+      responses:
+        '201':
+          description: Artículo creado con éxito
+
+  /articles/user/{id}:
+    get:
+      summary: Obtiene los artículos de un usuario específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de artículos del usuario
+
+  /articles/image:
+    post:
+      summary: Sube una imagen de un artículo
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Imagen subida con éxito
+
+  /articles/image/{id}:
+    get:
+      summary: Obtiene imágenes de un artículo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Imagen del artículo obtenida
+
+  /articles/{id}:
+    delete:
+      summary: Elimina un artículo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Artículo eliminado con éxito
+
+  /articles/search/{search}:
+    get:
+      summary: Busca artículos por nombre o descripción
+      parameters:
+        - name: search
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de artículos encontrados
+
+  /articles/category/{category}:
+    get:
+      summary: Filtra artículos por categoría
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de artículos filtrados por categoría
+
+  /exchanges:
+    post:
+      summary: Crea una nueva solicitud de intercambio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productoOne:
+                  type: integer
+                productoTwo:
+                  type: integer
+                userOne:
+                  type: integer
+                userTwo:
+                  type: integer
+      responses:
+        '201':
+          description: Intercambio creado con éxito
+
+  /exchanges/cancel/{id}:
+    patch:
+      summary: Cancela un intercambio
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Intercambio cancelado
+
+  /users/{iduser}/image:
+    patch:
+      summary: Sube una imagen de perfil
+      parameters:
+        - name: iduser
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Imagen de perfil actualizada
+
+  /users/{iduser}:
+    put:
+      summary: Actualiza la información del usuario
+      parameters:
+        - name: iduser
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                cellphone:
+                  type: integer
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Información del usuario actualizada
