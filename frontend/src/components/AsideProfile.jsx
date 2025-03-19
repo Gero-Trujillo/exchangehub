@@ -9,12 +9,14 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useAuth } from "../context/AuthContext";
 import { uploadImage } from "../api/profile";
 import { Link } from "react-router-dom";
+import EditProfile from "./EditProfile";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 
 function AsideProfile() {
   const { user, logout } = useAuth();
   const [showModalPhoto, setShowModalPhoto] = useState(false);
   const [error, setError] = useState(null);
+  const [editProfile, setEditProfile] = useState(false);
   const [file, setFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -81,7 +83,9 @@ function AsideProfile() {
       setShowModalPhoto(true);
     }
   };
-
+  
+  const abrirEditP = () => setEditProfile(true);
+  const cerrarEditP = () => setEditProfile(false);
   const abrirModal = () => setModalVisible(true);
   const cerrarModal = () => setModalVisible(false);
   const abrirHistorial = () => setHistorial(true);
@@ -164,12 +168,12 @@ function AsideProfile() {
             <p className="text-zinc-600 dark:text-zinc-500">{user.email}</p>
           </div>
           <div className="flex flex-col gap-2 items-center">
-            <Link
+            <button
               className="bg-emerald-600 px-4 py-1 text-slate-50 rounded-md z-10 hover:scale-105 transition-all duration-500 hover:bg-emerald-500"
-              to="/EditProfile"
+              onClick={abrirEditP}
               >
               Editar perfil
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -223,6 +227,7 @@ function AsideProfile() {
 
       {modalVisible && <ModalInhabilitar onClose={cerrarModal} />}
       {historial && <TableHistorial onClose={cerrarHistorial} />}
+      {editProfile && <EditProfile onClose={cerrarEditP} />}
     </>
   );
 }
