@@ -58,44 +58,23 @@ function ProductCard(props) {
                   <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-300">
                     {name}
                   </h3>
-                  <p className="text-xs text-emerald-300">{ownerName}</p>
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="text-xs">
+                      <div className="flex flex-row items-center gap-2">
+                        <p className="text-emerald-600 dark:text-emerald-300 text-lg font-bold">
+                          4.6
+                        </p>
+                        <div className="rating">
+                          <input className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300" />
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-emerald-300">{ownerName}</p>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-row justify-between w-full gap-2">
                 <p className="text-md">{description}</p>
-
-                <div className="text-xs">
-                  <div className="flex flex-row">
-                    <div className="rating">
-                      <input
-                        type="radio"
-                        name="rating-4"
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-4"
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                        defaultChecked
-                      />
-                      <input
-                        type="radio"
-                        name="rating-4"
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-4"
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-4"
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <div className="relative h-96">

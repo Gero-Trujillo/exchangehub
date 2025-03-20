@@ -6,12 +6,14 @@ import { useArticle } from "../context/ArticleContext";
 import { useChatStore } from "../store/useChatStore";
 import { useArticleStore } from "../store/useArticleStore";
 import { useNavigate } from "react-router-dom";
+import { getRatingsByUserId } from "../api/ratings";
 
 function ProductCard(props) {
   const { getArticlesImages, articleImgs } = useArticle();
   const { name, user, description, images, idArticle, ownerName } = props;
   const [product, setProduct] = useState(false);
   const [mainImage, setMainImage] = useState(null);
+  const [rating, setRating] = useState();
   const { setSelectedUser, getUser } = useChatStore();
   const { setArticleToOffer } = useArticleStore();
   const navigate = useNavigate();
@@ -51,10 +53,28 @@ function ProductCard(props) {
       ownerName,
       description,
       images,
-    }
+    };
     setArticleToOffer(articleToOfferObj);
     navigate(`/Ofertar`);
   };
+
+  useEffect(() => {
+    const fetchRating = async () => {
+      try {
+        const res = await getRatingsByUserId(user);
+        const sumRatings = res.data.reduce((acc, rating) => {
+          return acc + rating.rating;
+        }, 0);
+        const avgRating = sumRatings / res.data.length;
+        setRating(avgRating);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    if (user) {
+      fetchRating();
+    }
+  }, []);
 
   return (
     <>
@@ -72,34 +92,23 @@ function ProductCard(props) {
                   <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-300">
                     {name}
                   </h3>
-                  <p className="text-xs text-emerald-300">{ownerName}</p>
-                </div>
-              </div>
-              <div className="flex flex-row justify-between w-full gap-2">
-                <p className="text-md">{description}</p>
-
-                <div className="text-xs">
-                  <div className="flex flex-row">
-                    <div className="rating">
-                      <input
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                      <input
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                        defaultChecked
-                      />
-                      <input
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                      <input
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
-                      <input
-                        className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300"
-                      />
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="text-xs">
+                      <div className="flex flex-row items-center gap-2">
+                        <p className="text-emerald-600 dark:text-emerald-300 text-lg font-bold">
+                          {!isNaN(rating) ? rating.toFixed(1) : 0}
+                        </p>
+                        <div className="rating">
+                          <input className="mask mask-star-2 bg-emerald-600 dark:bg-emerald-300" />
+                        </div>
+                      </div>
                     </div>
+                    <p className="text-xs text-emerald-300">{ownerName}</p>
                   </div>
                 </div>
+              </div>
+              <div className="flex flex-row justify-between w-full gap-4">
+                <p className="text-md">{description}</p>
               </div>
 
               <div className="relative h-96">
@@ -150,7 +159,9 @@ function ProductCard(props) {
         <div className="flex flex-col gap-4 p-3">
           <div className="flex flex-row justify-between">
             <div className="flex flex-col w-4/5">
-              <span className="text-xl text-emerald-600 font-bold truncate overflow-hidden whitespace-nowrap">{name}</span>
+              <span className="text-xl text-emerald-600 font-bold truncate overflow-hidden whitespace-nowrap">
+                {name}
+              </span>
               <p className="text-xs text-gray-400">{ownerName}</p>
             </div>
           </div>
