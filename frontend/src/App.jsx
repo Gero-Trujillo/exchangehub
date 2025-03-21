@@ -1,7 +1,7 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import ProfilePage from "./pages/ProfilePage";
@@ -26,21 +26,52 @@ import "aos/dist/aos.css";
 import ProfileAnyUserPage from "./pages/ProfileAnyUserPage";
 import ConfirmAccountPage from "./pages/ConfirmAccountPage";
 import RegisterResponsePage from "./pages/RegisterResponsePage";
+import { getExchangeByUserId } from "./api/exchanges";
+import RatingModal from "./components/RatingModal";
 
 function App() {
-  const reconnectSocketOnLoad = useAuthStore((state) => state.reconnectSocketOnLoad);
+  const reconnectSocketOnLoad = useAuthStore(
+    (state) => state.reconnectSocketOnLoad
+  );
+  const [exchangesToRating, setExchangesToRating] = useState([]);
+  const user = JSON.parse(localStorage.getItem("authUser"));
 
   useEffect(() => {
     reconnectSocketOnLoad();
   }, []);
 
   useEffect(() => {
-      AOS.init({
-        duration: 1500, // Duración de la animación en milisegundos
-        once: false, // Permitir que la animación ocurra cada vez que el elemento entre en la vista
-        mirror: true, // Permitir que la animación ocurra al hacer scroll hacia arriba
-      });
-    }, []);
+    if (!user || !user.idUser) {
+      console.error("User is not defined");
+      return;
+    }
+
+    const fetchExchanges = async () => {
+      try {
+        const res = await getExchangeByUserId(user.idUser);
+        if (res.data.length > 0) {
+          // Guardar los intercambios que estan en estado completado
+          const exchanges = res.data.filter(
+            (exchange) => exchange.status === "completado"
+          );
+          setExchangesToRating(exchanges);
+        }
+      } catch (error) {
+        console.error("Error fetching exchanges:", error);
+      }
+    };
+
+    fetchExchanges();
+  }, []);
+
+  console.log("Exchanges to rating:", exchangesToRating);
+  useEffect(() => {
+    AOS.init({
+      duration: 1500, // Duración de la animación en milisegundos
+      once: false, // Permitir que la animación ocurra cada vez que el elemento entre en la vista
+      mirror: true, // Permitir que la animación ocurra al hacer scroll hacia arriba
+    });
+  }, []);
 
   return (
     <>
@@ -59,21 +90,54 @@ function App() {
               <Route path="/privacy" element={<PolicyPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/confirm/:idUser" element={<ConfirmAccountPage />} />
-              <Route path="/register/response" element={<RegisterResponsePage />} />
-
+              <Route
+                path="/register/response"
+                element={<RegisterResponsePage />}
+              />
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/Mensajes" element={<ChatHomePage />} />
                 <Route path="/Perfil" element={<ProfilePage />} />
                 <Route path="/EditProfile" element={<EditProfile />} />
-                <Route path="/EditArticle/:articleId" element={<EditArticle />} />
+                <Route
+                  path="/EditArticle/:articleId"
+                  element={<EditArticle />}
+                />
                 <Route path="/Ofertar" element={<OfertarPage />} />
                 <Route path="/MyProducts" element={<MyProducts />} />
                 <Route path="/Settings" element />
-                <Route path="/Perfil/Usuario/:id" element={<ProfileAnyUserPage />} />
+                <Route
+                  path="/Perfil/Usuario/:id"
+                  element={<ProfileAnyUserPage />}
+                />
               </Route>
             </Routes>
             <FooterWrapper />
+            {exchangesToRating.length > 0 &&
+              exchangesToRating.map((exchange) => {
+                const otherUserId =
+                  exchange.idUserOne === user.idUser
+                    ? exchange.idUserTwo
+                    : exchange.idUserOne;
+
+                const hasRated =
+                  (exchange.idUserOne === user.idUser &&
+                    exchange.ratedByUserOne) ||
+                  (exchange.idUserTwo === user.idUser &&
+                    exchange.ratedByUserTwo);
+
+                if(!hasRated) {
+                  return (
+                    <RatingModal
+                      key={exchange.idExchange}
+                      idUser={user.idUser}
+                      idUserToRate={otherUserId} // Enviar el ID del usuario contrario
+                      exchangeId={exchange.idExchange}
+                    />
+                  );
+                }
+                return null;
+              })}
           </BrowserRouter>
         </ArticleProvider>
       </AuthProvider>
