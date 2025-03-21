@@ -46,23 +46,28 @@ export const getExchangeByUserId = async (req, res) => {
     const id = req.params.id;
     const [rows] = await pool.query(
       `SELECT 
-                e.idExchange,
-                CONCAT(u1.name, ' ', u1.lastname) AS userOneName,
-                a1.name AS productOneName,
-                CONCAT(u2.name, ' ', u2.lastname) AS userTwoName,
-                a2.name AS productTwoName,
-                e.status
-            FROM exchanges e
-            JOIN users u1 ON e.idUserOne = u1.idUser
-            JOIN articles a1 ON e.idProductoOne = a1.idArticle
-            JOIN users u2 ON e.idUserTwo = u2.idUser
-            JOIN articles a2 ON e.idProductoTwo = a2.idArticle
-            WHERE e.idUserOne = ? OR e.idUserTwo = ?`,
+          e.idExchange,
+          e.idUserOne,
+          e.idUserTwo,
+          CONCAT(u1.name, ' ', u1.lastname) AS userOneName,
+          a1.name AS productOneName,
+          CONCAT(u2.name, ' ', u2.lastname) AS userTwoName,
+          a2.name AS productTwoName,
+          e.status,
+          e.ratedByUserOne,
+          e.ratedByUserTwo
+       FROM exchanges e
+       JOIN users u1 ON e.idUserOne = u1.idUser
+       JOIN articles a1 ON e.idProductoOne = a1.idArticle
+       JOIN users u2 ON e.idUserTwo = u2.idUser
+       JOIN articles a2 ON e.idProductoTwo = a2.idArticle
+       WHERE e.idUserOne = ? OR e.idUserTwo = ?`,
       [id, id]
     );
     res.json(rows);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: "Error retrieving exchanges by user ID" });
   }
 };
 
