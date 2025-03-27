@@ -64,7 +64,6 @@ function App() {
     fetchExchanges();
   }, []);
 
-  console.log("Exchanges to rating:", exchangesToRating);
   useEffect(() => {
     AOS.init({
       duration: 1500, // Duración de la animación en milisegundos

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
+import { MdOutlineWorkspacePremium } from "react-icons/md";
 
 function AsideYourProfile({ id }) {
   const { getUser } = useChatStore();
@@ -29,10 +30,16 @@ function AsideYourProfile({ id }) {
             }}
           ></div>
           <div className="z-10 group-hover:-translate-y-10 transition-all duration-500">
-            <span className="text-2xl font-semibold text-zinc-800 dark:text-slate-100">{`${selectedUser.name} ${selectedUser.lastname}`}</span>
-            <p className="text-zinc-600 dark:text-zinc-500">
-              {selectedUser.email}
-            </p>
+            <span className="text-2xl font-semibold text-zinc-800 dark:text-slate-100 flex items-center">
+              {`${selectedUser.name} ${selectedUser.lastname}`}{" "}
+              {selectedUser.isPremium ? (
+                <span className="text-yellow-400">
+                  {" "}
+                  <MdOutlineWorkspacePremium />
+                </span>
+              ) : null}
+            </span>
+            <p className="text-zinc-600 dark:text-zinc-500">{selectedUser.email}</p>
           </div>
         </div>
       </aside>

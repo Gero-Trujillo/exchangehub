@@ -48,7 +48,9 @@ function Navbar() {
   useEffect(() => {
     const currentPath = location.pathname.slice(1).toLowerCase();
     const activeIndex = Menus.findIndex(
-      (menu) => menu.name.toLowerCase() === currentPath || currentPath.startsWith(menu.name.toLowerCase())
+      (menu) =>
+        menu.name.toLowerCase() === currentPath ||
+        currentPath.startsWith(menu.name.toLowerCase())
     );
     if (activeIndex !== -1) {
       setActive(activeIndex);
@@ -77,7 +79,7 @@ function Navbar() {
   const handleNotificationClick = (idSender) => {
     setShowNotifications(false);
     getUser(idSender);
-    navigate('/mensajes');
+    navigate("/mensajes");
   };
 
   return (
@@ -152,10 +154,20 @@ function Navbar() {
                       <div
                         key={message.idMessage}
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-                        onClick={() => handleNotificationClick(message.idSender)}
+                        onClick={() =>
+                          handleNotificationClick(message.idSender)
+                        }
                       >
-                        <strong>{users.find((user) => user.idUser === message.idSender)?.name}</strong>
-                        <p className="text-sm">{message.text || "Imagen adjunta"}</p>
+                        <strong>
+                          {
+                            users.find(
+                              (user) => user.idUser === message.idSender
+                            )?.name
+                          }
+                        </strong>
+                        <p className="text-sm">
+                          {message.text || "Imagen adjunta"}
+                        </p>
                       </div>
                     ))}
                 </div>
