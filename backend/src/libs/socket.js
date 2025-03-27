@@ -32,6 +32,11 @@ io.on("connection", (socket) => {
     delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
+
+  // Manejar eventos de notificaciones
+  socket.on('sendNotification', (notification) => {
+    io.emit('newNotification', notification);
+  });
 });
 
 export { io, server, app };

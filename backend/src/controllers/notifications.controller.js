@@ -1,4 +1,5 @@
 import { pool } from "../db.js";
+import { io } from "../libs/socket.js"; // Importar io desde socket.js
 
 export const getNotificationsByUserId = async (req, res) => {
   const { id } = req.params;
@@ -21,7 +22,12 @@ export const createNotification = async (req, res) => {
       "INSERT INTO notifications (idUser, idSender, message) VALUES (?, ?, ?)",
       [idUser, idSender, message]
     );
-    res.json({ idNotification: result.insertId, idUser, idSender, message });
+    const notification = { idNotification: result.insertId, idUser, idSender, message };
+
+    // Emitir evento de notificación
+    io.emit('newNotification', notification);
+
+    res.json(notification);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating notification" });

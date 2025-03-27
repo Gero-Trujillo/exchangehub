@@ -1,10 +1,17 @@
 import { create } from "zustand";
 import axios from "../api/axios.js";
+import { useAuthStore } from "./useAuthStore";
 
 export const useNotificationStore = create((set, get) => ({
   notifications: [],
 
-  fetchNotifications: async (userId) => {
+  fetchNotifications: async () => {
+    const authUser = useAuthStore.getState().authUser;
+    if (!authUser || !authUser.idUser) {
+      console.error("User is not defined");
+      return;
+    }
+    const userId = authUser.idUser;
     try {
       const res = await axios.get(`/notifications/${userId}`);
       set({ notifications: res.data });
@@ -28,16 +35,9 @@ export const useNotificationStore = create((set, get) => ({
     }
   },
 
-  markMessagesAsRead: async (senderId, receiverId) => {
-    try {
-      await axios.patch(`/messages/markAsRead`, { senderId, receiverId });
-      // Actualizar el estado de los mensajes si es necesario
-    } catch (error) {
-      console.error("Error marking messages as read:", error);
-    }
-  },
+  subscribeToNotifications: () => {
+    const socket = useAuthStore.getState().socket;
 
-  subscribeToNotifications: (socket) => {
     if (!socket) return;
 
     const handleNewNotification = (notification) => {
@@ -51,5 +51,11 @@ export const useNotificationStore = create((set, get) => ({
     return () => {
       socket.off("newNotification", handleNewNotification);
     };
+  },
+
+  unsubscribeFromNotifications: () => {
+    const socket = useAuthStore.getState().socket;
+    if (!socket) return;
+    socket.off("newNotification");
   },
 }));

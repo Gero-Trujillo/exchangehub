@@ -3,13 +3,18 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useChatStore } from "../store/useChatStore";
+import { useNotificationStore } from "../store/useNotificationStore"; // Importar useNotificationStore
+import { useAuthStore } from "../store/useAuthStore"; // Importar useAuthStore
 import "./Navbar.css";
 
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuth();
-  const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtener mensajes no leídos
+  const { isAuthenticated } = useAuth();
+  const { authUser } = useAuthStore();
+  const { users, getUsers, getUser,  } = useChatStore(); // Obtener mensajes no leídos
+  const { notifications, fetchNotifications, markAsRead, subscribeToNotifications } = useNotificationStore(); // Obtener notificaciones
+  const [ timestamp, setTimestamp] = useState(Date.now());
 
   const Menus = [
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0", path: "/" },
@@ -56,10 +61,17 @@ function Navbar() {
   }, [location.pathname, Menus]);
 
   useEffect(() => {
-    if (isAuthenticated && user && user.idUser) {
-      getUsers(user.idUser); // Obtener usuarios y mensajes no leídos
+    if (isAuthenticated && authUser && authUser.idUser) {
+      fetchNotifications(); // Obtener notificaciones
     }
-  }, [isAuthenticated, user, getUsers]);
+  }, [isAuthenticated, authUser, getUsers, fetchNotifications, timestamp]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimestamp(Date.now()); // Actualizar el timestamp cada segundo
+    }, 3000);
+    return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+  }, []);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -70,14 +82,43 @@ function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (authUser && authUser.socket) {
+      const unsubscribe = subscribeToNotifications(authUser.socket);
+      return () => {
+        if (unsubscribe) unsubscribe();
+      };
+    }
+  }, [authUser, subscribeToNotifications]);
+
   const handleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  const handleNotificationClick = (idSender) => {
+  const handleNotificationClick = (idNotification, idSender) => {
+    markAsRead(idNotification); // Marcar la notificación como leída
     setShowNotifications(false);
     getUser(idSender);
     navigate('/mensajes');
+  };
+
+  // Agregar evento de clic al documento para cerrar notificaciones
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setShowNotifications(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  // Evitar que el clic en el icono de notificaciones cierre las notificaciones
+  const handleNotificationIconClick = (e) => {
+    e.stopPropagation();
+    setShowNotifications(!showNotifications);
   };
 
   return (
@@ -129,35 +170,41 @@ function Navbar() {
             <li className="relative w-16 dark:text-emerald-900">
               <div
                 className="flex flex-col text-center pt-6 cursor-pointer"
-                onClick={() => setShowNotifications(!showNotifications)}
+                onClick={handleNotificationIconClick}
               >
                 <span className="text-xl relative">
                   <ion-icon name="notifications-outline"></ion-icon>
-                  {unreadMessages > 0 && (
+                  {notifications.filter((notification) => !notification.isRead).length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs font-bold rounded-full px-2">
-                      {unreadMessages}
+                      {notifications.filter((notification) => !notification.isRead).length}
                     </span>
                   )}
                 </span>
               </div>
 
-              {showNotifications && unreadMessages > 0 && (
+              {showNotifications && (
                 <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 w-64">
                   <h3 className="font-bold text-black dark:text-white mb-2">
                     Mensajes nuevos
                   </h3>
-                  {messages
-                    .filter((message) => !message.read)
-                    .map((message) => (
+                  {notifications
+                    .filter((notification) => !notification.isRead)
+                    .map((notification) => (
                       <div
-                        key={message.idMessage}
+                        key={notification.idNotification}
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-                        onClick={() => handleNotificationClick(message.idSender)}
+                        onClick={() => handleNotificationClick(notification.idNotification, notification.idSender)}
                       >
-                        <strong>{users.find((user) => user.idUser === message.idSender)?.name}</strong>
-                        <p className="text-sm">{message.text || "Imagen adjunta"}</p>
+                        <strong>{users.find((user) => user.idUser === notification.idSender)?.name}</strong>
+                        <p className="text-sm">{notification.message || "Imagen adjunta"}</p>
                       </div>
                     ))}
+                  <button
+                    className="mt-2 w-full bg-emerald-600 text-white py-1 rounded"
+                    onClick={() => notifications.forEach(notification => markAsRead(notification.idNotification))}
+                  >
+                    Leer todas las notificaciones
+                  </button>
                 </div>
               )}
             </li>

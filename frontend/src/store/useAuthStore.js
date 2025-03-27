@@ -11,6 +11,7 @@ export const useAuthStore = create((set, get) => ({
   isLoggingIn: false,
   isUpdatingProfile: false,
   onlineUsers: [],
+  notifications: [],
   socket: null,
 
   login: async (data) => {
@@ -63,6 +64,11 @@ export const useAuthStore = create((set, get) => ({
 
     socket.on("getOnlineUsers", (userIds) => {
       set({ onlineUsers: userIds });
+    });
+
+    socket.on("newNotification", (notification) => {
+      const { notifications } = get();
+      set({ notifications: [notification, ...notifications] });
     });
   },
 

@@ -41,8 +41,8 @@ export const sendMessage = async (req, res) => {
       [senderId, receiverId, text, image, isSpecial, JSON.stringify(offerDetails)]
     );
 
+    // Emitir notificación en tiempo real
     const receiverSocketId = getReceiverSocketId(receiverId);
-
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", {
         idSender: senderId,
@@ -52,6 +52,27 @@ export const sendMessage = async (req, res) => {
         isSpecial,
         offerDetails,
       });
+    }
+
+    // Crear una notificación para el receptor del mensaje
+    const [notificationResult] = await pool.query(
+      "INSERT INTO notifications (idUser, idSender, message) VALUES (?, ?, ?)",
+      [receiverId, senderId, text]
+    );
+
+    const notification = {
+      idNotification: notificationResult.insertId,
+      idUser: receiverId,
+      idSender: senderId,
+      message: text,
+      isRead: false,
+      createdAt: new Date(),
+    };
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newNotification", notification);
+    } else {
+      io.emit("newNotification", notification);
     }
 
     res.status(200).json(rows);
@@ -75,7 +96,7 @@ export const changeSpecialMessageStatus = async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
 export const markMessagesAsRead = async (req, res) => {
   try {
