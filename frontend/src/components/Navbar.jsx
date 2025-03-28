@@ -1,16 +1,21 @@
-import logo from "../assets/exchangeLogo.png";
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { useChatStore } from "../store/useChatStore";
-import "./Navbar.css";
+import logo from "../assets/exchangeLogo.png"; // Importa el logo de la aplicación
+import { useEffect, useState } from "react"; // Importa hooks de React para manejar estados y efectos
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Importa herramientas para navegación entre rutas
+import { useAuth } from "../context/AuthContext"; // Importa el contexto de autenticación
+import { useChatStore } from "../store/useChatStore"; // Importa el estado global del chat
+import "./Navbar.css"; // Importa los estilos específicos para la barra de navegación
 
+/**
+ * Componente `Navbar` para mostrar la barra de navegación de la aplicación.
+ * Incluye enlaces a diferentes secciones, un selector de tema (claro/oscuro) y notificaciones de mensajes.
+ */
 function Navbar() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuth();
-  const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtener mensajes no leídos
+  const location = useLocation(); // Obtiene la ubicación actual de la ruta
+  const navigate = useNavigate(); // Hook para redirigir a otras rutas
+  const { isAuthenticated, user } = useAuth(); // Obtiene el estado de autenticación y el usuario actual
+  const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtiene mensajes no leídos y funciones relacionadas con el chat
 
+  // Menú de navegación con enlaces a diferentes secciones
   const Menus = [
     { name: "Inicio", icon: "home-outline", dis: "translate-x-0", path: "/" },
     {
@@ -39,51 +44,57 @@ function Navbar() {
     },
   ];
 
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(0); // Estado para rastrear el menú activo
   const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "dark"
+    () => localStorage.getItem("theme") || "dark" // Obtiene el tema actual del almacenamiento local o establece "dark" como predeterminado
   );
-  const [showNotifications, setShowNotifications] = useState(false); // Controla si se muestra la lista de mensajes
+  const [showNotifications, setShowNotifications] = useState(false); // Estado para mostrar/ocultar las notificaciones
 
+  // Actualiza el menú activo según la ruta actual
   useEffect(() => {
-    const currentPath = location.pathname.slice(1).toLowerCase();
+    const currentPath = location.pathname.slice(1).toLowerCase(); // Obtiene la ruta actual
     const activeIndex = Menus.findIndex(
       (menu) =>
         menu.name.toLowerCase() === currentPath ||
         currentPath.startsWith(menu.name.toLowerCase())
     );
     if (activeIndex !== -1) {
-      setActive(activeIndex);
+      setActive(activeIndex); // Establece el índice del menú activo
     }
   }, [location.pathname, Menus]);
 
+  // Obtiene los usuarios y mensajes no leídos si el usuario está autenticado
   useEffect(() => {
     if (isAuthenticated && user && user.idUser) {
-      getUsers(user.idUser); // Obtener usuarios y mensajes no leídos
+      getUsers(user.idUser); // Llama a la función para obtener usuarios y mensajes
     }
   }, [isAuthenticated, user, getUsers]);
 
+  // Aplica el tema (claro/oscuro) al cargar el componente o cuando cambia el tema
   useEffect(() => {
     if (theme === "dark") {
-      document.querySelector("html").classList.add("dark");
+      document.querySelector("html").classList.add("dark"); // Agrega la clase "dark" al elemento HTML
     } else {
-      document.querySelector("html").classList.remove("dark");
+      document.querySelector("html").classList.remove("dark"); // Elimina la clase "dark" del elemento HTML
     }
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("theme", theme); // Guarda el tema en el almacenamiento local
   }, [theme]);
 
+  // Cambia entre los temas claro y oscuro
   const handleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
+  // Maneja el clic en una notificación y redirige al chat del usuario correspondiente
   const handleNotificationClick = (idSender) => {
-    setShowNotifications(false);
-    getUser(idSender);
-    navigate("/mensajes");
+    setShowNotifications(false); // Oculta las notificaciones
+    getUser(idSender); // Obtiene los datos del usuario que envió el mensaje
+    navigate("/mensajes"); // Redirige a la página de mensajes
   };
 
   return (
     <nav className="navbar w-[100%] flex flex-col md:flex-row justify-evenly items-center p-4 sticky top-0 border-b-2 z-20 bg-neutral-100 dark:bg-zinc-900 py-6">
+      {/* Logo y nombre de la aplicación */}
       <Link to="/">
         <div className="flex items-center">
           <img src={logo} alt="logo" className="w-24" />
@@ -93,19 +104,22 @@ function Navbar() {
         </div>
       </Link>
 
+      {/* Menú de navegación para usuarios autenticados */}
       {isAuthenticated ? (
         <div className="bg-emerald-600 dark:bg-emerald-300 max-h-[4.4rem] px-6 md:rounded-xl w-full md:max-w-fit flex gap-8 items-center fixed bottom-0 md:relative">
           <ul className="flex relative text-white">
+            {/* Indicador del menú activo */}
             <span
               className={`bg-emerald-300 dark:bg-emerald-600 duration-500 ${Menus[active].dis} border-4 border-slate-100 dark:border-zinc-900 h-16 w-16 absolute -top-5 rounded-full`}
             ></span>
 
+            {/* Elementos del menú */}
             {Menus.map((menu, i) => (
               <li key={i} className="w-16 dark:text-emerald-900">
                 <Link
                   to={menu.name}
                   className="flex flex-col text-center pt-6"
-                  onClick={() => setActive(i)}
+                  onClick={() => setActive(i)} // Cambia el menú activo al hacer clic
                 >
                   <span
                     className={`text-xl cursor-pointer duration-500 ${
@@ -127,11 +141,11 @@ function Navbar() {
               </li>
             ))}
 
-            {/* 🔔 Icono de Notificaciones */}
+            {/* Icono de notificaciones */}
             <li className="relative w-16 dark:text-emerald-900">
               <div
                 className="flex flex-col text-center pt-6 cursor-pointer"
-                onClick={() => setShowNotifications(!showNotifications)}
+                onClick={() => setShowNotifications(!showNotifications)} // Alterna la visibilidad de las notificaciones
               >
                 <span className="text-xl relative">
                   <ion-icon name="notifications-outline"></ion-icon>
@@ -143,19 +157,20 @@ function Navbar() {
                 </span>
               </div>
 
+              {/* Lista de notificaciones */}
               {showNotifications && unreadMessages > 0 && (
                 <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 w-64">
                   <h3 className="font-bold text-black dark:text-white mb-2">
                     Mensajes nuevos
                   </h3>
                   {messages
-                    .filter((message) => !message.read)
+                    .filter((message) => !message.read) // Filtra los mensajes no leídos
                     .map((message) => (
                       <div
                         key={message.idMessage}
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
                         onClick={() =>
-                          handleNotificationClick(message.idSender)
+                          handleNotificationClick(message.idSender) // Maneja el clic en una notificación
                         }
                       >
                         <strong>
@@ -175,6 +190,7 @@ function Navbar() {
             </li>
           </ul>
 
+          {/* Botón para cambiar el tema */}
           <button
             className="text-3xl cursor-pointer text-slate-100 dark:text-emerald-900"
             onClick={handleTheme}
@@ -187,6 +203,7 @@ function Navbar() {
           </button>
         </div>
       ) : (
+        // Opciones para usuarios no autenticados
         <div className="flex gap-4">
           <button className="relative px-8 py-2 rounded-md bg-neutral-100 isolation-auto z-10 border-2 border-emerald-600 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-600 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-emerald-600 hover:text-emerald-300 dark:bg-zinc-900 dark:border-emerald-300 dark:before:bg-emerald-300 dark:text-emerald-300 dark:hover:text-emerald-600">
             <Link to="/login">Iniciar sesión</Link>
@@ -210,4 +227,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Navbar; // Exporta el componente para su uso en otras partes de la aplicación

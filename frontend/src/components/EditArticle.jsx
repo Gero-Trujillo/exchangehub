@@ -2,10 +2,9 @@ import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { RxCrossCircled } from "react-icons/rx";
 import { useArticle } from "../context/ArticleContext";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { v4 as uuidv4 } from "uuid";
-import { use } from "react";
 
 // Lista de categorías disponibles
 const categories = [
@@ -17,12 +16,19 @@ const categories = [
   "Accesorios",
 ];
 
+/**
+ * Componente `EditArticle` para editar un artículo existente.
+ * Permite modificar los detalles del artículo, gestionar imágenes y seleccionar una categoría.
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} props.idArticle - ID del artículo a editar.
+ * @param {Function} props.showAddArt - Función para controlar la visibilidad del componente.
+ */
 const EditArticle = (props) => {
-  const { user } = useAuth();
-  const [mainImage, setMainImage] = useState(null);
-  const [filesWithIds, setFilesWithIds] = useState([]);
-  const [originalImages, setOriginalImages] = useState([]);
-  const [holdImages, setHoldImages] = useState(false);
+  const { user } = useAuth(); // Obtiene el usuario autenticado desde el contexto
+  const [mainImage, setMainImage] = useState(null); // Imagen principal seleccionada
+  const [filesWithIds, setFilesWithIds] = useState([]); // Archivos seleccionados con identificadores únicos
+  const [originalImages, setOriginalImages] = useState([]); // Imágenes originales del artículo
+  const [holdImages, setHoldImages] = useState(false); // Estado para conservar las imágenes originales
   const {
     createArticles,
     createArticlesImage,
@@ -33,67 +39,75 @@ const EditArticle = (props) => {
     editArticle,
     deleteImages,
     articleImgs,
-  } = useArticle();
+  } = useArticle(); // Funciones relacionadas con los artículos
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm(); // Hook para manejar el formulario
 
-  const { showAddArt, idArticle } = props;
-  const [error, setError] = useState(null);
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const { showAddArt, idArticle } = props; // Propiedades recibidas del componente padre
+  const [error, setError] = useState(null); // Estado para manejar errores
+  const [uploadedImages, setUploadedImages] = useState([]); // Imágenes subidas con éxito
+
+  // Maneja el evento de arrastrar y soltar archivos
   const onDrop = useCallback((acceptedFiles) => {
     setError(null);
-    console.log(acceptedFiles);
-    // Do something with the files
+    console.log(acceptedFiles); // Registra los archivos aceptados en la consola
   }, []);
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ onDrop });
 
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({ onDrop }); // Configuración para la funcionalidad de arrastrar y soltar
+
+  // Obtiene los datos del artículo y sus imágenes al cargar el componente
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        await getArticle(idArticle);
-        const res = await getArticlesImages(idArticle);
-        setOriginalImages(res);
+        await getArticle(idArticle); // Obtiene los datos del artículo
+        const res = await getArticlesImages(idArticle); // Obtiene las imágenes asociadas al artículo
+        setOriginalImages(res); // Actualiza el estado con las imágenes originales
       } catch (error) {
-        console.log(error);
+        console.log(error); // Maneja y registra cualquier error que ocurra
       }
     };
     if (idArticle) {
-      fetchArticle();
+      fetchArticle(); // Llama a la función para obtener los datos del artículo si `idArticle` está definido
     }
-  }, []);
+  }, []); // Este efecto se ejecuta solo una vez al montar el componente
 
+  // Rellena los campos del formulario con los datos del artículo
   useEffect(() => {
     if (article) {
-      setValue("name", article.name);
-      setValue("description", article.description);
-      setValue("category", article.category);
+      setValue("name", article.name); // Rellena el campo "name" del formulario con el valor del artículo
+      setValue("description", article.description); // Rellena el campo "description" del formulario
+      setValue("category", article.category); // Rellena el campo "category" del formulario
     }
-  }, [article]);
+  }, [article]); // Este efecto se ejecuta cuando cambia el valor de `article`
 
+  // Actualiza los archivos seleccionados con identificadores únicos y vistas previas
   useEffect(() => {
     const files = acceptedFiles.map((file) => {
       return {
         file,
-        id: uuidv4(),
-        preview: URL.createObjectURL(file),
+        id: uuidv4(), // Genera un identificador único para cada archivo
+        preview: URL.createObjectURL(file), // Crea una URL para la vista previa del archivo
       };
     });
-    setFilesWithIds(files);
+    setFilesWithIds(files); // Actualiza el estado con los archivos seleccionados
 
+    // Limpia las vistas previas de las imágenes al desmontar el componente
     return () => {
       acceptedFiles.forEach((file) => URL.revokeObjectURL(file.preview));
     };
   }, [acceptedFiles]);
 
+  // Maneja el envío del formulario
   const onSubmit = (data) => {
-    handleSubmitArticle(data);
+    handleSubmitArticle(data); // Llama a la función para manejar la edición del artículo
   };
 
+  // Sube las imágenes seleccionadas a Cloudinary
   const handleFiles = async () => {
     const uploadPromises = filesWithIds.map(async ({ file, id }) => {
       const formData = new FormData();

@@ -32,38 +32,41 @@ import RatingModal from "./components/RatingModal";
 function App() {
   const reconnectSocketOnLoad = useAuthStore(
     (state) => state.reconnectSocketOnLoad
-  );
-  const [exchangesToRating, setExchangesToRating] = useState([]);
-  const user = JSON.parse(localStorage.getItem("authUser"));
+  ); // Recupera la función para reconectar el socket desde el estado global
+  const [exchangesToRating, setExchangesToRating] = useState([]); // Estado para almacenar los intercambios pendientes de calificación
+  const user = JSON.parse(localStorage.getItem("authUser")); // Obtiene el usuario autenticado desde el almacenamiento local
 
+  // Reconecta el socket al cargar la aplicación
   useEffect(() => {
     reconnectSocketOnLoad();
   }, []);
 
+  // Obtiene los intercambios completados del usuario autenticado
   useEffect(() => {
     if (!user || !user.idUser) {
-      console.error("User is not defined");
+      console.error("User is not defined"); // Loguea un error si el usuario no está definido
       return;
     }
 
     const fetchExchanges = async () => {
       try {
-        const res = await getExchangeByUserId(user.idUser);
+        const res = await getExchangeByUserId(user.idUser); // Solicita los intercambios del usuario
         if (res.data.length > 0) {
-          // Guardar los intercambios que estan en estado completado
+          // Filtra los intercambios completados
           const exchanges = res.data.filter(
             (exchange) => exchange.status === "completado"
           );
-          setExchangesToRating(exchanges);
+          setExchangesToRating(exchanges); // Actualiza el estado con los intercambios pendientes de calificación
         }
       } catch (error) {
-        console.error("Error fetching exchanges:", error);
+        console.error("Error fetching exchanges:", error); // Loguea un error si falla la solicitud
       }
     };
 
     fetchExchanges();
   }, []);
 
+  // Inicializa las animaciones de AOS
   useEffect(() => {
     AOS.init({
       duration: 1500, // Duración de la animación en milisegundos
@@ -79,6 +82,7 @@ function App() {
           <BrowserRouter>
             <Navbar />
             <Routes>
+              {/* Rutas públicas */}
               <Route path="/" element={<HomePage />} />
               <Route path="/Premium" element={<SuscriptionPage />} />
               <Route path="*" element={<NotFoundPage />} />
@@ -94,6 +98,7 @@ function App() {
                 element={<RegisterResponsePage />}
               />
 
+              {/* Rutas protegidas */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/Mensajes" element={<ChatHomePage />} />
                 <Route path="/Perfil" element={<ProfilePage />} />
@@ -112,6 +117,7 @@ function App() {
               </Route>
             </Routes>
             <FooterWrapper />
+            {/* Renderiza el modal de calificación si hay intercambios pendientes */}
             {exchangesToRating.length > 0 &&
               exchangesToRating.map((exchange) => {
                 const otherUserId =
@@ -125,7 +131,7 @@ function App() {
                   (exchange.idUserTwo === user.idUser &&
                     exchange.ratedByUserTwo);
 
-                if(!hasRated) {
+                if (!hasRated) {
                   return (
                     <RatingModal
                       key={exchange.idExchange}
@@ -144,6 +150,7 @@ function App() {
   );
 }
 
+// Componente para mostrar el footer solo si no estamos en la página de mensajes
 function FooterWrapper() {
   const location = useLocation();
   return location.pathname !== "/Mensajes" ? <Footer /> : null;

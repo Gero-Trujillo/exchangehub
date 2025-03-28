@@ -12,14 +12,15 @@ import { Link } from "react-router-dom";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 
 function AsideProfile() {
-  const { user, logout } = useAuth();
-  const [showModalPhoto, setShowModalPhoto] = useState(false);
-  const [error, setError] = useState(null);
-  const [file, setFile] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [historial, setHistorial] = useState(false);
+  const { user, logout } = useAuth(); // Obtiene el usuario autenticado y la función para cerrar sesión desde el contexto
+  const [showModalPhoto, setShowModalPhoto] = useState(false); // Estado para mostrar/ocultar el modal de subir foto
+  const [error, setError] = useState(null); // Estado para manejar errores
+  const [file, setFile] = useState(null); // Archivo seleccionado para subir
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null); // Vista previa de la imagen seleccionada
+  const [modalVisible, setModalVisible] = useState(false); // Estado para mostrar/ocultar el modal de inhabilitar cuenta
+  const [historial, setHistorial] = useState(false); // Estado para mostrar/ocultar el historial de intercambios
 
+  // Maneja el cambio de archivo para subir una imagen
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -27,7 +28,7 @@ function AsideProfile() {
     if (selectedFile && validImageTypes.includes(selectedFile.type)) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreviewUrl(reader.result);
+        setImagePreviewUrl(reader.result); // Actualiza la vista previa de la imagen
       };
       reader.readAsDataURL(selectedFile);
       setFile(selectedFile);
@@ -41,6 +42,7 @@ function AsideProfile() {
     }
   };
 
+  // Maneja el envío de la imagen seleccionada
   const handleSubmitPhoto = async (e) => {
     e.preventDefault();
 
@@ -63,14 +65,14 @@ function AsideProfile() {
         }
       );
       const data = await res.json();
-      console.log(data);
-      await uploadImage(user.idUser, { image: data.secure_url });
-      window.location.reload();
+      await uploadImage(user.idUser, { image: data.secure_url }); // Actualiza la imagen del perfil en el servidor
+      window.location.reload(); // Recarga la página para reflejar los cambios
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
 
+  // Alterna la visibilidad del modal de subir foto
   const handleModalPhoto = () => {
     if (showModalPhoto) {
       setImagePreviewUrl(null);
@@ -82,6 +84,7 @@ function AsideProfile() {
     }
   };
 
+  // Funciones para manejar la visibilidad de los modales
   const abrirModal = () => setModalVisible(true);
   const cerrarModal = () => setModalVisible(false);
   const abrirHistorial = () => setHistorial(true);
@@ -89,6 +92,7 @@ function AsideProfile() {
 
   return (
     <>
+      {/* Modal para subir foto */}
       {showModalPhoto && (
         <section className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-[#000000dd] z-50">
           <div className="bg-neutral-100 w-3/6 lg:w-2/6 h-auto rounded-xl gap-8 flex flex-col justify-center items-center p-4 dark:bg-zinc-900">
