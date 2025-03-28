@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import PageDashboard from "@/app/dashboard/page";
+import PageDashboard from "@/app/pages/dashboard/page";
 import Login from "@/components/Login";
+import Allusers from "@/components/Allusers";
 
-export default function App() {
+export default function UsuariosPage() {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const router = useRouter();
 
@@ -19,10 +20,14 @@ export default function App() {
     }
   }, []);
 
-
   if (isAuth === null) {
     return <p>Cargando...</p>;
   }
 
-  return isAuth ? <PageDashboard /> : <Login />;
+  return (
+    <>
+      {isAuth ? <Allusers /> : <Login />}
+      
+    </>
+  );
 }

@@ -1,41 +1,60 @@
-import * as React from "react";
-import { GalleryVerticalEnd } from "lucide-react";
-import Creators from "./Creators";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-} from "@/components/ui/sidebar";
-import BotonLogout from "@/components/BotonLogout";
+"use client"
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+import { useEffect, useState } from "react"
+import type * as React from "react"
+import { Users, Sun, Moon, ChevronRight } from "lucide-react"
+import Creators from "./Creators"
+import { Sidebar, SidebarContent, SidebarRail } from "@/components/ui/sidebar"
+import BotonLogout from "@/components/BotonLogout"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { useTheme } from "next-themes"
+
+export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [theme, setTheme] = useState<"light" | "dark">("light")
+
+  useEffect(() => {
+    // Asegúrate de que el tema inicial se establezca correctamente
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
+    if (savedTheme) {
+      setTheme(savedTheme)
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark")
+    }
+  }, [setTheme])
+
+  useEffect(() => {
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
+    if (savedTheme) {
+      setTheme(savedTheme)
+      document.documentElement.classList.toggle("dark", savedTheme === "dark")
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark")
+      document.documentElement.classList.add("dark")
+    }
+
+    
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light"
+    setTheme(newTheme)
+    document.documentElement.classList.toggle("dark", newTheme === "dark")
+    localStorage.setItem("theme", newTheme)
+  }
+
   return (
-    <Sidebar {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <GalleryVerticalEnd className="size-4" />
-                </div>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Dashboard</span>
-                  <span>ExchangeHub</span>
-                </div>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent>
-        <div className="aspect-video rounded-xl bg-muted/50 p-4">
-          <h2 className="text-lg font-semibold mb-3">Creadores</h2>
-          <div className="space-y-3">
+    <Sidebar
+      {...props}
+      className="bg-gradient-to-b from-purple-700 to-indigo-900 text-white dark:from-gray-800 dark:to-gray-900"
+    >
+      <SidebarContent className="px-4 py-6 flex flex-col justify-between">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-emerald-300 dark:text-emerald-400 text-center">Creadores</h2>
+          <div className="space-y-4">
             <Creators
               image="https://avatars.githubusercontent.com/u/145505587?v=4&size=64"
               name="Julian Estiven Posso Cataño"
@@ -51,15 +70,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               name="Juan Pablo Ruiz Marin"
               description="Desarrollador"
             />
-            <div className="flex min-h-min w-full items-center justify-center p-6 md:p-10" {...props}>
-              <div className="w-full max-w-sm">
-                <BotonLogout />
-              </div>
-            </div>
           </div>
         </div>
+        <div className="space-y-4">
+          <Link href="/pages/allUsers" className="block w-full">
+            <Button
+              variant="outline"
+              className="w-full bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600"
+            >
+              <Users className="mr-2 h-5 w-5" />
+              <span className="flex-grow text-left">Ir a Usuarios</span>
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </Link>
+          <Button
+            variant="outline"
+            className="w-full bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600"
+            onClick={toggleTheme}
+          >
+            {theme === "light" ? <Moon className="h-5 w-5 mr-2" /> : <Sun className="h-5 w-5 mr-2" />}
+            <span className="flex-grow text-left">{theme === "light" ? "Modo Oscuro" : "Modo Claro"}</span>
+            <ChevronRight className="h-5 w-5" />
+          </Button>
+
+          <BotonLogout className="w-full" />
+        </div>
       </SidebarContent>
-      <SidebarRail />
+      <SidebarRail className="bg-white/5 dark:bg-black/5" />
     </Sidebar>
-  );
+  )
 }
+

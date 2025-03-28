@@ -3,6 +3,8 @@
 import * as React from "react";
 import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart, ResponsiveContainer } from "recharts";
+import dotenv from 'dotenv';
+dotenv.config();
 
 import {
   Card,
@@ -19,21 +21,43 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
+type Exchange = {
+  idExchange: number;
+  userOneName: string;
+  userOneId: number;
+  productOneName: string;
+  productOneId: number;
+  userTwoName: string;
+  userTwoId: number;
+  productTwoName: string;
+  productTwoId: number;
+  status: "aceptado" | "completado" | "pendiente" | "cancelado" | "rechazado";
+  exchangeDate: string;
+};
+
 const chartConfig = {
   cantidad: {
     label: "Clientes",
   },
   hechos: {
-    label: "Hechos",
+    label: "aceptados",
     color: "hsl(var(--chart-2))",
   },
+  completado: {
+    label: "completado",
+    color: "hsl(var(--chart-4))",
+  },
   cancelados: {
-    label: "Cancelados",
+    label: "cancelados",
     color: "hsl(var(--chart-1))",
   },
   enEspera: {
-    label: "En espera",
+    label: "pendientes",
     color: "hsl(var(--chart-3))",
+  },
+  rechazados: {
+    label: "rechazados",
+    color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
@@ -44,22 +68,34 @@ const currentDate = new Date().toLocaleDateString("es-ES", {
 
 export default function TortaChart() {
   const [chartData, setChartData] = React.useState([
-    { estado: "hechos", cantidad: 0, fill: "var(--color-hechos)" },
-    { estado: "cancelados", cantidad: 0, fill: "var(--color-cancelados)" },
-    { estado: "enEspera", cantidad: 0, fill: "var(--color-enEspera)" },
+    { estado: "aceptado", cantidad: 0, fill: "var(--color-hechos)" },
+    { estado: "completado", cantidad: 0, fill: "var(--color-completado)" },
+    { estado: "cancelado", cantidad: 0, fill: "var(--color-cancelados)" },
+    { estado: "pendiente", cantidad: 0, fill: "var(--color-enEspera)" },
+    { estado: "rechazado", cantidad: 0, fill: "var(--color-cancelados)" },
   ]);
 
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3001/estadisticas");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/exchanges`)
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
-        const data = await res.json();
+        const data: Exchange[] = await res.json();
+
+        const counts = data.reduce(
+          (acc, { status }) => {
+            acc[status] = (acc[status] || 0) + 1;
+            return acc;
+          },
+          { aceptado: 0, completado: 0, pendiente: 0, cancelado: 0, rechazado: 0 }
+        );
 
         setChartData([
-          { estado: "hechos", cantidad: data.cambios_hechos, fill: "var(--color-hechos)" },
-          { estado: "cancelados", cantidad: data.cambios_cancelados, fill: "var(--color-cancelados)" },
-          { estado: "enEspera", cantidad: data.cambios_en_espera, fill: "var(--color-enEspera)" },
+          { estado: "aceptado", cantidad: counts.aceptado, fill: "var(--color-hechos)" },
+          { estado: "completado", cantidad: counts.completado, fill: "var(--color-completado)" },
+          { estado: "cancelado", cantidad: counts.cancelado, fill: "var(--color-cancelados)" },
+          { estado: "pendiente", cantidad: counts.pendiente, fill: "var(--color-enEspera)" },
+          { estado: "rechazado", cantidad: counts.rechazado, fill: "var(--color-rechazados)" },
         ]);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
