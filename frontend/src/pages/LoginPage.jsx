@@ -3,7 +3,8 @@ import Login from "../components/LoginRegister";
 function LoginPage() {
   return (
     <>
-      <Login/>
+      {/* Renderiza el componente de inicio de sesión y registro */}
+      <Login />
     </>
   );
 }

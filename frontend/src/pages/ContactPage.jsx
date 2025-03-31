@@ -2,11 +2,24 @@ import React from 'react';
 
 function ContactPage() {
   return (
-    <div data-aos="fade-left" className="max-w-md p-8 bg-neutral-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 m-auto my-20 rounded-xl">
-      <h1 className="text-3xl font-bold mb-6 text-emerald-600 dark:text-emerald-300">Contáctanos</h1>
+    // Contenedor principal de la página de contacto
+    <div
+      data-aos="fade-left" // Animación al cargar el componente
+      className="max-w-md p-8 bg-neutral-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 m-auto my-20 rounded-xl"
+    >
+      {/* Título de la página */}
+      <h1 className="text-3xl font-bold mb-6 text-emerald-600 dark:text-emerald-300">
+        Contáctanos
+      </h1>
+
+      {/* Formulario de contacto */}
       <form className="space-y-6">
+        {/* Campo para el nombre completo */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
             Nombre completo
           </label>
           <input
@@ -14,11 +27,16 @@ function ContactPage() {
             id="name"
             name="name"
             className="mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-600 dark:focus:ring-emerald-300 focus:border-emerald-600 dark:focus:border-emerald-300 sm:text-sm"
-            required
+            required // Campo obligatorio
           />
         </div>
+
+        {/* Campo para el correo electrónico */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
             Correo
           </label>
           <input
@@ -26,11 +44,16 @@ function ContactPage() {
             id="email"
             name="email"
             className="mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-600 dark:focus:ring-emerald-300 focus:border-emerald-600 dark:focus:border-emerald-300 sm:text-sm"
-            required
+            required // Campo obligatorio
           />
         </div>
+
+        {/* Campo para el número de celular */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
             Celular
           </label>
           <input
@@ -38,11 +61,16 @@ function ContactPage() {
             id="phone"
             name="phone"
             className="mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-600 dark:focus:ring-emerald-300 focus:border-emerald-600 dark:focus:border-emerald-300 sm:text-sm"
-            required
+            required // Campo obligatorio
           />
         </div>
+
+        {/* Campo para el mensaje */}
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          <label
+            htmlFor="message"
+            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
             Mensaje
           </label>
           <textarea
@@ -50,9 +78,11 @@ function ContactPage() {
             name="message"
             rows="4"
             className="mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-600 dark:focus:ring-emerald-300 focus:border-emerald-600 dark:focus:border-emerald-300 sm:text-sm"
-            required
+            required // Campo obligatorio
           ></textarea>
         </div>
+
+        {/* Botón para enviar el formulario */}
         <div>
           <button
             type="submit"
