@@ -1,0 +1,53 @@
+:root {
+  --gcolor: #f1f5f9;
+}
+.dark {
+  --gcolor: #000;
+}
+
+button{
+  transition: all 0.3s ease;
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before,
+.product-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid;
+  border-image: linear-gradient(45deg, var(--gcolor), #059669) 1;
+  box-sizing: border-box;
+  animation: animate-border 5s linear infinite;
+}
+
+.product-card::after {
+  filter: blur(5px);
+}
+
+@keyframes animate-border {
+  0% {
+    border-image-source: linear-gradient(45deg, var(--gcolor), #059669);
+  }
+  25% {
+    border-image-source: linear-gradient(135deg, var(--gcolor), #059669);
+  }
+  50% {
+    border-image-source: linear-gradient(225deg, var(--gcolor), #059669);
+  }
+  75% {
+    border-image-source: linear-gradient(315deg, var(--gcolor), #059669);
+  }
+  100% {
+    border-image-source: linear-gradient(405deg, var(--gcolor), #059669);
+  }
+}
+
+

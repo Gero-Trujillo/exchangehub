@@ -1,0 +1,152 @@
+/* TableHistorial.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  backdrop-filter: blur(5px); /* Efecto de difuminado */
+}
+
+
+.table-container {
+  padding: 1rem;
+  width: 80%;
+  position: absolute;
+  height: 90%;
+  background-color: #ddd;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 5px;
+  height: 10%;
+  background-color: #10f1aa;
+}
+
+/* Para WebKit (Chrome, Safari, Edge) */
+.table-container::-webkit-scrollbar {
+  height: 8px; /* Altura de la barra de desplazamiento horizontal */
+  width: 8px;  /* Ancho de la barra de desplazamiento vertical */
+}
+
+/* Personalizar el "track" de la barra de desplazamiento */
+.table-container::-webkit-scrollbar-track {
+  background: #026344; /* Color de fondo de la barra */
+}
+
+/* Personalizar el "thumb" de la barra de desplazamiento */
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #07f5a9; /* Color del "thumb" o deslizante */
+  border-radius: 2px;     /* Bordes redondeados */
+}
+
+/* Color cuando el usuario está interactuando con el scrollbar */
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #10f1aa;
+}
+
+
+.filter-input {
+  max-width: 190px;
+  background-color: #f5f5f5;
+  color: #242424;
+  padding: 0.15rem 0.5rem;
+  min-height: 40px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  line-height: 1.15;
+  box-shadow: 0px 10px 20px -18px;
+  margin-bottom: 1rem;
+}
+
+.filter-input:focus {
+  border-bottom: 2px solid #10f1aa;
+  border-radius: 4px 4px 2px 2px;
+}
+
+.filter-input:hover {
+  outline: 1px solid lightgrey;
+}
+
+.historial-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+thead,
+tfoot {
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+body[data-theme="dark"] tr:nth-child(even) {
+  background-color: #333; /* Color de fondo en modo oscuro */
+}
+
+
+.pagination-controls {
+  margin-top: 0px;
+}
+
+.pagination-controls button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #059669;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination-controls button:hover {
+  background-color: #10f1aa;
+}
+
+.filtersTable {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dismiss {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  color: black;
+  border: 2px solid #d1d5db;
+  font-size: 1rem;
+  font-weight: 300;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  transition: 0.3s ease;
+}
+
+.dismiss:hover {
+  background-color: #ee0d0d;
+  border: 2px solid #ee0d0d;
+  color: #fff;
+}

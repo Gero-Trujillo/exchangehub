@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    background-color: #fff;
+}
+
+.dark {
+  background: #000;
+}
+/* #root{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows:
+        auto 1fr auto;
+} */
