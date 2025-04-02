@@ -106,7 +106,8 @@ function SidebarChat() {
                 <div className="text-sm text-zinc-400">
                   {onlineUsers.includes(user.idUser.toString())
                     ? "En linea" // Estado en línea
-                    : "Desconectado"} // Estado desconectado
+                    : "Desconectado"  // Estado desconectado                       
+                    } 
                 </div>
               </div>
             </button>

@@ -6,6 +6,14 @@ import { useChatStore } from "../store/useChatStore"; // Importa el estado globa
 import "./Navbar.css"; // Importa los estilos específicos para la barra de navegación
 import { useNotificationStore } from "../store/useNotificationStore"; // Importar useNotificationStore
 import { useAuthStore } from "../store/useAuthStore"; // Importar useAuthStore
+import {
+  IoHomeOutline,
+  IoPersonOutline,
+  IoBagHandleOutline,
+  IoRocketOutline,
+  IoNotificationsOutline
+} from "react-icons/io5"; // Importa iconos
+import { FiMessageCircle } from "react-icons/fi"; // Importa iconos de mensajes
 
 /**
  * Componente `Navbar` para mostrar la barra de navegación de la aplicación.
@@ -17,8 +25,13 @@ function Navbar() {
   const { isAuthenticated, user } = useAuth(); // Obtiene el estado de autenticación y el usuario actual
   const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtiene mensajes no leídos y funciones relacionadas con el chat
   const { authUser } = useAuthStore();
-  const { notifications, fetchNotifications, markAsRead, subscribeToNotifications } = useNotificationStore(); // Obtener notificaciones
-  const [ timestamp, setTimestamp] = useState(Date.now());
+  const {
+    notifications,
+    fetchNotifications,
+    markAsRead,
+    subscribeToNotifications,
+  } = useNotificationStore(); // Obtener notificaciones
+  const [timestamp, setTimestamp] = useState(Date.now());
 
   // Menú de navegación con enlaces a diferentes secciones
   const Menus = [
@@ -109,7 +122,7 @@ function Navbar() {
     markAsRead(idNotification); // Marcar la notificación como leída
     setShowNotifications(false);
     getUser(idSender);
-    navigate('/mensajes');
+    navigate("/mensajes");
   };
 
   // Agregar evento de clic al documento para cerrar notificaciones
@@ -188,9 +201,14 @@ function Navbar() {
               >
                 <span className="text-xl relative">
                   <ion-icon name="notifications-outline"></ion-icon>
-                  {notifications.filter((notification) => !notification.isRead).length > 0 && (
+                  {notifications.filter((notification) => !notification.isRead)
+                    .length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs font-bold rounded-full px-2">
-                      {notifications.filter((notification) => !notification.isRead).length}
+                      {
+                        notifications.filter(
+                          (notification) => !notification.isRead
+                        ).length
+                      }
                     </span>
                   )}
                 </span>
@@ -207,15 +225,32 @@ function Navbar() {
                       <div
                         key={notification.idNotification}
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-                        onClick={() => handleNotificationClick(notification.idNotification, notification.idSender)}
+                        onClick={() =>
+                          handleNotificationClick(
+                            notification.idNotification,
+                            notification.idSender
+                          )
+                        }
                       >
-                        <strong>{users.find((user) => user.idUser === notification.idSender)?.name}</strong>
-                        <p className="text-sm">{notification.message || "Imagen adjunta"}</p>
+                        <strong>
+                          {
+                            users.find(
+                              (user) => user.idUser === notification.idSender
+                            )?.name
+                          }
+                        </strong>
+                        <p className="text-sm">
+                          {notification.message || "Imagen adjunta"}
+                        </p>
                       </div>
                     ))}
                   <button
                     className="mt-2 w-full bg-emerald-600 text-white py-1 rounded"
-                    onClick={() => notifications.forEach(notification => markAsRead(notification.idNotification))}
+                    onClick={() =>
+                      notifications.forEach((notification) =>
+                        markAsRead(notification.idNotification)
+                      )
+                    }
                   >
                     Leer todas las notificaciones
                   </button>
