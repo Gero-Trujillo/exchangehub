@@ -1,16 +1,17 @@
-import cookieParser from "cookie-parser"; // Middleware para analizar cookies en las solicitudes
-import dotenv from "dotenv"; // Carga las variables de entorno desde un archivo .env
-import cors from "cors"; // Middleware para habilitar CORS (Cross-Origin Resource Sharing)
-import express from "express"; // Framework para manejar solicitudes HTTP
-import { app, server } from "./libs/socket.js"; // Importa la instancia de Express y el servidor HTTP configurado con Socket.IO
-import authRoutes from "./routes/auth.routes.js"; // Rutas relacionadas con la autenticación
-import userRoutes from "./routes/users.routes.js"; // Rutas relacionadas con los usuarios
-import articleRoutes from './routes/articles.routes.js'; // Rutas relacionadas con los artículos
-import messageRoutes from './routes/messages.routes.js'; // Rutas relacionadas con los mensajes
-import dashboardRoutes from './routes/dashboard.routes.js'; // Rutas relacionadas con el dashboard
-import exchangesRoutes from './routes/exchanges.routes.js'; // Rutas relacionadas con los intercambios
-import paymentRoutes from './routes/payment.routes.js'; // Rutas relacionadas con los pagos
-import ratingsRoutes from './routes/ratings.routes.js'; // Rutas relacionadas con las calificaciones
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import cors from "cors";
+import express from "express";
+import { io, app, server } from "./libs/socket.js";
+import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/users.routes.js";
+import articleRoutes from './routes/articles.routes.js'
+import messageRoutes from './routes/messages.routes.js'
+import dashboardRoutes from './routes/dashboard.routes.js'
+import exchangesRoutes from './routes/exchanges.routes.js'
+import paymentRoutes from './routes/payment.routes.js'
+import ratingsRoutes from './routes/ratings.routes.js'
+import notificationsRoutes from './routes/notifications.routes.js'
 
 dotenv.config(); // Carga las variables de entorno desde el archivo .env
 
@@ -25,15 +26,18 @@ app.use(cors({
   credentials: true, // Habilita el envío de cookies y credenciales
 }));
 
+app.set('socketio', io); // Guardar instancia de socket.io en app
+
 // Rutas de la aplicación
-app.use(authRoutes); // Rutas de autenticación
-app.use(userRoutes); // Rutas de usuarios
-app.use(articleRoutes); // Rutas de artículos
-app.use(messageRoutes); // Rutas de mensajes
-app.use(dashboardRoutes); // Rutas del dashboard
-app.use(exchangesRoutes); // Rutas de intercambios
-app.use(paymentRoutes); // Rutas de pagos
-app.use(ratingsRoutes); // Rutas de calificaciones
+app.use(authRoutes);
+app.use(userRoutes);
+app.use(articleRoutes);
+app.use(messageRoutes);
+app.use(dashboardRoutes);
+app.use(exchangesRoutes);
+app.use(paymentRoutes);
+app.use(ratingsRoutes);
+app.use(notificationsRoutes);
 
 // Inicia el servidor
 server.listen(PORT, () => {

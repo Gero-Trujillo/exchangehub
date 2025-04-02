@@ -45,6 +45,11 @@ io.on("connection", (socket) => {
     delete userSocketMap[userId]; // Elimina al usuario del mapa de sockets
     io.emit("getOnlineUsers", Object.keys(userSocketMap)); // Actualiza la lista de usuarios en línea
   });
+
+  // Manejar eventos de notificaciones
+  socket.on('sendNotification', (notification) => {
+    io.emit('newNotification', notification);
+  });
 });
 
 // Exporta las instancias de `io`, `server` y `app` para usarlas en otras partes de la aplicación

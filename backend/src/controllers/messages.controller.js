@@ -77,7 +77,6 @@ export const sendMessage = async (req, res) => {
 
     // Obtiene el socket ID del receptor para enviar el mensaje en tiempo real
     const receiverSocketId = getReceiverSocketId(receiverId);
-
     if (receiverSocketId) {
       // Si el receptor está conectado, envía el mensaje en tiempo real
       io.to(receiverSocketId).emit("newMessage", {
@@ -90,7 +89,28 @@ export const sendMessage = async (req, res) => {
       });
     }
 
-    res.status(200).json(rows); // Devuelve el resultado de la inserción
+    // Crear una notificación para el receptor del mensaje
+    const [notificationResult] = await pool.query(
+      "INSERT INTO notifications (idUser, idSender, message) VALUES (?, ?, ?)",
+      [receiverId, senderId, text]
+    );
+
+    const notification = {
+      idNotification: notificationResult.insertId,
+      idUser: receiverId,
+      idSender: senderId,
+      message: text,
+      isRead: false,
+      createdAt: new Date(),
+    };
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newNotification", notification);
+    } else {
+      io.emit("newNotification", notification);
+    }
+
+    res.status(200).json(rows);
   } catch (error) {
     console.log(error); // Loguea el error en caso de fallo
     res.status(500).json({ message: "Internal server error" }); // Devuelve un error 500 en caso de fallo

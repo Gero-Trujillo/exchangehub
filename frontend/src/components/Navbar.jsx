@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; // Importa he
 import { useAuth } from "../context/AuthContext"; // Importa el contexto de autenticación
 import { useChatStore } from "../store/useChatStore"; // Importa el estado global del chat
 import "./Navbar.css"; // Importa los estilos específicos para la barra de navegación
+import { useNotificationStore } from "../store/useNotificationStore"; // Importar useNotificationStore
+import { useAuthStore } from "../store/useAuthStore"; // Importar useAuthStore
 
 /**
  * Componente `Navbar` para mostrar la barra de navegación de la aplicación.
@@ -14,6 +16,9 @@ function Navbar() {
   const navigate = useNavigate(); // Hook para redirigir a otras rutas
   const { isAuthenticated, user } = useAuth(); // Obtiene el estado de autenticación y el usuario actual
   const { unreadMessages, users, getUsers, getUser, messages } = useChatStore(); // Obtiene mensajes no leídos y funciones relacionadas con el chat
+  const { authUser } = useAuthStore();
+  const { notifications, fetchNotifications, markAsRead, subscribeToNotifications } = useNotificationStore(); // Obtener notificaciones
+  const [ timestamp, setTimestamp] = useState(Date.now());
 
   // Menú de navegación con enlaces a diferentes secciones
   const Menus = [
@@ -65,10 +70,17 @@ function Navbar() {
 
   // Obtiene los usuarios y mensajes no leídos si el usuario está autenticado
   useEffect(() => {
-    if (isAuthenticated && user && user.idUser) {
-      getUsers(user.idUser); // Llama a la función para obtener usuarios y mensajes
+    if (isAuthenticated && authUser && authUser.idUser) {
+      fetchNotifications(); // Obtener notificaciones
     }
-  }, [isAuthenticated, user, getUsers]);
+  }, [isAuthenticated, authUser, getUsers, fetchNotifications, timestamp]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimestamp(Date.now()); // Actualizar el timestamp cada segundo
+    }, 3000);
+    return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+  }, []);
 
   // Aplica el tema (claro/oscuro) al cargar el componente o cuando cambia el tema
   useEffect(() => {
@@ -80,16 +92,43 @@ function Navbar() {
     localStorage.setItem("theme", theme); // Guarda el tema en el almacenamiento local
   }, [theme]);
 
-  // Cambia entre los temas claro y oscuro
+  useEffect(() => {
+    if (authUser && authUser.socket) {
+      const unsubscribe = subscribeToNotifications(authUser.socket);
+      return () => {
+        if (unsubscribe) unsubscribe();
+      };
+    }
+  }, [authUser, subscribeToNotifications]);
+
   const handleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  // Maneja el clic en una notificación y redirige al chat del usuario correspondiente
-  const handleNotificationClick = (idSender) => {
-    setShowNotifications(false); // Oculta las notificaciones
-    getUser(idSender); // Obtiene los datos del usuario que envió el mensaje
-    navigate("/mensajes"); // Redirige a la página de mensajes
+  const handleNotificationClick = (idNotification, idSender) => {
+    markAsRead(idNotification); // Marcar la notificación como leída
+    setShowNotifications(false);
+    getUser(idSender);
+    navigate('/mensajes');
+  };
+
+  // Agregar evento de clic al documento para cerrar notificaciones
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setShowNotifications(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  // Evitar que el clic en el icono de notificaciones cierre las notificaciones
+  const handleNotificationIconClick = (e) => {
+    e.stopPropagation();
+    setShowNotifications(!showNotifications);
   };
 
   return (
@@ -145,46 +184,41 @@ function Navbar() {
             <li className="relative w-16 dark:text-emerald-900">
               <div
                 className="flex flex-col text-center pt-6 cursor-pointer"
-                onClick={() => setShowNotifications(!showNotifications)} // Alterna la visibilidad de las notificaciones
+                onClick={handleNotificationIconClick}
               >
                 <span className="text-xl relative">
                   <ion-icon name="notifications-outline"></ion-icon>
-                  {unreadMessages > 0 && (
+                  {notifications.filter((notification) => !notification.isRead).length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs font-bold rounded-full px-2">
-                      {unreadMessages}
+                      {notifications.filter((notification) => !notification.isRead).length}
                     </span>
                   )}
                 </span>
               </div>
 
-              {/* Lista de notificaciones */}
-              {showNotifications && unreadMessages > 0 && (
+              {showNotifications && (
                 <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 w-64">
                   <h3 className="font-bold text-black dark:text-white mb-2">
                     Mensajes nuevos
                   </h3>
-                  {messages
-                    .filter((message) => !message.read) // Filtra los mensajes no leídos
-                    .map((message) => (
+                  {notifications
+                    .filter((notification) => !notification.isRead)
+                    .map((notification) => (
                       <div
-                        key={message.idMessage}
+                        key={notification.idNotification}
                         className="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-                        onClick={() =>
-                          handleNotificationClick(message.idSender) // Maneja el clic en una notificación
-                        }
+                        onClick={() => handleNotificationClick(notification.idNotification, notification.idSender)}
                       >
-                        <strong>
-                          {
-                            users.find(
-                              (user) => user.idUser === message.idSender
-                            )?.name
-                          }
-                        </strong>
-                        <p className="text-sm">
-                          {message.text || "Imagen adjunta"}
-                        </p>
+                        <strong>{users.find((user) => user.idUser === notification.idSender)?.name}</strong>
+                        <p className="text-sm">{notification.message || "Imagen adjunta"}</p>
                       </div>
                     ))}
+                  <button
+                    className="mt-2 w-full bg-emerald-600 text-white py-1 rounded"
+                    onClick={() => notifications.forEach(notification => markAsRead(notification.idNotification))}
+                  >
+                    Leer todas las notificaciones
+                  </button>
                 </div>
               )}
             </li>

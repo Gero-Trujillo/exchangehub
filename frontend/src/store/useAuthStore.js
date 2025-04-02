@@ -70,6 +70,11 @@ export const useAuthStore = create((set, get) => ({
     socket.on("getOnlineUsers", (userIds) => {
       set({ onlineUsers: userIds }); // Actualiza la lista de usuarios en línea en el estado
     });
+
+    socket.on("newNotification", (notification) => {
+      const { notifications } = get();
+      set({ notifications: [notification, ...notifications] });
+    });
   },
 
   // Función para desconectar el socket
